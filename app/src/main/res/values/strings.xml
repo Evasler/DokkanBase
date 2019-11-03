@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">DokkanBase</string>
+    <string name="preferences">"DokkanBasePreferences"</string>
 </resources>
