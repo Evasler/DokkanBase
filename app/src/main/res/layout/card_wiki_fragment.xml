@@ -11,4 +11,28 @@
         android:layout_height="match_parent"
         android:text="Card Wiki Fragment" />
 
+    <ScrollView
+        android:id="@+id/result_scrollview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <GridLayout
+                android:id="@+id/result_gridLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:columnCount="5"/>
+            <Button
+                android:id="@+id/loadMoreButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Load More"
+                android:onClick="populate_grid"
+                android:layout_gravity="center_horizontal"/>
+        </LinearLayout>
+    </ScrollView>
+
 </FrameLayout>

@@ -9,7 +9,7 @@ public class free_to_play_cards {
 
     @NonNull
     @PrimaryKey(autoGenerate = true)
-    private Integer card_category_relation_id;
+    private Integer free_to_play_cards_id;
     @NonNull
     private String card_id;
     @NonNull
@@ -18,8 +18,8 @@ public class free_to_play_cards {
     private String origin;
 
     @NonNull
-    public Integer getCard_category_relation_id() {
-        return card_category_relation_id;
+    public Integer getFree_to_play_cards_id() {
+        return free_to_play_cards_id;
     }
 
     @NonNull
@@ -37,8 +37,8 @@ public class free_to_play_cards {
         return origin;
     }
 
-    public void setCard_category_relation_id(@NonNull Integer card_category_relation_id) {
-        this.card_category_relation_id = card_category_relation_id;
+    public void setFree_to_play_cards_id(@NonNull Integer card_category_relation_id) {
+        this.free_to_play_cards_id = card_category_relation_id;
     }
 
     public void setCard_id(@NonNull String card_id) {

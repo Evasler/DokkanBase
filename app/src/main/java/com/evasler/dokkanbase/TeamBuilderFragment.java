@@ -29,7 +29,7 @@ public class TeamBuilderFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    private OnFragmentInteractionListener mListener;
+    OnFragmentInteractionListener mListener;
 
     public TeamBuilderFragment() {
         // Required empty public constructor
@@ -90,7 +90,15 @@ public class TeamBuilderFragment extends Fragment {
     @Override
     public void onDetach() {
         super.onDetach();
-        mListener = null;
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                mListener = null;
+                System.runFinalization();
+                Runtime.getRuntime().gc();
+                System.gc();
+            }
+        }).start();
     }
 
     /**

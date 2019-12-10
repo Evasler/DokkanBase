@@ -9,9 +9,9 @@ public class super_attack_super_attack_extra_effect_relation {
 
     @NonNull
     @PrimaryKey
-    private Integer super_attack_id;
-    @NonNull
     private Integer extra_effect_id;
+    @NonNull
+    private Integer super_attack_id;
 
     @NonNull
     public Integer getSuper_attack_id() {

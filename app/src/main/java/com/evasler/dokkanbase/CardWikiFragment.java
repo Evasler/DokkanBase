@@ -2,13 +2,25 @@ package com.evasler.dokkanbase;
 
 import android.content.Context;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.util.DisplayMetrics;
+import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.GridLayout;
+import android.widget.LinearLayout;
+
+import com.evasler.dokkanbase.queryresponseobjects.card_preview;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 
 /**
@@ -29,11 +41,17 @@ public class CardWikiFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    private OnFragmentInteractionListener mListener;
+    OnFragmentInteractionListener mListener;
 
-    public CardWikiFragment() {
-        // Required empty public constructor
-    }
+    boolean lockedUI;
+    int lockIndex;
+    long lastUnlockTimeInMillis;
+    int cardPreviewPixelSize;
+    GridLayout gridLayout;
+    static List<CardPreview> CardPreviews;
+    static SparseArray<LinearLayout> card_preview_containers;
+
+    public CardWikiFragment() { }
 
     /**
      * Use this factory method to create a new instance of
@@ -50,6 +68,7 @@ public class CardWikiFragment extends Fragment {
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
+
         return fragment;
     }
 
@@ -89,8 +108,29 @@ public class CardWikiFragment extends Fragment {
 
     @Override
     public void onDetach() {
+
+        List<Fragment> cardPreviews = getActivity().getSupportFragmentManager().getFragments();
+
+        for (Fragment fragment : cardPreviews) {
+            System.out.println(System.currentTimeMillis());
+            getActivity().getSupportFragmentManager().popBackStack();
+        }
+
         super.onDetach();
-        mListener = null;
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                mListener = null;
+                gridLayout = null;
+                CardPreviews = null;
+                card_preview_containers = null;
+                System.runFinalization();
+                Runtime.getRuntime().gc();
+                System.gc();
+                System.out.println("Card Wiki detached");
+            }
+        }).start();
     }
 
     /**
@@ -106,5 +146,92 @@ public class CardWikiFragment extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        CardPreviews = new ArrayList<>();
+        card_preview_containers = new SparseArray<>();
+        lockedUI = false;
+        lockIndex = 0;
+        lastUnlockTimeInMillis = 0;
+        gridLayout = Objects.requireNonNull(getView()).findViewById(R.id.result_gridLayout);
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        Objects.requireNonNull(getActivity()).getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        cardPreviewPixelSize = displayMetrics.widthPixels / 5;
+        populate_grid();
+    }
+
+    public void populate_grid(View view) {
+        populate_grid();
+    }
+
+    public void populate_grid() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                MyDao myDao = AppDatabase.getDatabase(Objects.requireNonNull(getContext())).myDao();
+                List<card_preview> card_previews_data = myDao.getCardsForPreview();
+                loadCardPreviews(card_previews_data);
+            }
+        }).start();
+    }
+
+    public void loadCardPreviews(List<card_preview> card_previews_data) {
+        GridLayout.Spec rowSpan = GridLayout.spec(GridLayout.UNDEFINED, 1);
+        GridLayout.Spec colspan = GridLayout.spec(GridLayout.UNDEFINED, 1);
+        int start = gridLayout.getChildCount();
+        int end = start + 100 > card_previews_data.size() ? card_previews_data.size() : start + 100;
+        for (int i = start; i < end; i++) {
+            CardPreviewPostOperation cardPreviewOperation = new CardPreviewPostOperation();
+            cardPreviewOperation.execute(i, card_previews_data, rowSpan, colspan);
+        }
+    }
+
+    final class CardPreviewPostOperation extends AsyncTask<Object, Void, String> {
+
+        int index;
+        card_preview currentCard;
+        GridLayout.LayoutParams gridLayoutParams;
+
+        @Override
+        protected String doInBackground(Object... params) {
+            index = (int) params[0];
+            @SuppressWarnings("unchecked")
+            List<card_preview> card_previews_data = (List<card_preview>) params[1];
+            GridLayout.Spec rowSpan = (GridLayout.Spec) params[2];
+            GridLayout.Spec colspan = (GridLayout.Spec) params[3];
+            gridLayoutParams = new GridLayout.LayoutParams(rowSpan, colspan);
+
+            currentCard = (card_previews_data).get(index);
+            LinearLayout cardPreviewContainer = new LinearLayout(getContext());
+            cardPreviewContainer.setId(index + 1);
+            card_preview_containers.put(index, cardPreviewContainer);
+
+            /*while (lockedUI || (System.currentTimeMillis() - lastUnlockTimeInMillis < 20) ) {
+                try {
+                    Thread.sleep(10);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }*/
+            lockedUI = true;
+
+            return "Executed";
+        }
+
+        @Override
+        protected void onPostExecute(String string) {
+            CardPreviews.add(new CardPreview(currentCard.getCard_id(), currentCard.getRarity(), currentCard.getType(), cardPreviewPixelSize));
+            gridLayout.addView(card_preview_containers.get(index), gridLayoutParams);
+            Objects.requireNonNull(getActivity()).getSupportFragmentManager().beginTransaction()
+                    .replace(index + 1, CardPreviews.get(index))
+                    .addToBackStack(null)
+                    .commit();
+            currentCard = null;
+            gridLayoutParams = null;
+            lockedUI = false;
+            lastUnlockTimeInMillis = System.currentTimeMillis();
+        }
     }
 }

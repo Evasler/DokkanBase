@@ -25,7 +25,7 @@ public abstract class AppDatabase extends RoomDatabase {
 
     public abstract MyDao myDao();
     private static AppDatabase INSTANCE;
-    private static final String DB_NAME = "DigipediaMasterEdition.db";
+    private static final String DB_NAME = "DokkanBattle.db";
 
     static final Migration MIGRATION_1_2 = new Migration(1, 2) {
         @Override
@@ -33,7 +33,7 @@ public abstract class AppDatabase extends RoomDatabase {
         }
     };
 
-    public static AppDatabase getDatabase(final Context context) {
+    public static AppDatabase getDatabase(final @NonNull Context context) {
         if (INSTANCE == null) {
             synchronized (AppDatabase.class) {
                 if (INSTANCE == null) {
