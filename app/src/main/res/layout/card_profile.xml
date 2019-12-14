@@ -79,9 +79,25 @@
         android:layout_width="110dp"
         android:layout_height="110dp"
         app:layout_constraintBottom_toTopOf="@+id/guideline3"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@id/guideline5"
         app:layout_constraintTop_toTopOf="@+id/guideline"
         app:srcCompat="@drawable/card_icon_9015142" />
+
+    <ImageView
+        android:id="@+id/card_rarity"
+        android:layout_width="49.5dp"
+        android:layout_height="53.9dp"
+        app:layout_constraintBottom_toBottomOf="@+id/card_icon"
+        app:layout_constraintStart_toStartOf="@+id/card_icon"
+        app:srcCompat="@drawable/lr" />
+
+    <ImageView
+        android:id="@+id/card_type"
+        android:layout_width="38.5dp"
+        android:layout_height="38.5dp"
+        app:layout_constraintEnd_toEndOf="@+id/card_icon"
+        app:layout_constraintTop_toTopOf="@+id/card_icon"
+        app:srcCompat="@drawable/super_agl" />
 
     <TextView
         android:id="@+id/leader_skill"
@@ -299,6 +315,7 @@
 
                             </androidx.constraintlayout.widget.ConstraintLayout>
                         </com.evasler.dokkanbase.LimitedScrollView>
+
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <androidx.constraintlayout.widget.ConstraintLayout
@@ -721,16 +738,16 @@
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </ViewFlipper>
 
-            <ImageView
-                android:id="@+id/imageView2"
-                android:layout_width="100dp"
-                android:layout_height="45dp"
-                app:layout_constraintBottom_toBottomOf="@+id/imageView3"
-                app:layout_constraintEnd_toStartOf="@+id/imageView3"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="@id/guideline5"
-                app:layout_constraintTop_toTopOf="@+id/imageView3"
-                app:srcCompat="@color/colorAccent" />
+    <ImageView
+        android:id="@+id/hp_background"
+        android:layout_width="100dp"
+        android:layout_height="45dp"
+        app:layout_constraintBottom_toBottomOf="@+id/atk_background"
+        app:layout_constraintEnd_toStartOf="@+id/atk_background"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/atk_background"
+        app:srcCompat="@color/colorAccent" />
 
             <TextView
                 android:id="@+id/hp"
@@ -739,9 +756,10 @@
                 android:gravity="center"
                 android:text="23000"
                 android:textSize="16dp"
-                app:layout_constraintEnd_toEndOf="@+id/imageView2"
-                app:layout_constraintStart_toStartOf="@+id/imageView2"
-                app:layout_constraintTop_toTopOf="@+id/imageView2" />
+                app:layout_constraintEnd_toEndOf="@+id/hp_background"
+                app:layout_constraintStart_toStartOf="@+id/hp_background"
+                app:layout_constraintTop_toTopOf="@+id/hp_background"
+                app:layout_constraintBottom_toTopOf="@+id/hp_label" />
 
             <TextView
                 android:id="@+id/hp_label"
@@ -750,19 +768,19 @@
                 android:gravity="center"
                 android:text="HP"
                 android:textSize="16dp"
-                app:layout_constraintBottom_toBottomOf="@+id/imageView2"
-                app:layout_constraintEnd_toEndOf="@+id/imageView2"
-                app:layout_constraintStart_toStartOf="@+id/imageView2"
+                app:layout_constraintBottom_toBottomOf="@+id/hp_background"
+                app:layout_constraintEnd_toEndOf="@+id/hp_background"
+                app:layout_constraintStart_toStartOf="@+id/hp_background"
                 app:layout_constraintTop_toBottomOf="@+id/hp" />
 
             <ImageView
-                android:id="@+id/imageView3"
+                android:id="@+id/atk_background"
                 android:layout_width="100dp"
                 android:layout_height="45dp"
                 app:layout_constraintBottom_toTopOf="@+id/details_panel"
-                app:layout_constraintEnd_toStartOf="@+id/imageView1"
+                app:layout_constraintEnd_toStartOf="@+id/def_background"
                 app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/imageView2"
+                app:layout_constraintStart_toEndOf="@+id/hp_background"
                 app:layout_constraintTop_toBottomOf="@+id/guideline4"
                 app:srcCompat="@color/colorAccent" />
 
@@ -773,9 +791,10 @@
                 android:gravity="center"
                 android:text="23000"
                 android:textSize="16dp"
-                app:layout_constraintEnd_toEndOf="@+id/imageView3"
-                app:layout_constraintStart_toStartOf="@+id/imageView3"
-                app:layout_constraintTop_toTopOf="@+id/imageView3" />
+                app:layout_constraintEnd_toEndOf="@+id/atk_background"
+                app:layout_constraintStart_toStartOf="@+id/atk_background"
+                app:layout_constraintTop_toTopOf="@+id/atk_background"
+                app:layout_constraintBottom_toTopOf="@+id/atk_label" />
 
             <TextView
                 android:id="@+id/atk_label"
@@ -784,21 +803,21 @@
                 android:gravity="center"
                 android:text="ATK"
                 android:textSize="16dp"
-                app:layout_constraintBottom_toBottomOf="@+id/imageView3"
-                app:layout_constraintEnd_toEndOf="@+id/imageView3"
-                app:layout_constraintStart_toStartOf="@+id/imageView3"
+                app:layout_constraintBottom_toBottomOf="@+id/atk_background"
+                app:layout_constraintEnd_toEndOf="@+id/atk_background"
+                app:layout_constraintStart_toStartOf="@+id/atk_background"
                 app:layout_constraintTop_toBottomOf="@+id/atk" />
 
-            <ImageView
-                android:id="@+id/imageView1"
-                android:layout_width="100dp"
-                android:layout_height="45dp"
-                app:layout_constraintBottom_toBottomOf="@+id/imageView3"
-                app:layout_constraintEnd_toStartOf="@id/guideline2"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/imageView3"
-                app:layout_constraintTop_toTopOf="@+id/imageView3"
-                app:srcCompat="@color/colorAccent" />
+    <ImageView
+        android:id="@+id/def_background"
+        android:layout_width="100dp"
+        android:layout_height="45dp"
+        app:layout_constraintBottom_toBottomOf="@+id/atk_background"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/atk_background"
+        app:layout_constraintTop_toTopOf="@+id/atk_background"
+        app:srcCompat="@color/colorAccent" />
 
             <TextView
                 android:id="@+id/def"
@@ -807,9 +826,10 @@
                 android:gravity="center"
                 android:text="23000"
                 android:textSize="16dp"
-                app:layout_constraintEnd_toEndOf="@+id/imageView1"
-                app:layout_constraintStart_toStartOf="@+id/imageView1"
-                app:layout_constraintTop_toTopOf="@+id/imageView1" />
+                app:layout_constraintEnd_toEndOf="@+id/def_background"
+                app:layout_constraintStart_toStartOf="@+id/def_background"
+                app:layout_constraintTop_toTopOf="@+id/def_background"
+                app:layout_constraintBottom_toTopOf="@+id/def_label" />
 
             <TextView
                 android:id="@+id/def_label"
@@ -818,9 +838,9 @@
                 android:gravity="center"
                 android:text="DEF"
                 android:textSize="16dp"
-                app:layout_constraintBottom_toBottomOf="@+id/imageView1"
-                app:layout_constraintEnd_toEndOf="@+id/imageView1"
-                app:layout_constraintStart_toStartOf="@+id/imageView1"
+                app:layout_constraintBottom_toBottomOf="@+id/def_background"
+                app:layout_constraintEnd_toEndOf="@+id/def_background"
+                app:layout_constraintStart_toStartOf="@+id/def_background"
                 app:layout_constraintTop_toBottomOf="@+id/def" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -829,7 +849,7 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintStart_toEndOf="@id/guideline5"
                 app:layout_constraintEnd_toStartOf="@id/guideline2"
-                app:layout_constraintTop_toBottomOf="@+id/imageView3"
+                app:layout_constraintTop_toBottomOf="@+id/atk_background"
                 app:layout_constraintBottom_toTopOf="@+id/guideline13">
 
                 <TextView
@@ -936,10 +956,26 @@
                     android:scaleType="fitXY"
                     app:layout_constraintBottom_toTopOf="@+id/dokkan_card_icon"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintHorizontal_bias="0.45"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:srcCompat="@drawable/card_icon_9015140" />
+
+                <ImageView
+                    android:id="@+id/pre_dokkan_card_type"
+                    android:layout_width="19.25dp"
+                    android:layout_height="19.25dp"
+                    app:layout_constraintTop_toTopOf="@+id/pre_dokkan_card_icon"
+                    app:layout_constraintEnd_toEndOf="@+id/pre_dokkan_card_icon"
+                    app:srcCompat="@drawable/super_agl" />
+
+                <ImageView
+                    android:id="@+id/pre_dokkan_card_rarity"
+                    android:layout_width="24.2dp"
+                    android:layout_height="26.95dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/pre_dokkan_card_icon"
+                    app:layout_constraintStart_toStartOf="@+id/pre_dokkan_card_icon"
+                    app:srcCompat="@drawable/lr" />
 
                 <ImageView
                     android:id="@+id/pre_dokkan_medal_1"
@@ -1078,10 +1114,26 @@
                     android:scaleType="fitXY"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintHorizontal_bias="0.45"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/pre_dokkan_card_icon"
                     app:srcCompat="@drawable/card_icon_9015141" />
+
+                <ImageView
+                    android:id="@+id/dokkan_card_type"
+                    android:layout_width="19.25dp"
+                    android:layout_height="19.25dp"
+                    app:layout_constraintTop_toTopOf="@+id/pre_dokkan_card_icon"
+                    app:layout_constraintEnd_toEndOf="@+id/pre_dokkan_card_icon"
+                    app:srcCompat="@drawable/super_agl" />
+
+                <ImageView
+                    android:id="@+id/dokkan_card_rarity"
+                    android:layout_width="24.2dp"
+                    android:layout_height="26.95dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/dokkan_card_icon"
+                    app:layout_constraintStart_toStartOf="@+id/dokkan_card_icon"
+                    app:srcCompat="@drawable/lr" />
 
                 <ImageView
                     android:id="@+id/dokkan_medal_1"
@@ -1330,4 +1382,5 @@
                 app:layout_constraintEnd_toEndOf="@+id/imageView6"
                 app:layout_constraintStart_toStartOf="@+id/imageView6"
                 app:layout_constraintTop_toTopOf="@+id/imageView6" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

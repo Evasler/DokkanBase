@@ -2,8 +2,7 @@ package com.evasler.dokkanbase;
 
 import com.evasler.dokkanbase.queryresponseobjects.active_skill_details;
 import com.evasler.dokkanbase.queryresponseobjects.card_preview;
-import com.evasler.dokkanbase.queryresponseobjects.dokkan_details;
-import com.evasler.dokkanbase.queryresponseobjects.pre_dokkan_details;
+import com.evasler.dokkanbase.queryresponseobjects.related_card_details;
 import com.evasler.dokkanbase.queryresponseobjects.tier_1_medal_combination;
 import com.evasler.dokkanbase.queryresponseobjects.tier_2_medal_combination;
 import com.evasler.dokkanbase.queryresponseobjects.tier_3_medal_combination;
@@ -33,11 +32,11 @@ public interface MyDao {
             "card.card_id = :card_id")
     List<active_skill_details> getActiveSkill(String card_id);
 
-    @Query("SELECT card_id, dokkan_awakening_medal_combination_id FROM card_dokkan_awakened_card_relation WHERE dokkan_awakened_card_id = :card_id")
-    pre_dokkan_details getPreDokkanAwakenedCardDetails(String card_id);
+    @Query("SELECT card.card_id, type, rarity, dokkan_awakening_medal_combination_id FROM card, card_dokkan_awakened_card_relation WHERE card.card_id = card_dokkan_awakened_card_relation.card_id AND dokkan_awakened_card_id = :card_id")
+    related_card_details getPreDokkanAwakenedCardDetails(String card_id);
 
-    @Query("SELECT dokkan_awakened_card_id, dokkan_awakening_medal_combination_id FROM card_dokkan_awakened_card_relation WHERE card_id = :card_id")
-    dokkan_details getDokkanAwakenedCardDetails(String card_id);
+    @Query("SELECT card.card_id, type, rarity, dokkan_awakening_medal_combination_id FROM card, card_dokkan_awakened_card_relation WHERE card.card_id = card_dokkan_awakened_card_relation.dokkan_awakened_card_id AND card_dokkan_awakened_card_relation.card_id = :card_id")
+    related_card_details getDokkanAwakenedCardDetails(String card_id);
 
     @Query("SELECT medal_1_id, medal_1_count, medal_2_id, medal_2_count, medal_3_id, medal_3_count, medal_4_id, medal_4_count, medal_5_id, medal_5_count FROM tier_1_awakening_combination, tier_2_awakening_combination, tier_3_awakening_combination, tier_4_awakening_combination, tier_5_awakening_combination WHERE tier_1_awakening_combination.tier_1_combination_id = tier_2_awakening_combination.tier_1_combination_id AND tier_2_awakening_combination.tier_2_combination_id = tier_3_awakening_combination.tier_2_combination_id AND tier_3_awakening_combination.tier_3_combination_id = tier_4_awakening_combination.tier_3_combination_id AND tier_4_awakening_combination.tier_4_combination_id = tier_5_awakening_combination.tier_4_combination_id AND tier_5_awakening_combination.tier_5_combination_id = :medal_combination_id")
     tier_5_medal_combination getTier5MedalCombination(int medal_combination_id);
