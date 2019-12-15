@@ -30,8 +30,8 @@ public class card_super_attack_relation {
         return super_attack_id;
     }
 
-    public void setCard_super_attack_relation_id(@NonNull Integer card_category_relation_id) {
-        this.card_super_attack_relation_id = card_category_relation_id;
+    public void setCard_super_attack_relation_id(@NonNull Integer card_super_attack_relation_id) {
+        this.card_super_attack_relation_id = card_super_attack_relation_id;
     }
 
     public void setCard_id(@NonNull String card_id) {

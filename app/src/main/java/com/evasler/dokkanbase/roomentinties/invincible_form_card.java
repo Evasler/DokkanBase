@@ -9,7 +9,7 @@ public class invincible_form_card {
 
     @NonNull
     @PrimaryKey
-    private String invincible_form_card_id;
+    private String card_id;
     @NonNull
     private String passive_skill_name;
     @NonNull
@@ -24,8 +24,8 @@ public class invincible_form_card {
     private Integer base_def;
 
     @NonNull
-    public String getInvincible_form_card_id() {
-        return invincible_form_card_id;
+    public String getCard_id() {
+        return card_id;
     }
 
     @NonNull
@@ -58,8 +58,8 @@ public class invincible_form_card {
         return base_def;
     }
 
-    public void setInvincible_form_card_id(@NonNull String invincible_form_card_id) {
-        this.invincible_form_card_id = invincible_form_card_id;
+    public void setCard_id(@NonNull String card_id) {
+        this.card_id = card_id;
     }
 
     public void setPassive_skill_name(@NonNull String passive_skill_name) {

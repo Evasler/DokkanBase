@@ -9,7 +9,7 @@ public class exchange_card {
 
     @NonNull
     @PrimaryKey
-    private String exchange_card_id;
+    private String card_id;
     @NonNull
     private String character_name;
     @NonNull
@@ -18,8 +18,8 @@ public class exchange_card {
     private String passive_skill;
 
     @NonNull
-    public String getExchange_card_id() {
-        return exchange_card_id;
+    public String getCard_id() {
+        return card_id;
     }
 
     @NonNull
@@ -37,8 +37,8 @@ public class exchange_card {
         return passive_skill;
     }
 
-    public void setExchange_card_id(@NonNull String exchange_card_id) {
-        this.exchange_card_id = exchange_card_id;
+    public void setCard_id(@NonNull String card_id) {
+        this.card_id = card_id;
     }
 
     public void setCharacter_name(@NonNull String character_name) {

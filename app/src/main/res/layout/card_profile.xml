@@ -19,14 +19,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.25" />
+        app:layout_constraintGuide_percent="0.24076608" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.68" />
+        app:layout_constraintGuide_percent="0.67" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline13"
@@ -49,7 +49,7 @@
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.98" />
 
-<!--> <!-->
+    <!--> <!-->
     <TextView
         android:id="@+id/card_name_character_name"
         android:layout_width="wrap_content"
@@ -66,8 +66,8 @@
     <ImageView
         android:id="@+id/card_background"
         android:layout_width="88dp"
-        android:layout_height="99dp"
-        android:layout_marginBottom="2dp"
+        android:layout_height="88dp"
+        android:layout_marginBottom="7.5dp"
         app:layout_constraintBottom_toBottomOf="@+id/card_icon"
         app:layout_constraintEnd_toEndOf="@+id/card_icon"
         app:layout_constraintHorizontal_bias="0.5"
@@ -115,628 +115,630 @@
         android:id="@+id/contentFlipper"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintStart_toStartOf="@id/guideline5"
+        app:layout_constraintBottom_toBottomOf="@id/guideline4"
         app:layout_constraintEnd_toEndOf="@id/guideline2"
-        app:layout_constraintTop_toTopOf="@id/guideline3"
-        app:layout_constraintBottom_toBottomOf="@id/guideline4">
+        app:layout_constraintStart_toStartOf="@id/guideline5"
+        app:layout_constraintTop_toTopOf="@id/guideline3">
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/super_attack_master"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="@android:color/darker_gray"
+                app:layout_constraintBottom_toTopOf="@+id/passive_skill_master"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:id="@+id/super_attack_label"
+                    android:layout_width="45dp"
+                    android:layout_height="25dp"
+                    android:src="@android:color/background_light"
+                    app:layout_constraintBottom_toTopOf="@+id/super_attacks_scroll"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/ki_meter"
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/super_attack_label"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/super_attack_label"
+                    app:layout_constraintTop_toTopOf="@+id/super_attack_label" />
+
+                <com.evasler.dokkanbase.LimitedScrollView
+                    android:id="@+id/super_attacks_scroll"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:background="@android:color/holo_green_light"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/super_attack_label">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/super_attack_master"
-                        android:layout_width="0dp"
-                        android:layout_height="0dp"
-                        android:background="@android:color/darker_gray"
-                        app:layout_constraintBottom_toTopOf="@+id/passive_skill_master"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.5"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent">
-                        <ImageView
-                            android:id="@+id/super_attack_label"
-                            android:layout_width="45dp"
-                            android:layout_height="25dp"
-                            android:src="@android:color/background_light"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintBottom_toTopOf="@+id/super_attacks_scroll"
-                            app:layout_constraintHorizontal_bias="0.5"
-                            app:layout_constraintStart_toStartOf="parent" />
+                        android:id="@+id/super_attacks_container"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
 
                         <ImageView
-                            android:id="@+id/ki_meter"
+                            android:id="@+id/super_attack_1_ki_blast"
                             android:layout_width="wrap_content"
                             android:layout_height="0dp"
-                            app:layout_constraintBottom_toBottomOf="@+id/super_attack_label"
-                            app:layout_constraintHorizontal_bias="0.5"
-                            app:layout_constraintStart_toEndOf="@+id/super_attack_label"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toTopOf="@+id/super_attack_label"/>
 
-                        <com.evasler.dokkanbase.LimitedScrollView
-                            android:id="@+id/super_attacks_scroll"
-                            android:layout_width="0dp"
-                            android:layout_height="0dp"
-                            android:background="@android:color/holo_green_light"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintHorizontal_bias="0.5"
+                            app:layout_constraintBottom_toBottomOf="@+id/super_attack_1_name"
+                            app:layout_constraintEnd_toStartOf="@+id/super_attack_1_name"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@id/super_attack_label">
-
-                            <androidx.constraintlayout.widget.ConstraintLayout
-                                android:id="@+id/super_attacks_container"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content">
-
-                                <ImageView
-                                    android:id="@+id/super_attack_1_ki_blast"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="0dp"
-
-                                    app:layout_constraintBottom_toBottomOf="@+id/super_attack_1_name"
-                                    app:layout_constraintEnd_toStartOf="@+id/super_attack_1_name"
-                                    app:layout_constraintStart_toStartOf="parent"
-                                    app:layout_constraintTop_toTopOf="@+id/super_attack_1_name"
-                                    app:srcCompat="@drawable/ki_blast" />
-
-                                <TextView
-                                    android:id="@+id/super_attack_1_name"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:textSize="13dp"
-                                    app:layout_constraintBottom_toTopOf="@+id/super_attack_1_effect"
-                                    app:layout_constraintStart_toEndOf="@+id/super_attack_1_ki_blast"
-                                    app:layout_constraintTop_toTopOf="parent" />
-
-                                <ImageView
-                                    android:id="@+id/super_attack_1_extra_effect"
-                                    android:layout_width="30dp"
-                                    android:layout_height="0dp"
-
-                                    app:layout_constraintBottom_toBottomOf="@+id/super_attack_1_name"
-                                    app:layout_constraintStart_toEndOf="@+id/super_attack_1_name"
-                                    app:layout_constraintTop_toTopOf="@+id/super_attack_1_name"
-                                    app:srcCompat="@color/colorPrimary" />
-
-                                <TextView
-                                    android:id="@+id/super_attack_1_effect"
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-                                    android:textSize="13dp"
-                                    app:layout_constraintEnd_toEndOf="parent"
-                                    app:layout_constraintHorizontal_bias="0.5"
-                                    app:layout_constraintStart_toStartOf="parent"
-                                    app:layout_constraintTop_toBottomOf="@+id/super_attack_1_name"
-                                    app:layout_constraintBottom_toTopOf="@+id/super_attack_2_barrier" />
-
-                                <ImageView
-                                    android:id="@+id/super_attack_2_ki_blast"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="0dp"
-
-                                    app:layout_constraintBottom_toBottomOf="@+id/super_attack_2_name"
-                                    app:layout_constraintEnd_toStartOf="@+id/super_attack_2_name"
-                                    app:layout_constraintStart_toStartOf="parent"
-                                    app:layout_constraintTop_toTopOf="@+id/super_attack_2_name"
-                                    app:srcCompat="@drawable/ki_blast" />
-
-                                <TextView
-                                    android:id="@+id/super_attack_2_name"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-
-                                    android:textSize="13dp"
-                                    app:layout_constraintBottom_toTopOf="@+id/super_attack_2_effect"
-                                    app:layout_constraintStart_toEndOf="@+id/super_attack_2_ki_blast"
-                                    app:layout_constraintTop_toBottomOf="@+id/super_attack_1_effect" />
-
-                                <ImageView
-                                    android:id="@+id/super_attack_2_extra_effect"
-                                    android:layout_width="30dp"
-                                    android:layout_height="0dp"
-
-                                    app:layout_constraintBottom_toBottomOf="@+id/super_attack_2_name"
-                                    app:layout_constraintStart_toEndOf="@+id/super_attack_2_name"
-                                    app:layout_constraintTop_toTopOf="@+id/super_attack_2_name"
-                                    app:srcCompat="@color/colorPrimary" />
-
-                                <TextView
-                                    android:id="@+id/super_attack_2_effect"
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-
-                                    android:textSize="13dp"
-                                    app:layout_constraintEnd_toEndOf="parent"
-                                    app:layout_constraintHorizontal_bias="0.5"
-                                    app:layout_constraintStart_toStartOf="parent"
-                                    app:layout_constraintTop_toBottomOf="@+id/super_attack_2_name"
-                                    app:layout_constraintBottom_toTopOf="@+id/super_attack_3_barrier"/>
-
-                                <ImageView
-                                    android:id="@+id/super_attack_3_ki_blast"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="0dp"
-
-                                    app:layout_constraintBottom_toBottomOf="@+id/super_attack_3_name"
-                                    app:layout_constraintEnd_toStartOf="@+id/super_attack_3_name"
-                                    app:layout_constraintStart_toStartOf="parent"
-                                    app:layout_constraintTop_toTopOf="@+id/super_attack_3_name"
-                                    app:srcCompat="@drawable/ki_blast" />
-
-                                <TextView
-                                    android:id="@+id/super_attack_3_name"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-
-                                    android:textSize="13dp"
-                                    app:layout_constraintBottom_toTopOf="@+id/super_attack_3_effect"
-                                    app:layout_constraintStart_toEndOf="@+id/super_attack_3_ki_blast"
-                                    app:layout_constraintTop_toBottomOf="@+id/super_attack_2_effect" />
-
-                                <ImageView
-                                    android:id="@+id/super_attack_3_extra_effect"
-                                    android:layout_width="30dp"
-                                    android:layout_height="0dp"
-
-                                    app:layout_constraintBottom_toBottomOf="@+id/super_attack_3_name"
-                                    app:layout_constraintStart_toEndOf="@+id/super_attack_3_name"
-                                    app:layout_constraintTop_toTopOf="@+id/super_attack_3_name"
-                                    app:srcCompat="@color/colorPrimary" />
-
-                                <TextView
-                                    android:id="@+id/super_attack_3_effect"
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-
-                                    android:textSize="13dp"
-                                    app:layout_constraintBottom_toBottomOf="parent"
-                                    app:layout_constraintEnd_toEndOf="parent"
-                                    app:layout_constraintHorizontal_bias="1.0"
-                                    app:layout_constraintStart_toStartOf="parent"
-                                    app:layout_constraintTop_toBottomOf="@+id/super_attack_3_name" />
-
-                                <androidx.constraintlayout.widget.Barrier
-                                    android:id="@+id/super_attack_2_barrier"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    app:barrierDirection="top"
-                                    app:constraint_referenced_ids="super_attack_2_extra_effect,super_attack_2_effect,super_attack_2_ki_blast,super_attack_2_name"
-                                    tools:layout_editor_absoluteY="583dp" />
-
-                                <androidx.constraintlayout.widget.Barrier
-                                    android:id="@+id/super_attack_3_barrier"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    app:barrierDirection="top"
-                                    app:constraint_referenced_ids="super_attack_3_name,super_attack_3_ki_blast,super_attack_3_effect,super_attack_3_extra_effect"
-                                    tools:layout_editor_absoluteY="105dp" />
-
-                            </androidx.constraintlayout.widget.ConstraintLayout>
-                        </com.evasler.dokkanbase.LimitedScrollView>
-
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/passive_skill_master"
-                        android:layout_width="0dp"
-                        android:layout_height="0dp"
-                        android:background="@android:color/darker_gray"
-                        app:layout_constraintBottom_toTopOf="@+id/active_skill_master"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.5"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/super_attack_master">
-
-                        <ImageView
-                            android:id="@+id/passive_skill_label"
-                            android:layout_width="45dp"
-                            android:layout_height="25dp"
-                            android:src="@android:color/background_light"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintBottom_toTopOf="@+id/passive_skill_scroll"
-                            app:layout_constraintHorizontal_bias="0.5"
-                            app:layout_constraintStart_toStartOf="parent" />
+                            app:layout_constraintTop_toTopOf="@+id/super_attack_1_name"
+                            app:srcCompat="@drawable/ki_blast" />
 
                         <TextView
-                            android:id="@+id/passive_skill_name"
+                            android:id="@+id/super_attack_1_name"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Passive Skill Name"
                             android:textSize="13dp"
-                            app:layout_constraintBottom_toBottomOf="@id/passive_skill_label"
-                            app:layout_constraintStart_toEndOf="@id/passive_skill_label"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toTopOf="@id/passive_skill_label" />
+                            app:layout_constraintBottom_toTopOf="@+id/super_attack_1_effect"
+                            app:layout_constraintStart_toEndOf="@+id/super_attack_1_ki_blast"
+                            app:layout_constraintTop_toTopOf="parent" />
 
-                        <com.evasler.dokkanbase.LimitedScrollView
-                            android:id="@+id/passive_skill_scroll"
-                            android:layout_width="0dp"
+                        <ImageView
+                            android:id="@+id/super_attack_1_extra_effect"
+                            android:layout_width="30dp"
                             android:layout_height="0dp"
-                            android:background="@android:color/holo_purple"
-                            app:layout_constraintBottom_toBottomOf="parent"
+
+                            app:layout_constraintBottom_toBottomOf="@+id/super_attack_1_name"
+                            app:layout_constraintStart_toEndOf="@+id/super_attack_1_name"
+                            app:layout_constraintTop_toTopOf="@+id/super_attack_1_name"
+                            app:srcCompat="@color/colorPrimary" />
+
+                        <TextView
+                            android:id="@+id/super_attack_1_effect"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:textSize="13dp"
+                            app:layout_constraintBottom_toTopOf="@+id/super_attack_2_barrier"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintHorizontal_bias="0.5"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@id/passive_skill_label">
+                            app:layout_constraintTop_toBottomOf="@+id/super_attack_1_name" />
 
-                            <TextView
-                                android:id="@+id/passive_skill"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:text="Passive Skill"
-                                android:textSize="13dp"
-                                app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toTopOf="parent" />
-                        </com.evasler.dokkanbase.LimitedScrollView>
+                        <ImageView
+                            android:id="@+id/super_attack_2_ki_blast"
+                            android:layout_width="wrap_content"
+                            android:layout_height="0dp"
+
+                            app:layout_constraintBottom_toBottomOf="@+id/super_attack_2_name"
+                            app:layout_constraintEnd_toStartOf="@+id/super_attack_2_name"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="@+id/super_attack_2_name"
+                            app:srcCompat="@drawable/ki_blast" />
+
+                        <TextView
+                            android:id="@+id/super_attack_2_name"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+
+                            android:textSize="13dp"
+                            app:layout_constraintBottom_toTopOf="@+id/super_attack_2_effect"
+                            app:layout_constraintStart_toEndOf="@+id/super_attack_2_ki_blast"
+                            app:layout_constraintTop_toBottomOf="@+id/super_attack_1_effect" />
+
+                        <ImageView
+                            android:id="@+id/super_attack_2_extra_effect"
+                            android:layout_width="30dp"
+                            android:layout_height="0dp"
+
+                            app:layout_constraintBottom_toBottomOf="@+id/super_attack_2_name"
+                            app:layout_constraintStart_toEndOf="@+id/super_attack_2_name"
+                            app:layout_constraintTop_toTopOf="@+id/super_attack_2_name"
+                            app:srcCompat="@color/colorPrimary" />
+
+                        <TextView
+                            android:id="@+id/super_attack_2_effect"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+
+                            android:textSize="13dp"
+                            app:layout_constraintBottom_toTopOf="@+id/super_attack_3_barrier"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_bias="0.5"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/super_attack_2_name" />
+
+                        <ImageView
+                            android:id="@+id/super_attack_3_ki_blast"
+                            android:layout_width="wrap_content"
+                            android:layout_height="0dp"
+
+                            app:layout_constraintBottom_toBottomOf="@+id/super_attack_3_name"
+                            app:layout_constraintEnd_toStartOf="@+id/super_attack_3_name"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="@+id/super_attack_3_name"
+                            app:srcCompat="@drawable/ki_blast" />
+
+                        <TextView
+                            android:id="@+id/super_attack_3_name"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+
+                            android:textSize="13dp"
+                            app:layout_constraintBottom_toTopOf="@+id/super_attack_3_effect"
+                            app:layout_constraintStart_toEndOf="@+id/super_attack_3_ki_blast"
+                            app:layout_constraintTop_toBottomOf="@+id/super_attack_2_effect" />
+
+                        <ImageView
+                            android:id="@+id/super_attack_3_extra_effect"
+                            android:layout_width="30dp"
+                            android:layout_height="0dp"
+
+                            app:layout_constraintBottom_toBottomOf="@+id/super_attack_3_name"
+                            app:layout_constraintStart_toEndOf="@+id/super_attack_3_name"
+                            app:layout_constraintTop_toTopOf="@+id/super_attack_3_name"
+                            app:srcCompat="@color/colorPrimary" />
+
+                        <TextView
+                            android:id="@+id/super_attack_3_effect"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+
+                            android:textSize="13dp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_bias="1.0"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/super_attack_3_name" />
+
+                        <androidx.constraintlayout.widget.Barrier
+                            android:id="@+id/super_attack_2_barrier"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:barrierDirection="top"
+                            app:constraint_referenced_ids="super_attack_2_extra_effect,super_attack_2_effect,super_attack_2_ki_blast,super_attack_2_name"
+                            tools:layout_editor_absoluteY="583dp" />
+
+                        <androidx.constraintlayout.widget.Barrier
+                            android:id="@+id/super_attack_3_barrier"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:barrierDirection="top"
+                            app:constraint_referenced_ids="super_attack_3_name,super_attack_3_ki_blast,super_attack_3_effect,super_attack_3_extra_effect"
+                            tools:layout_editor_absoluteY="105dp" />
+
                     </androidx.constraintlayout.widget.ConstraintLayout>
+                </com.evasler.dokkanbase.LimitedScrollView>
 
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/active_skill_master"
-                        android:layout_width="0dp"
-                        android:layout_height="0dp"
-                        android:background="@android:color/darker_gray"
-                        android:visibility="gone"
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/passive_skill_master"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="@android:color/darker_gray"
+                app:layout_constraintBottom_toTopOf="@+id/active_skill_master"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/super_attack_master">
+
+                <ImageView
+                    android:id="@+id/passive_skill_label"
+                    android:layout_width="45dp"
+                    android:layout_height="25dp"
+                    android:src="@android:color/background_light"
+                    app:layout_constraintBottom_toTopOf="@+id/passive_skill_scroll"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/passive_skill_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Passive Skill Name"
+                    android:textSize="13dp"
+                    app:layout_constraintBottom_toBottomOf="@id/passive_skill_label"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/passive_skill_label"
+                    app:layout_constraintTop_toTopOf="@id/passive_skill_label" />
+
+                <com.evasler.dokkanbase.LimitedScrollView
+                    android:id="@+id/passive_skill_scroll"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:background="@android:color/holo_purple"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/passive_skill_label">
+
+                    <TextView
+                        android:id="@+id/passive_skill"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Passive Skill"
+                        android:textSize="13dp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.5"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/passive_skill_master">
+                        app:layout_constraintTop_toTopOf="parent" />
+                </com.evasler.dokkanbase.LimitedScrollView>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
-                        <ImageView
-                            android:id="@+id/active_skill_label"
-                            android:layout_width="45dp"
-                            android:layout_height="25dp"
-                            android:src="@android:color/background_light"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintBottom_toTopOf="@+id/active_skill_scroll"
-                            app:layout_constraintHorizontal_bias="0.5"
-                            app:layout_constraintStart_toStartOf="parent" />
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/active_skill_master"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="@android:color/darker_gray"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/passive_skill_master">
 
-                        <ImageView
-                            android:id="@+id/active_skill_ki_blast"
-                            android:layout_width="wrap_content"
-                            android:layout_height="0dp"
-                            android:src="@drawable/ki_blast"
-                            app:layout_constraintHorizontal_chainStyle="packed"
-                            app:layout_constraintBottom_toBottomOf="@+id/active_skill_name"
-                            app:layout_constraintEnd_toStartOf="@id/active_skill_name"
-                            app:layout_constraintStart_toEndOf="@id/active_skill_label"
-                            app:layout_constraintTop_toTopOf="@+id/active_skill_name" />
+                <ImageView
+                    android:id="@+id/active_skill_label"
+                    android:layout_width="45dp"
+                    android:layout_height="25dp"
+                    android:src="@android:color/background_light"
+                    app:layout_constraintBottom_toTopOf="@+id/active_skill_scroll"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-                        <TextView
-                            android:id="@+id/active_skill_name"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Active Skill Name"
-                            android:textSize="13dp"
-                            app:layout_constraintStart_toEndOf="@id/active_skill_ki_blast"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toTopOf="@id/active_skill_label"
-                            app:layout_constraintBottom_toBottomOf="@id/active_skill_label" />
+                <ImageView
+                    android:id="@+id/active_skill_ki_blast"
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:src="@drawable/ki_blast"
+                    app:layout_constraintBottom_toBottomOf="@+id/active_skill_name"
+                    app:layout_constraintEnd_toStartOf="@id/active_skill_name"
+                    app:layout_constraintHorizontal_chainStyle="packed"
+                    app:layout_constraintStart_toEndOf="@id/active_skill_label"
+                    app:layout_constraintTop_toTopOf="@+id/active_skill_name" />
 
-                        <com.evasler.dokkanbase.LimitedScrollView
-                            android:id="@+id/active_skill_scroll"
-                            android:layout_width="0dp"
-                            android:layout_height="0dp"
-                            android:background="@android:color/holo_orange_light"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@id/active_skill_label">
-                                <TextView
-                                    android:id="@+id/active_skill"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:text='Active Skill'
-                                    android:textSize="13dp"/>
-                        </com.evasler.dokkanbase.LimitedScrollView>
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-                </androidx.constraintlayout.widget.ConstraintLayout>
+                <TextView
+                    android:id="@+id/active_skill_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Active Skill Name"
+                    android:textSize="13dp"
+                    app:layout_constraintBottom_toBottomOf="@id/active_skill_label"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/active_skill_ki_blast"
+                    app:layout_constraintTop_toTopOf="@id/active_skill_label" />
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <TextView
-                        android:id="@+id/linkSkill1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="-"
-                        android:textSize="13dp"
-                        app:layout_constraintHorizontal_chainStyle="spread_inside"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toTopOf="@id/linkSkill2"/>
+                <com.evasler.dokkanbase.LimitedScrollView
+                    android:id="@+id/active_skill_scroll"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:background="@android:color/holo_orange_light"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/active_skill_label">
 
                     <TextView
-                        android:id="@+id/linkSkill2"
-                        android:layout_width="wrap_content"
+                        android:id="@+id/active_skill"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="-"
-                        android:textSize="13dp"
-                        app:layout_constraintHorizontal_chainStyle="spread_inside"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/linkSkill1"
-                        app:layout_constraintBottom_toTopOf="@id/linkSkill3"/>
+                        android:text='Active Skill'
+                        android:textSize="13dp" />
+                </com.evasler.dokkanbase.LimitedScrollView>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-                    <TextView
-                        android:id="@+id/linkSkill3"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="-"
-                        android:textSize="13dp"
-                        app:layout_constraintHorizontal_chainStyle="spread_inside"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/linkSkill2"
-                        app:layout_constraintBottom_toTopOf="@id/linkSkill4"/>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-                    <TextView
-                        android:id="@+id/linkSkill4"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="-"
-                        android:textSize="13dp"
-                        app:layout_constraintHorizontal_chainStyle="spread_inside"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/linkSkill3"
-                        app:layout_constraintBottom_toTopOf="@id/linkSkill5"/>
+            <TextView
+                android:id="@+id/linkSkill1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="-"
+                android:textSize="13dp"
+                app:layout_constraintBottom_toTopOf="@id/linkSkill2"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_chainStyle="spread_inside"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-                    <TextView
-                        android:id="@+id/linkSkill5"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="-"
-                        android:textSize="13dp"
-                        app:layout_constraintHorizontal_chainStyle="spread_inside"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/linkSkill4"
-                        app:layout_constraintBottom_toTopOf="@id/linkSkill6"/>
+            <TextView
+                android:id="@+id/linkSkill2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="-"
+                android:textSize="13dp"
+                app:layout_constraintBottom_toTopOf="@id/linkSkill3"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_chainStyle="spread_inside"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/linkSkill1" />
 
-                    <TextView
-                        android:id="@+id/linkSkill6"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="-"
-                        android:textSize="13dp"
-                        app:layout_constraintHorizontal_chainStyle="spread_inside"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/linkSkill5"
-                        app:layout_constraintBottom_toTopOf="@id/linkSkill7"/>
+            <TextView
+                android:id="@+id/linkSkill3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="-"
+                android:textSize="13dp"
+                app:layout_constraintBottom_toTopOf="@id/linkSkill4"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_chainStyle="spread_inside"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/linkSkill2" />
 
-                    <TextView
-                        android:id="@+id/linkSkill7"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="-"
-                        android:textSize="13dp"
-                        app:layout_constraintHorizontal_chainStyle="spread_inside"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/linkSkill6"
-                        app:layout_constraintBottom_toTopOf="@id/category1Background"/>
+            <TextView
+                android:id="@+id/linkSkill4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="-"
+                android:textSize="13dp"
+                app:layout_constraintBottom_toTopOf="@id/linkSkill5"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_chainStyle="spread_inside"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/linkSkill3" />
 
-                    <ImageView
-                        android:id="@+id/category1Background"
-                        android:layout_width="120dp"
-                        android:layout_height="30dp"
-                        android:background="@android:color/holo_blue_light"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toStartOf="@id/category2Background"
-                        app:layout_constraintTop_toBottomOf="@+id/linkSkill7"
-                        app:layout_constraintBottom_toTopOf="@+id/category3Background"/>
+            <TextView
+                android:id="@+id/linkSkill5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="-"
+                android:textSize="13dp"
+                app:layout_constraintBottom_toTopOf="@id/linkSkill6"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_chainStyle="spread_inside"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/linkSkill4" />
 
-                    <TextView
-                        android:id="@+id/category1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="-"
-                        android:textSize="13dp"
-                        app:layout_constraintStart_toStartOf="@+id/category1Background"
-                        app:layout_constraintEnd_toEndOf="@id/category1Background"
-                        app:layout_constraintTop_toTopOf="@+id/category1Background"
-                        app:layout_constraintBottom_toBottomOf="@id/category1Background"/>
+            <TextView
+                android:id="@+id/linkSkill6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="-"
+                android:textSize="13dp"
+                app:layout_constraintBottom_toTopOf="@id/linkSkill7"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_chainStyle="spread_inside"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/linkSkill5" />
 
-                    <ImageView
-                        android:id="@+id/category2Background"
-                        android:layout_width="120dp"
-                        android:layout_height="30dp"
-                        android:background="@android:color/holo_blue_light"
-                        app:layout_constraintStart_toEndOf="@id/category1Background"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/linkSkill7"
-                        app:layout_constraintBottom_toTopOf="@+id/category4Background"/>
+            <TextView
+                android:id="@+id/linkSkill7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="-"
+                android:textSize="13dp"
+                app:layout_constraintBottom_toTopOf="@id/category1Background"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_chainStyle="spread_inside"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/linkSkill6" />
 
-                    <TextView
-                        android:id="@+id/category2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="-"
-                        android:textSize="13dp"
-                        app:layout_constraintStart_toStartOf="@+id/category2Background"
-                        app:layout_constraintEnd_toEndOf="@id/category2Background"
-                        app:layout_constraintTop_toTopOf="@+id/category2Background"
-                        app:layout_constraintBottom_toBottomOf="@id/category2Background"/>
+            <ImageView
+                android:id="@+id/category1Background"
+                android:layout_width="120dp"
+                android:layout_height="30dp"
+                android:background="@android:color/holo_blue_light"
+                app:layout_constraintBottom_toTopOf="@+id/category3Background"
+                app:layout_constraintEnd_toStartOf="@id/category2Background"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/linkSkill7" />
 
-                    <ImageView
-                        android:id="@+id/category3Background"
-                        android:layout_width="120dp"
-                        android:layout_height="30dp"
-                        android:background="@android:color/holo_blue_light"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toStartOf="@id/category4Background"
-                        app:layout_constraintTop_toBottomOf="@+id/category1Background"
-                        app:layout_constraintBottom_toTopOf="@+id/category5Background"/>
+            <TextView
+                android:id="@+id/category1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="-"
+                android:textSize="13dp"
+                app:layout_constraintBottom_toBottomOf="@id/category1Background"
+                app:layout_constraintEnd_toEndOf="@id/category1Background"
+                app:layout_constraintStart_toStartOf="@+id/category1Background"
+                app:layout_constraintTop_toTopOf="@+id/category1Background" />
 
-                    <TextView
-                        android:id="@+id/category3"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="-"
-                        android:textSize="13dp"
-                        app:layout_constraintStart_toStartOf="@+id/category3Background"
-                        app:layout_constraintEnd_toEndOf="@id/category3Background"
-                        app:layout_constraintTop_toTopOf="@+id/category3Background"
-                        app:layout_constraintBottom_toBottomOf="@id/category3Background"/>
+            <ImageView
+                android:id="@+id/category2Background"
+                android:layout_width="120dp"
+                android:layout_height="30dp"
+                android:background="@android:color/holo_blue_light"
+                app:layout_constraintBottom_toTopOf="@+id/category4Background"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/category1Background"
+                app:layout_constraintTop_toBottomOf="@+id/linkSkill7" />
 
-                    <ImageView
-                        android:id="@+id/category4Background"
-                        android:layout_width="120dp"
-                        android:layout_height="30dp"
-                        android:background="@android:color/holo_blue_light"
-                        app:layout_constraintStart_toEndOf="@id/category3Background"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/category2Background"
-                        app:layout_constraintBottom_toTopOf="@+id/category6Background"/>
+            <TextView
+                android:id="@+id/category2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="-"
+                android:textSize="13dp"
+                app:layout_constraintBottom_toBottomOf="@id/category2Background"
+                app:layout_constraintEnd_toEndOf="@id/category2Background"
+                app:layout_constraintStart_toStartOf="@+id/category2Background"
+                app:layout_constraintTop_toTopOf="@+id/category2Background" />
 
-                    <TextView
-                        android:id="@+id/category4"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="-"
-                        android:textSize="13dp"
-                        app:layout_constraintStart_toStartOf="@+id/category4Background"
-                        app:layout_constraintEnd_toEndOf="@id/category4Background"
-                        app:layout_constraintTop_toTopOf="@+id/category4Background"
-                        app:layout_constraintBottom_toBottomOf="@id/category4Background"/>
+            <ImageView
+                android:id="@+id/category3Background"
+                android:layout_width="120dp"
+                android:layout_height="30dp"
+                android:background="@android:color/holo_blue_light"
+                app:layout_constraintBottom_toTopOf="@+id/category5Background"
+                app:layout_constraintEnd_toStartOf="@id/category4Background"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/category1Background" />
 
-                    <ImageView
-                        android:id="@+id/category5Background"
-                        android:layout_width="120dp"
-                        android:layout_height="30dp"
-                        android:background="@android:color/holo_blue_light"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toStartOf="@id/category6Background"
-                        app:layout_constraintTop_toBottomOf="@+id/category3Background"
-                        app:layout_constraintBottom_toTopOf="@+id/category7Background"/>
+            <TextView
+                android:id="@+id/category3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="-"
+                android:textSize="13dp"
+                app:layout_constraintBottom_toBottomOf="@id/category3Background"
+                app:layout_constraintEnd_toEndOf="@id/category3Background"
+                app:layout_constraintStart_toStartOf="@+id/category3Background"
+                app:layout_constraintTop_toTopOf="@+id/category3Background" />
 
-                    <TextView
-                        android:id="@+id/category5"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="-"
-                        android:textSize="13dp"
-                        app:layout_constraintStart_toStartOf="@+id/category5Background"
-                        app:layout_constraintEnd_toEndOf="@id/category5Background"
-                        app:layout_constraintTop_toTopOf="@+id/category5Background"
-                        app:layout_constraintBottom_toBottomOf="@id/category5Background"/>
+            <ImageView
+                android:id="@+id/category4Background"
+                android:layout_width="120dp"
+                android:layout_height="30dp"
+                android:background="@android:color/holo_blue_light"
+                app:layout_constraintBottom_toTopOf="@+id/category6Background"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/category3Background"
+                app:layout_constraintTop_toBottomOf="@+id/category2Background" />
 
-                    <ImageView
-                        android:id="@+id/category6Background"
-                        android:layout_width="120dp"
-                        android:layout_height="30dp"
-                        android:background="@android:color/holo_blue_light"
-                        app:layout_constraintStart_toEndOf="@id/category5Background"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/category4Background"
-                        app:layout_constraintBottom_toTopOf="@+id/category8Background"/>
+            <TextView
+                android:id="@+id/category4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="-"
+                android:textSize="13dp"
+                app:layout_constraintBottom_toBottomOf="@id/category4Background"
+                app:layout_constraintEnd_toEndOf="@id/category4Background"
+                app:layout_constraintStart_toStartOf="@+id/category4Background"
+                app:layout_constraintTop_toTopOf="@+id/category4Background" />
 
-                    <TextView
-                        android:id="@+id/category6"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="-"
-                        android:textSize="13dp"
-                        app:layout_constraintStart_toStartOf="@+id/category6Background"
-                        app:layout_constraintEnd_toEndOf="@id/category6Background"
-                        app:layout_constraintTop_toTopOf="@+id/category6Background"
-                        app:layout_constraintBottom_toBottomOf="@id/category6Background"/>
+            <ImageView
+                android:id="@+id/category5Background"
+                android:layout_width="120dp"
+                android:layout_height="30dp"
+                android:background="@android:color/holo_blue_light"
+                app:layout_constraintBottom_toTopOf="@+id/category7Background"
+                app:layout_constraintEnd_toStartOf="@id/category6Background"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/category3Background" />
 
-                    <ImageView
-                        android:id="@+id/category7Background"
-                        android:layout_width="120dp"
-                        android:layout_height="30dp"
-                        android:background="@android:color/holo_blue_light"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toStartOf="@id/category8Background"
-                        app:layout_constraintTop_toBottomOf="@+id/category5Background"
-                        app:layout_constraintBottom_toTopOf="@+id/category9Background"/>
+            <TextView
+                android:id="@+id/category5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="-"
+                android:textSize="13dp"
+                app:layout_constraintBottom_toBottomOf="@id/category5Background"
+                app:layout_constraintEnd_toEndOf="@id/category5Background"
+                app:layout_constraintStart_toStartOf="@+id/category5Background"
+                app:layout_constraintTop_toTopOf="@+id/category5Background" />
 
-                    <TextView
-                        android:id="@+id/category7"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="-"
-                        android:textSize="13dp"
-                        app:layout_constraintStart_toStartOf="@+id/category7Background"
-                        app:layout_constraintEnd_toEndOf="@id/category7Background"
-                        app:layout_constraintTop_toTopOf="@+id/category7Background"
-                        app:layout_constraintBottom_toBottomOf="@id/category7Background"/>
+            <ImageView
+                android:id="@+id/category6Background"
+                android:layout_width="120dp"
+                android:layout_height="30dp"
+                android:background="@android:color/holo_blue_light"
+                app:layout_constraintBottom_toTopOf="@+id/category8Background"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/category5Background"
+                app:layout_constraintTop_toBottomOf="@+id/category4Background" />
 
-                    <ImageView
-                        android:id="@+id/category8Background"
-                        android:layout_width="120dp"
-                        android:layout_height="30dp"
-                        android:background="@android:color/holo_blue_light"
-                        app:layout_constraintStart_toEndOf="@id/category7Background"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/category6Background"
-                        app:layout_constraintBottom_toTopOf="@+id/category10Background"/>
+            <TextView
+                android:id="@+id/category6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="-"
+                android:textSize="13dp"
+                app:layout_constraintBottom_toBottomOf="@id/category6Background"
+                app:layout_constraintEnd_toEndOf="@id/category6Background"
+                app:layout_constraintStart_toStartOf="@+id/category6Background"
+                app:layout_constraintTop_toTopOf="@+id/category6Background" />
 
-                    <TextView
-                        android:id="@+id/category8"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="-"
-                        android:textSize="13dp"
-                        app:layout_constraintStart_toStartOf="@+id/category8Background"
-                        app:layout_constraintEnd_toEndOf="@id/category8Background"
-                        app:layout_constraintTop_toTopOf="@+id/category8Background"
-                        app:layout_constraintBottom_toBottomOf="@id/category8Background"/>
+            <ImageView
+                android:id="@+id/category7Background"
+                android:layout_width="120dp"
+                android:layout_height="30dp"
+                android:background="@android:color/holo_blue_light"
+                app:layout_constraintBottom_toTopOf="@+id/category9Background"
+                app:layout_constraintEnd_toStartOf="@id/category8Background"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/category5Background" />
 
-                    <ImageView
-                        android:id="@+id/category9Background"
-                        android:layout_width="120dp"
-                        android:layout_height="30dp"
-                        android:background="@android:color/holo_blue_light"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toStartOf="@id/category10Background"
-                        app:layout_constraintTop_toBottomOf="@+id/category7Background"
-                        app:layout_constraintBottom_toBottomOf="parent"/>
+            <TextView
+                android:id="@+id/category7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="-"
+                android:textSize="13dp"
+                app:layout_constraintBottom_toBottomOf="@id/category7Background"
+                app:layout_constraintEnd_toEndOf="@id/category7Background"
+                app:layout_constraintStart_toStartOf="@+id/category7Background"
+                app:layout_constraintTop_toTopOf="@+id/category7Background" />
 
-                    <TextView
-                        android:id="@+id/category9"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="-"
-                        android:textSize="13dp"
-                        app:layout_constraintStart_toStartOf="@+id/category9Background"
-                        app:layout_constraintEnd_toEndOf="@id/category9Background"
-                        app:layout_constraintTop_toTopOf="@+id/category9Background"
-                        app:layout_constraintBottom_toBottomOf="@id/category9Background"/>
+            <ImageView
+                android:id="@+id/category8Background"
+                android:layout_width="120dp"
+                android:layout_height="30dp"
+                android:background="@android:color/holo_blue_light"
+                app:layout_constraintBottom_toTopOf="@+id/category10Background"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/category7Background"
+                app:layout_constraintTop_toBottomOf="@+id/category6Background" />
 
-                    <ImageView
-                        android:id="@+id/category10Background"
-                        android:layout_width="120dp"
-                        android:layout_height="30dp"
-                        android:background="@android:color/holo_blue_light"
-                        app:layout_constraintStart_toEndOf="@id/category9Background"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/category8Background"
-                        app:layout_constraintBottom_toBottomOf="parent"/>
+            <TextView
+                android:id="@+id/category8"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="-"
+                android:textSize="13dp"
+                app:layout_constraintBottom_toBottomOf="@id/category8Background"
+                app:layout_constraintEnd_toEndOf="@id/category8Background"
+                app:layout_constraintStart_toStartOf="@+id/category8Background"
+                app:layout_constraintTop_toTopOf="@+id/category8Background" />
 
-                    <TextView
-                        android:id="@+id/category10"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="-"
-                        android:textSize="13dp"
-                        app:layout_constraintStart_toStartOf="@+id/category10Background"
-                        app:layout_constraintEnd_toEndOf="@id/category10Background"
-                        app:layout_constraintTop_toTopOf="@+id/category10Background"
-                        app:layout_constraintBottom_toBottomOf="@id/category10Background"/>
+            <ImageView
+                android:id="@+id/category9Background"
+                android:layout_width="120dp"
+                android:layout_height="30dp"
+                android:background="@android:color/holo_blue_light"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/category10Background"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/category7Background" />
 
-                </androidx.constraintlayout.widget.ConstraintLayout>
-            </ViewFlipper>
+            <TextView
+                android:id="@+id/category9"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="-"
+                android:textSize="13dp"
+                app:layout_constraintBottom_toBottomOf="@id/category9Background"
+                app:layout_constraintEnd_toEndOf="@id/category9Background"
+                app:layout_constraintStart_toStartOf="@+id/category9Background"
+                app:layout_constraintTop_toTopOf="@+id/category9Background" />
+
+            <ImageView
+                android:id="@+id/category10Background"
+                android:layout_width="120dp"
+                android:layout_height="30dp"
+                android:background="@android:color/holo_blue_light"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/category9Background"
+                app:layout_constraintTop_toBottomOf="@+id/category8Background" />
+
+            <TextView
+                android:id="@+id/category10"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="-"
+                android:textSize="13dp"
+                app:layout_constraintBottom_toBottomOf="@id/category10Background"
+                app:layout_constraintEnd_toEndOf="@id/category10Background"
+                app:layout_constraintStart_toStartOf="@+id/category10Background"
+                app:layout_constraintTop_toTopOf="@+id/category10Background" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ViewFlipper>
 
     <ImageView
         android:id="@+id/hp_background"
@@ -749,64 +751,64 @@
         app:layout_constraintTop_toTopOf="@+id/atk_background"
         app:srcCompat="@color/colorAccent" />
 
-            <TextView
-                android:id="@+id/hp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="23000"
-                android:textSize="16dp"
-                app:layout_constraintEnd_toEndOf="@+id/hp_background"
-                app:layout_constraintStart_toStartOf="@+id/hp_background"
-                app:layout_constraintTop_toTopOf="@+id/hp_background"
-                app:layout_constraintBottom_toTopOf="@+id/hp_label" />
+    <TextView
+        android:id="@+id/hp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="23000"
+        android:textSize="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/hp_label"
+        app:layout_constraintEnd_toEndOf="@+id/hp_background"
+        app:layout_constraintStart_toStartOf="@+id/hp_background"
+        app:layout_constraintTop_toTopOf="@+id/hp_background" />
 
-            <TextView
-                android:id="@+id/hp_label"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="HP"
-                android:textSize="16dp"
-                app:layout_constraintBottom_toBottomOf="@+id/hp_background"
-                app:layout_constraintEnd_toEndOf="@+id/hp_background"
-                app:layout_constraintStart_toStartOf="@+id/hp_background"
-                app:layout_constraintTop_toBottomOf="@+id/hp" />
+    <TextView
+        android:id="@+id/hp_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="HP"
+        android:textSize="16dp"
+        app:layout_constraintBottom_toBottomOf="@+id/hp_background"
+        app:layout_constraintEnd_toEndOf="@+id/hp_background"
+        app:layout_constraintStart_toStartOf="@+id/hp_background"
+        app:layout_constraintTop_toBottomOf="@+id/hp" />
 
-            <ImageView
-                android:id="@+id/atk_background"
-                android:layout_width="100dp"
-                android:layout_height="45dp"
-                app:layout_constraintBottom_toTopOf="@+id/details_panel"
-                app:layout_constraintEnd_toStartOf="@+id/def_background"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/hp_background"
-                app:layout_constraintTop_toBottomOf="@+id/guideline4"
-                app:srcCompat="@color/colorAccent" />
+    <ImageView
+        android:id="@+id/atk_background"
+        android:layout_width="100dp"
+        android:layout_height="45dp"
+        app:layout_constraintBottom_toTopOf="@+id/form_tree_container"
+        app:layout_constraintEnd_toStartOf="@+id/def_background"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/hp_background"
+        app:layout_constraintTop_toBottomOf="@+id/guideline4"
+        app:srcCompat="@color/colorAccent" />
 
-            <TextView
-                android:id="@+id/atk"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="23000"
-                android:textSize="16dp"
-                app:layout_constraintEnd_toEndOf="@+id/atk_background"
-                app:layout_constraintStart_toStartOf="@+id/atk_background"
-                app:layout_constraintTop_toTopOf="@+id/atk_background"
-                app:layout_constraintBottom_toTopOf="@+id/atk_label" />
+    <TextView
+        android:id="@+id/atk"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="23000"
+        android:textSize="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/atk_label"
+        app:layout_constraintEnd_toEndOf="@+id/atk_background"
+        app:layout_constraintStart_toStartOf="@+id/atk_background"
+        app:layout_constraintTop_toTopOf="@+id/atk_background" />
 
-            <TextView
-                android:id="@+id/atk_label"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="ATK"
-                android:textSize="16dp"
-                app:layout_constraintBottom_toBottomOf="@+id/atk_background"
-                app:layout_constraintEnd_toEndOf="@+id/atk_background"
-                app:layout_constraintStart_toStartOf="@+id/atk_background"
-                app:layout_constraintTop_toBottomOf="@+id/atk" />
+    <TextView
+        android:id="@+id/atk_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="ATK"
+        android:textSize="16dp"
+        app:layout_constraintBottom_toBottomOf="@+id/atk_background"
+        app:layout_constraintEnd_toEndOf="@+id/atk_background"
+        app:layout_constraintStart_toStartOf="@+id/atk_background"
+        app:layout_constraintTop_toBottomOf="@+id/atk" />
 
     <ImageView
         android:id="@+id/def_background"
@@ -819,568 +821,629 @@
         app:layout_constraintTop_toTopOf="@+id/atk_background"
         app:srcCompat="@color/colorAccent" />
 
-            <TextView
-                android:id="@+id/def"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="23000"
-                android:textSize="16dp"
-                app:layout_constraintEnd_toEndOf="@+id/def_background"
-                app:layout_constraintStart_toStartOf="@+id/def_background"
-                app:layout_constraintTop_toTopOf="@+id/def_background"
-                app:layout_constraintBottom_toTopOf="@+id/def_label" />
+    <TextView
+        android:id="@+id/def"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="23000"
+        android:textSize="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/def_label"
+        app:layout_constraintEnd_toEndOf="@+id/def_background"
+        app:layout_constraintStart_toStartOf="@+id/def_background"
+        app:layout_constraintTop_toTopOf="@+id/def_background" />
+
+    <TextView
+        android:id="@+id/def_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="DEF"
+        android:textSize="16dp"
+        app:layout_constraintBottom_toBottomOf="@+id/def_background"
+        app:layout_constraintEnd_toEndOf="@+id/def_background"
+        app:layout_constraintStart_toStartOf="@+id/def_background"
+        app:layout_constraintTop_toBottomOf="@+id/def" />
+
+    <ImageView
+        android:id="@+id/generic_stats_container"
+        android:layout_width="120dp"
+        android:layout_height="115dp"
+        app:layout_constraintBottom_toTopOf="@id/guideline13"
+        app:layout_constraintEnd_toStartOf="@+id/form_tree_container"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/atk_background"
+        app:srcCompat="@android:color/holo_blue_light" />
+
+    <TextView
+        android:id="@+id/cost_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cost:"
+        app:layout_constraintVertical_chainStyle="packed"
+        app:layout_constraintBottom_toTopOf="@+id/max_level_label"
+        app:layout_constraintStart_toStartOf="@+id/max_level_label"
+        app:layout_constraintTop_toTopOf="@id/generic_stats_container" />
+
+    <TextView
+        android:id="@+id/cost"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="99"
+        app:layout_constraintBottom_toBottomOf="@+id/cost_label"
+        app:layout_constraintStart_toStartOf="@+id/max_level"
+        app:layout_constraintTop_toTopOf="@+id/cost_label"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/max_level_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Level:"
+        app:layout_constraintBottom_toTopOf="@+id/max_sa_level_label"
+        app:layout_constraintStart_toStartOf="@+id/max_sa_level_label"
+        app:layout_constraintTop_toBottomOf="@+id/cost_label" />
+
+    <TextView
+        android:id="@+id/max_level"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="150"
+        app:layout_constraintBottom_toBottomOf="@+id/max_level_label"
+        app:layout_constraintStart_toStartOf="@+id/max_sa_level"
+        app:layout_constraintTop_toTopOf="@+id/max_level_label"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/max_sa_level_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="SA Level:"
+        app:layout_constraintBottom_toTopOf="@+id/twelve_ki_multiplier_label"
+        app:layout_constraintStart_toStartOf="@+id/twelve_ki_multiplier_label"
+        app:layout_constraintTop_toBottomOf="@+id/max_level_label" />
+
+    <TextView
+        android:id="@+id/max_sa_level"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="20"
+        app:layout_constraintBottom_toBottomOf="@+id/max_sa_level_label"
+        app:layout_constraintStart_toStartOf="@+id/twelve_ki_multiplier"
+        app:layout_constraintTop_toTopOf="@+id/max_sa_level_label"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/twelve_ki_multiplier_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="12 Ki Boost:"
+        app:layout_constraintTop_toBottomOf="@+id/max_sa_level_label"
+        app:layout_constraintBottom_toBottomOf="@id/generic_stats_container"
+        app:layout_constraintEnd_toStartOf="@+id/twelve_ki_multiplier"
+        app:layout_constraintStart_toStartOf="@id/generic_stats_container" />
+
+    <TextView
+        android:id="@+id/twelve_ki_multiplier"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="200%"
+        app:layout_constraintBottom_toBottomOf="@+id/twelve_ki_multiplier_label"
+        app:layout_constraintEnd_toEndOf="@+id/generic_stats_container"
+        app:layout_constraintStart_toEndOf="@+id/twelve_ki_multiplier_label"
+        app:layout_constraintTop_toTopOf="@+id/twelve_ki_multiplier_label"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <ImageView
+        android:id="@+id/form_tree_container"
+        android:layout_width="260dp"
+        android:layout_height="115dp"
+        app:layout_constraintBottom_toTopOf="@id/guideline13"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/generic_stats_container"
+        app:layout_constraintTop_toBottomOf="@id/atk_background"
+        app:srcCompat="@android:color/holo_red_light" />
+
+    <ImageView
+        android:id="@+id/top_row_type_icon"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        app:layout_constraintBottom_toBottomOf="@+id/pre_dokkan_card_icon"
+        app:layout_constraintEnd_toStartOf="@+id/pre_dokkan_card_background"
+        app:layout_constraintStart_toStartOf="@+id/form_tree_container"
+        app:layout_constraintTop_toTopOf="@+id/pre_dokkan_card_icon"
+        app:srcCompat="@android:color/holo_blue_light" />
+
+    <ImageView
+        android:id="@+id/pre_dokkan_card_background"
+        android:layout_width="44dp"
+        android:layout_height="44dp"
+        android:layout_marginBottom="3.5dp"
+        app:layout_constraintBottom_toBottomOf="@+id/pre_dokkan_card_icon"
+        app:layout_constraintEnd_toEndOf="@+id/pre_dokkan_card_icon"
+        app:layout_constraintHorizontal_bias="0.51"
+        app:layout_constraintStart_toStartOf="@+id/pre_dokkan_card_icon"
+        app:srcCompat="@drawable/agl_background" />
+
+    <ImageView
+        android:id="@+id/pre_dokkan_card_icon"
+        android:layout_width="55dp"
+        android:layout_height="55dp"
+        android:onClick="openProfile"
+        android:scaleType="fitXY"
+        app:layout_constraintBottom_toTopOf="@+id/dokkan_card_icon"
+        app:layout_constraintEnd_toStartOf="@+id/pre_dokkan_medal_1"
+        app:layout_constraintStart_toEndOf="@+id/top_row_type_icon"
+        app:layout_constraintTop_toTopOf="@id/form_tree_container"
+        app:srcCompat="@drawable/card_icon_9015140" />
+
+    <ImageView
+        android:id="@+id/pre_dokkan_card_type"
+        android:layout_width="19.25dp"
+        android:layout_height="19.25dp"
+        app:layout_constraintEnd_toEndOf="@+id/pre_dokkan_card_icon"
+        app:layout_constraintTop_toTopOf="@+id/pre_dokkan_card_icon"
+        app:srcCompat="@drawable/super_agl" />
+
+    <ImageView
+        android:id="@+id/pre_dokkan_card_rarity"
+        android:layout_width="24.2dp"
+        android:layout_height="26.95dp"
+        app:layout_constraintBottom_toBottomOf="@+id/pre_dokkan_card_icon"
+        app:layout_constraintStart_toStartOf="@+id/pre_dokkan_card_icon"
+        app:srcCompat="@drawable/lr" />
+
+    <ImageView
+        android:id="@+id/pre_dokkan_medal_1"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        app:layout_constraintBottom_toTopOf="@+id/pre_dokkan_medal_1_count"
+        app:layout_constraintEnd_toStartOf="@+id/pre_dokkan_medal_2"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/pre_dokkan_card_background"
+        app:layout_constraintTop_toTopOf="@+id/pre_dokkan_card_background"
+        app:srcCompat="@drawable/medal_0" />
+
+    <TextView
+        android:id="@+id/pre_dokkan_medal_1_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="50"
+        app:layout_constraintBottom_toBottomOf="@+id/pre_dokkan_card_background"
+        app:layout_constraintEnd_toEndOf="@+id/pre_dokkan_medal_1"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="@+id/pre_dokkan_medal_1"
+        app:layout_constraintTop_toBottomOf="@+id/pre_dokkan_medal_1" />
+
+    <ImageView
+        android:id="@+id/pre_dokkan_medal_2"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        app:layout_constraintBottom_toTopOf="@+id/pre_dokkan_medal_2_count"
+        app:layout_constraintEnd_toStartOf="@+id/pre_dokkan_medal_3"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/pre_dokkan_medal_1"
+        app:layout_constraintTop_toTopOf="@+id/pre_dokkan_card_background"
+        app:srcCompat="@drawable/medal_0" />
+
+    <TextView
+        android:id="@+id/pre_dokkan_medal_2_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="50"
+        app:layout_constraintBottom_toBottomOf="@+id/pre_dokkan_card_background"
+        app:layout_constraintEnd_toEndOf="@+id/pre_dokkan_medal_2"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="@+id/pre_dokkan_medal_2"
+        app:layout_constraintTop_toBottomOf="@+id/pre_dokkan_medal_2" />
+
+    <ImageView
+        android:id="@+id/pre_dokkan_medal_3"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        app:layout_constraintBottom_toTopOf="@+id/pre_dokkan_medal_3_count"
+        app:layout_constraintEnd_toStartOf="@+id/pre_dokkan_medal_4"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/pre_dokkan_medal_2"
+        app:layout_constraintTop_toTopOf="@+id/pre_dokkan_card_background"
+        app:srcCompat="@drawable/medal_0" />
+
+    <TextView
+        android:id="@+id/pre_dokkan_medal_3_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="50"
+        app:layout_constraintBottom_toBottomOf="@+id/pre_dokkan_card_background"
+        app:layout_constraintEnd_toEndOf="@+id/pre_dokkan_medal_3"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="@+id/pre_dokkan_medal_3"
+        app:layout_constraintTop_toBottomOf="@+id/pre_dokkan_medal_3" />
+
+    <ImageView
+        android:id="@+id/pre_dokkan_medal_4"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        app:layout_constraintBottom_toTopOf="@+id/pre_dokkan_medal_4_count"
+        app:layout_constraintEnd_toStartOf="@+id/pre_dokkan_medal_5"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/pre_dokkan_medal_3"
+        app:layout_constraintTop_toTopOf="@+id/pre_dokkan_card_background"
+        app:srcCompat="@drawable/medal_0" />
+
+    <TextView
+        android:id="@+id/pre_dokkan_medal_4_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="50"
+        app:layout_constraintBottom_toBottomOf="@+id/pre_dokkan_card_background"
+        app:layout_constraintEnd_toEndOf="@+id/pre_dokkan_medal_4"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="@+id/pre_dokkan_medal_4"
+        app:layout_constraintTop_toBottomOf="@+id/pre_dokkan_medal_4" />
+
+    <ImageView
+        android:id="@+id/pre_dokkan_medal_5"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        app:layout_constraintBottom_toTopOf="@+id/pre_dokkan_medal_5_count"
+        app:layout_constraintEnd_toEndOf="@+id/form_tree_container"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/pre_dokkan_medal_4"
+        app:layout_constraintTop_toTopOf="@+id/pre_dokkan_card_background"
+        app:srcCompat="@drawable/medal_0" />
+
+    <TextView
+        android:id="@+id/pre_dokkan_medal_5_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="50"
+        app:layout_constraintBottom_toBottomOf="@+id/pre_dokkan_card_background"
+        app:layout_constraintEnd_toEndOf="@+id/pre_dokkan_medal_5"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="@+id/pre_dokkan_medal_5"
+        app:layout_constraintTop_toBottomOf="@+id/pre_dokkan_medal_5" />
+
+    <ImageView
+        android:id="@+id/bottom_row_type_icon"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        app:layout_constraintBottom_toBottomOf="@+id/dokkan_card_icon"
+        app:layout_constraintEnd_toStartOf="@+id/dokkan_card_background"
+        app:layout_constraintStart_toStartOf="@+id/form_tree_container"
+        app:layout_constraintTop_toTopOf="@+id/dokkan_card_icon"
+        app:srcCompat="@android:color/holo_blue_light" />
+
+    <ImageView
+        android:id="@+id/dokkan_card_background"
+        android:layout_width="44dp"
+        android:layout_height="44dp"
+        android:layout_marginBottom="3.5dp"
+        app:layout_constraintBottom_toBottomOf="@+id/dokkan_card_icon"
+        app:layout_constraintEnd_toEndOf="@+id/dokkan_card_icon"
+        app:layout_constraintStart_toStartOf="@+id/dokkan_card_icon"
+        app:srcCompat="@drawable/agl_background" />
+
+    <ImageView
+        android:id="@+id/dokkan_card_icon"
+        android:layout_width="55dp"
+        android:layout_height="55dp"
+        android:onClick="openProfile"
+        android:scaleType="fitXY"
+        app:layout_constraintBottom_toBottomOf="@id/form_tree_container"
+        app:layout_constraintEnd_toStartOf="@+id/dokkan_medal_1"
+        app:layout_constraintStart_toEndOf="@+id/bottom_row_type_icon"
+        app:layout_constraintTop_toBottomOf="@+id/pre_dokkan_card_icon"
+        app:srcCompat="@drawable/card_icon_9015141" />
+
+    <ImageView
+        android:id="@+id/dokkan_card_type"
+        android:layout_width="19.25dp"
+        android:layout_height="19.25dp"
+        app:layout_constraintEnd_toEndOf="@+id/dokkan_card_icon"
+        app:layout_constraintTop_toTopOf="@+id/dokkan_card_icon"
+        app:srcCompat="@drawable/super_agl" />
+
+    <ImageView
+        android:id="@+id/dokkan_card_rarity"
+        android:layout_width="24.2dp"
+        android:layout_height="26.95dp"
+        app:layout_constraintBottom_toBottomOf="@+id/dokkan_card_icon"
+        app:layout_constraintStart_toStartOf="@+id/dokkan_card_icon"
+        app:srcCompat="@drawable/lr" />
+
+    <ImageView
+        android:id="@+id/dokkan_medal_1"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        app:layout_constraintBottom_toTopOf="@+id/dokkan_medal_1_count"
+        app:layout_constraintEnd_toStartOf="@+id/dokkan_medal_2"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/dokkan_card_background"
+        app:layout_constraintTop_toTopOf="@+id/dokkan_card_background"
+        app:srcCompat="@drawable/medal_0" />
+
+    <TextView
+        android:id="@+id/dokkan_medal_1_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="50"
+        app:layout_constraintBottom_toBottomOf="@+id/dokkan_card_background"
+        app:layout_constraintEnd_toEndOf="@+id/dokkan_medal_1"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="@+id/dokkan_medal_1"
+        app:layout_constraintTop_toBottomOf="@+id/dokkan_medal_1" />
+
+    <ImageView
+        android:id="@+id/dokkan_medal_2"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        app:layout_constraintBottom_toTopOf="@+id/dokkan_medal_2_count"
+        app:layout_constraintEnd_toStartOf="@+id/dokkan_medal_3"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/dokkan_medal_1"
+        app:layout_constraintTop_toTopOf="@+id/dokkan_card_background"
+        app:srcCompat="@drawable/medal_0" />
+
+    <TextView
+        android:id="@+id/dokkan_medal_2_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="50"
+        app:layout_constraintBottom_toBottomOf="@+id/dokkan_card_background"
+        app:layout_constraintEnd_toEndOf="@+id/dokkan_medal_2"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="@+id/dokkan_medal_2"
+        app:layout_constraintTop_toBottomOf="@+id/dokkan_medal_2" />
+
+    <ImageView
+        android:id="@+id/dokkan_medal_3"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        app:layout_constraintBottom_toTopOf="@+id/dokkan_medal_3_count"
+        app:layout_constraintEnd_toStartOf="@+id/dokkan_medal_4"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/dokkan_medal_2"
+        app:layout_constraintTop_toTopOf="@+id/dokkan_card_background"
+        app:srcCompat="@drawable/medal_0" />
+
+    <TextView
+        android:id="@+id/dokkan_medal_3_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="50"
+        app:layout_constraintBottom_toBottomOf="@+id/dokkan_card_background"
+        app:layout_constraintEnd_toEndOf="@+id/dokkan_medal_3"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="@+id/dokkan_medal_3"
+        app:layout_constraintTop_toBottomOf="@+id/dokkan_medal_3" />
+
+    <ImageView
+        android:id="@+id/dokkan_medal_4"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        app:layout_constraintBottom_toTopOf="@+id/dokkan_medal_4_count"
+        app:layout_constraintEnd_toStartOf="@+id/dokkan_medal_5"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/dokkan_medal_3"
+        app:layout_constraintTop_toTopOf="@+id/dokkan_card_background"
+        app:srcCompat="@drawable/medal_0" />
+
+    <TextView
+        android:id="@+id/dokkan_medal_4_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="50"
+        app:layout_constraintBottom_toBottomOf="@+id/dokkan_card_background"
+        app:layout_constraintEnd_toEndOf="@+id/dokkan_medal_4"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="@+id/dokkan_medal_4"
+        app:layout_constraintTop_toBottomOf="@+id/dokkan_medal_4" />
+
+    <ImageView
+        android:id="@+id/dokkan_medal_5"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        app:layout_constraintBottom_toTopOf="@+id/dokkan_medal_5_count"
+        app:layout_constraintEnd_toEndOf="@id/form_tree_container"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/dokkan_medal_4"
+        app:layout_constraintTop_toTopOf="@+id/dokkan_card_background"
+        app:srcCompat="@drawable/medal_0" />
+
+    <TextView
+        android:id="@+id/dokkan_medal_5_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="50"
+        app:layout_constraintBottom_toBottomOf="@+id/dokkan_card_background"
+        app:layout_constraintEnd_toEndOf="@+id/dokkan_medal_5"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="@+id/dokkan_medal_5"
+        app:layout_constraintTop_toBottomOf="@+id/dokkan_medal_5" />
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/pre_dokkan_medal_1_group"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:constraint_referenced_ids="pre_dokkan_medal_1_count,pre_dokkan_medal_1" />
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/pre_dokkan_medal_2_group"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"
+        app:constraint_referenced_ids="pre_dokkan_medal_2,pre_dokkan_medal_2_count" />
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/pre_dokkan_medal_3_group"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"
+        app:constraint_referenced_ids="pre_dokkan_medal_3,pre_dokkan_medal_3_count" />
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/pre_dokkan_medal_4_group"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"
+        app:constraint_referenced_ids="pre_dokkan_medal_4,pre_dokkan_medal_4_count" />
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/pre_dokkan_medal_5_group"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"
+        app:constraint_referenced_ids="pre_dokkan_medal_5_count,pre_dokkan_medal_5" />
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/dokkan_medal_1_group"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:constraint_referenced_ids="dokkan_medal_1,dokkan_medal_1_count" />
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/dokkan_medal_2_group"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"
+        app:constraint_referenced_ids="dokkan_medal_2,dokkan_medal_2_count" />
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/dokkan_medal_3_group"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"
+        app:constraint_referenced_ids="dokkan_medal_3_count,dokkan_medal_3" />
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/dokkan_medal_4_group"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"
+        app:constraint_referenced_ids="dokkan_medal_4_count,dokkan_medal_4" />
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/dokkan_medal_5_group"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"
+        app:constraint_referenced_ids="dokkan_medal_5_count,dokkan_medal_5" />
+
+    <LinearLayout
+        android:id="@+id/top_transformation_condition_container"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="6dp"
+        app:layout_constraintBottom_toBottomOf="@+id/pre_dokkan_card_background"
+        app:layout_constraintEnd_toEndOf="@id/form_tree_container"
+        app:layout_constraintStart_toEndOf="@+id/pre_dokkan_card_background"
+        app:layout_constraintTop_toTopOf="@+id/pre_dokkan_card_icon">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="14dp"
+            android:orientation="vertical">
 
             <TextView
-                android:id="@+id/def_label"
-                android:layout_width="wrap_content"
+                android:id="@+id/top_transformation_condition"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="DEF"
-                android:textSize="16dp"
-                app:layout_constraintBottom_toBottomOf="@+id/def_background"
-                app:layout_constraintEnd_toEndOf="@+id/def_background"
-                app:layout_constraintStart_toStartOf="@+id/def_background"
-                app:layout_constraintTop_toBottomOf="@+id/def" />
+                android:textSize="13dp" />
+        </ScrollView>
+    </LinearLayout>
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/details_panel"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                app:layout_constraintStart_toEndOf="@id/guideline5"
-                app:layout_constraintEnd_toStartOf="@id/guideline2"
-                app:layout_constraintTop_toBottomOf="@+id/atk_background"
-                app:layout_constraintBottom_toTopOf="@+id/guideline13">
+    <LinearLayout
+        android:id="@+id/bottom_transformation_condition_container"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="6dp"
+        app:layout_constraintBottom_toBottomOf="@+id/dokkan_card_background"
+        app:layout_constraintEnd_toEndOf="@id/form_tree_container"
+        app:layout_constraintStart_toEndOf="@+id/dokkan_card_background"
+        app:layout_constraintTop_toTopOf="@+id/dokkan_card_icon">
 
-                <TextView
-                    android:id="@+id/cost_label"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Cost:"
-                    app:layout_constraintBottom_toTopOf="@+id/max_level_label"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:id="@+id/cost"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="99"
-                    app:layout_constraintBottom_toBottomOf="@+id/cost_label"
-                    app:layout_constraintStart_toStartOf="@+id/max_level"
-                    app:layout_constraintTop_toTopOf="@+id/cost_label"
-                    app:layout_constraintVertical_bias="0.0" />
-
-                <TextView
-                    android:id="@+id/max_level_label"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Level:"
-                    app:layout_constraintBottom_toTopOf="@+id/max_sa_level_label"
-                    app:layout_constraintStart_toStartOf="@+id/cost_label"
-                    app:layout_constraintTop_toBottomOf="@+id/cost_label" />
-
-                <TextView
-                    android:id="@+id/max_level"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="150"
-                    app:layout_constraintBottom_toBottomOf="@+id/max_level_label"
-                    app:layout_constraintStart_toStartOf="@+id/max_sa_level"
-                    app:layout_constraintTop_toTopOf="@+id/max_level_label"
-                    app:layout_constraintVertical_bias="0.0" />
-
-                <TextView
-                    android:id="@+id/max_sa_level_label"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="SA Level:"
-                    app:layout_constraintBottom_toTopOf="@+id/twelve_ki_multiplier_label"
-                    app:layout_constraintStart_toStartOf="@+id/max_level_label"
-                    app:layout_constraintTop_toBottomOf="@+id/max_level_label" />
-
-                <TextView
-                    android:id="@+id/max_sa_level"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="20"
-                    app:layout_constraintBottom_toBottomOf="@+id/max_sa_level_label"
-                    app:layout_constraintStart_toStartOf="@+id/twelve_ki_multiplier"
-                    app:layout_constraintTop_toTopOf="@+id/max_sa_level_label"
-                    app:layout_constraintVertical_bias="0.0" />
-
-                <TextView
-                    android:id="@+id/twelve_ki_multiplier_label"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="12 Ki Boost:"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="@+id/max_sa_level_label" />
-
-                <TextView
-                    android:id="@+id/twelve_ki_multiplier"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="200%"
-                    app:layout_constraintBottom_toBottomOf="@+id/twelve_ki_multiplier_label"
-                    app:layout_constraintEnd_toStartOf="@+id/top_row_type_icon"
-                    app:layout_constraintStart_toEndOf="@+id/twelve_ki_multiplier_label"
-                    app:layout_constraintTop_toTopOf="@+id/twelve_ki_multiplier_label"
-                    app:layout_constraintVertical_bias="0.0" />
-
-                <ImageView
-                android:id="@+id/top_row_type_icon"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                app:layout_constraintBottom_toBottomOf="@+id/pre_dokkan_card_icon"
-                app:layout_constraintEnd_toStartOf="@+id/pre_dokkan_card_icon"
-                app:layout_constraintTop_toTopOf="@+id/pre_dokkan_card_icon"
-                app:srcCompat="@android:color/holo_blue_light" />
-
-                <ImageView
-                    android:id="@+id/pre_dokkan_card_background"
-                    android:layout_width="44dp"
-                    android:layout_height="48.5dp"
-                    android:layout_marginBottom="1dp"
-                    app:layout_constraintBottom_toBottomOf="@+id/pre_dokkan_card_icon"
-                    app:layout_constraintEnd_toEndOf="@+id/pre_dokkan_card_icon"
-                    app:layout_constraintHorizontal_bias="0.51"
-                    app:layout_constraintStart_toStartOf="@+id/pre_dokkan_card_icon"
-                    app:srcCompat="@drawable/agl_background" />
-
-                <ImageView
-                    android:id="@+id/pre_dokkan_card_icon"
-                    android:layout_width="55dp"
-                    android:layout_height="55dp"
-                    android:onClick="openProfile"
-                    android:scaleType="fitXY"
-                    app:layout_constraintBottom_toTopOf="@+id/dokkan_card_icon"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.45"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/card_icon_9015140" />
-
-                <ImageView
-                    android:id="@+id/pre_dokkan_card_type"
-                    android:layout_width="19.25dp"
-                    android:layout_height="19.25dp"
-                    app:layout_constraintTop_toTopOf="@+id/pre_dokkan_card_icon"
-                    app:layout_constraintEnd_toEndOf="@+id/pre_dokkan_card_icon"
-                    app:srcCompat="@drawable/super_agl" />
-
-                <ImageView
-                    android:id="@+id/pre_dokkan_card_rarity"
-                    android:layout_width="24.2dp"
-                    android:layout_height="26.95dp"
-                    app:layout_constraintBottom_toBottomOf="@+id/pre_dokkan_card_icon"
-                    app:layout_constraintStart_toStartOf="@+id/pre_dokkan_card_icon"
-                    app:srcCompat="@drawable/lr" />
-
-                <ImageView
-                    android:id="@+id/pre_dokkan_medal_1"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    app:layout_constraintBottom_toTopOf="@+id/pre_dokkan_medal_1_count"
-                    app:layout_constraintEnd_toStartOf="@+id/pre_dokkan_medal_2"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toEndOf="@+id/pre_dokkan_card_background"
-                    app:layout_constraintTop_toTopOf="@+id/pre_dokkan_card_background"
-                    app:srcCompat="@drawable/medal_0" />
-
-                <TextView
-                    android:id="@+id/pre_dokkan_medal_1_count"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="50"
-                    app:layout_constraintBottom_toBottomOf="@+id/pre_dokkan_card_background"
-                    app:layout_constraintEnd_toEndOf="@+id/pre_dokkan_medal_1"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toStartOf="@+id/pre_dokkan_medal_1"
-                    app:layout_constraintTop_toBottomOf="@+id/pre_dokkan_medal_1" />
-
-                <ImageView
-                    android:id="@+id/pre_dokkan_medal_2"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    app:layout_constraintBottom_toTopOf="@+id/pre_dokkan_medal_2_count"
-                    app:layout_constraintEnd_toStartOf="@+id/pre_dokkan_medal_3"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toEndOf="@+id/pre_dokkan_medal_1"
-                    app:layout_constraintTop_toTopOf="@+id/pre_dokkan_card_background"
-                    app:srcCompat="@drawable/medal_0" />
-
-                <TextView
-                    android:id="@+id/pre_dokkan_medal_2_count"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="50"
-                    app:layout_constraintBottom_toBottomOf="@+id/pre_dokkan_card_background"
-                    app:layout_constraintEnd_toEndOf="@+id/pre_dokkan_medal_2"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toStartOf="@+id/pre_dokkan_medal_2"
-                    app:layout_constraintTop_toBottomOf="@+id/pre_dokkan_medal_2" />
-
-                <ImageView
-                    android:id="@+id/pre_dokkan_medal_3"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    app:layout_constraintBottom_toTopOf="@+id/pre_dokkan_medal_3_count"
-                    app:layout_constraintEnd_toStartOf="@+id/pre_dokkan_medal_4"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toEndOf="@+id/pre_dokkan_medal_2"
-                    app:layout_constraintTop_toTopOf="@+id/pre_dokkan_card_background"
-                    app:srcCompat="@drawable/medal_0" />
-
-                <TextView
-                    android:id="@+id/pre_dokkan_medal_3_count"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="50"
-                    app:layout_constraintBottom_toBottomOf="@+id/pre_dokkan_card_background"
-                    app:layout_constraintEnd_toEndOf="@+id/pre_dokkan_medal_3"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toStartOf="@+id/pre_dokkan_medal_3"
-                    app:layout_constraintTop_toBottomOf="@+id/pre_dokkan_medal_3" />
-
-                <ImageView
-                    android:id="@+id/pre_dokkan_medal_4"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    app:layout_constraintBottom_toTopOf="@+id/pre_dokkan_medal_4_count"
-                    app:layout_constraintEnd_toStartOf="@+id/pre_dokkan_medal_5"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toEndOf="@+id/pre_dokkan_medal_3"
-                    app:layout_constraintTop_toTopOf="@+id/pre_dokkan_card_background"
-                    app:srcCompat="@drawable/medal_0" />
-
-                <TextView
-                    android:id="@+id/pre_dokkan_medal_4_count"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="50"
-                    app:layout_constraintBottom_toBottomOf="@+id/pre_dokkan_card_background"
-                    app:layout_constraintEnd_toEndOf="@+id/pre_dokkan_medal_4"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toStartOf="@+id/pre_dokkan_medal_4"
-                    app:layout_constraintTop_toBottomOf="@+id/pre_dokkan_medal_4" />
-
-                <ImageView
-                    android:id="@+id/pre_dokkan_medal_5"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    app:layout_constraintBottom_toTopOf="@+id/pre_dokkan_medal_5_count"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toEndOf="@+id/pre_dokkan_medal_4"
-                    app:layout_constraintTop_toTopOf="@+id/pre_dokkan_card_background"
-                    app:srcCompat="@drawable/medal_0" />
-
-                <TextView
-                    android:id="@+id/pre_dokkan_medal_5_count"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="50"
-                    app:layout_constraintBottom_toBottomOf="@+id/pre_dokkan_card_background"
-                    app:layout_constraintEnd_toEndOf="@+id/pre_dokkan_medal_5"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toStartOf="@+id/pre_dokkan_medal_5"
-                    app:layout_constraintTop_toBottomOf="@+id/pre_dokkan_medal_5" />
-
-                <ImageView
-                    android:id="@+id/bottom_row_type_icon"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    app:layout_constraintBottom_toBottomOf="@+id/dokkan_card_icon"
-                    app:layout_constraintEnd_toStartOf="@+id/dokkan_card_icon"
-                    app:layout_constraintTop_toTopOf="@+id/dokkan_card_icon"
-                    app:srcCompat="@android:color/holo_blue_light" />
-
-                <ImageView
-                    android:id="@+id/dokkan_card_background"
-                    android:layout_width="44dp"
-                    android:layout_height="48.5dp"
-                    android:layout_marginBottom="1dp"
-                    app:layout_constraintBottom_toBottomOf="@+id/dokkan_card_icon"
-                    app:layout_constraintEnd_toEndOf="@+id/dokkan_card_icon"
-                    app:layout_constraintStart_toStartOf="@+id/dokkan_card_icon"
-                    app:srcCompat="@drawable/agl_background" />
-
-                <ImageView
-                    android:id="@+id/dokkan_card_icon"
-                    android:layout_width="55dp"
-                    android:layout_height="55dp"
-                    android:onClick="openProfile"
-                    android:scaleType="fitXY"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.45"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/pre_dokkan_card_icon"
-                    app:srcCompat="@drawable/card_icon_9015141" />
-
-                <ImageView
-                    android:id="@+id/dokkan_card_type"
-                    android:layout_width="19.25dp"
-                    android:layout_height="19.25dp"
-                    app:layout_constraintTop_toTopOf="@+id/pre_dokkan_card_icon"
-                    app:layout_constraintEnd_toEndOf="@+id/pre_dokkan_card_icon"
-                    app:srcCompat="@drawable/super_agl" />
-
-                <ImageView
-                    android:id="@+id/dokkan_card_rarity"
-                    android:layout_width="24.2dp"
-                    android:layout_height="26.95dp"
-                    app:layout_constraintBottom_toBottomOf="@+id/dokkan_card_icon"
-                    app:layout_constraintStart_toStartOf="@+id/dokkan_card_icon"
-                    app:srcCompat="@drawable/lr" />
-
-                <ImageView
-                    android:id="@+id/dokkan_medal_1"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    app:layout_constraintBottom_toTopOf="@+id/dokkan_medal_1_count"
-                    app:layout_constraintEnd_toStartOf="@+id/dokkan_medal_2"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toEndOf="@+id/dokkan_card_background"
-                    app:layout_constraintTop_toTopOf="@+id/dokkan_card_background"
-                    app:srcCompat="@drawable/medal_0" />
-
-                <TextView
-                    android:id="@+id/dokkan_medal_1_count"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="50"
-                    app:layout_constraintBottom_toBottomOf="@+id/dokkan_card_background"
-                    app:layout_constraintEnd_toEndOf="@+id/dokkan_medal_1"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toStartOf="@+id/dokkan_medal_1"
-                    app:layout_constraintTop_toBottomOf="@+id/dokkan_medal_1" />
-
-                <ImageView
-                    android:id="@+id/dokkan_medal_2"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    app:layout_constraintBottom_toTopOf="@+id/dokkan_medal_2_count"
-                    app:layout_constraintEnd_toStartOf="@+id/dokkan_medal_3"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toEndOf="@+id/dokkan_medal_1"
-                    app:layout_constraintTop_toTopOf="@+id/dokkan_card_background"
-                    app:srcCompat="@drawable/medal_0" />
-
-                <TextView
-                    android:id="@+id/dokkan_medal_2_count"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="50"
-                    app:layout_constraintBottom_toBottomOf="@+id/dokkan_card_background"
-                    app:layout_constraintEnd_toEndOf="@+id/dokkan_medal_2"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toStartOf="@+id/dokkan_medal_2"
-                    app:layout_constraintTop_toBottomOf="@+id/dokkan_medal_2" />
-
-                <ImageView
-                    android:id="@+id/dokkan_medal_3"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    app:layout_constraintBottom_toTopOf="@+id/dokkan_medal_3_count"
-                    app:layout_constraintEnd_toStartOf="@+id/dokkan_medal_4"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toEndOf="@+id/dokkan_medal_2"
-                    app:layout_constraintTop_toTopOf="@+id/dokkan_card_background"
-                    app:srcCompat="@drawable/medal_0" />
-
-                <TextView
-                    android:id="@+id/dokkan_medal_3_count"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="50"
-                    app:layout_constraintBottom_toBottomOf="@+id/dokkan_card_background"
-                    app:layout_constraintEnd_toEndOf="@+id/dokkan_medal_3"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toStartOf="@+id/dokkan_medal_3"
-                    app:layout_constraintTop_toBottomOf="@+id/dokkan_medal_3" />
-
-                <ImageView
-                    android:id="@+id/dokkan_medal_4"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    app:layout_constraintBottom_toTopOf="@+id/dokkan_medal_4_count"
-                    app:layout_constraintEnd_toStartOf="@+id/dokkan_medal_5"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toEndOf="@+id/dokkan_medal_3"
-                    app:layout_constraintTop_toTopOf="@+id/dokkan_card_background"
-                    app:srcCompat="@drawable/medal_0" />
-
-                <TextView
-                    android:id="@+id/dokkan_medal_4_count"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="50"
-                    app:layout_constraintBottom_toBottomOf="@+id/dokkan_card_background"
-                    app:layout_constraintEnd_toEndOf="@+id/dokkan_medal_4"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toStartOf="@+id/dokkan_medal_4"
-                    app:layout_constraintTop_toBottomOf="@+id/dokkan_medal_4" />
-
-                <ImageView
-                    android:id="@+id/dokkan_medal_5"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    app:layout_constraintBottom_toTopOf="@+id/dokkan_medal_5_count"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toEndOf="@+id/dokkan_medal_4"
-                    app:layout_constraintTop_toTopOf="@+id/dokkan_card_background"
-                    app:srcCompat="@drawable/medal_0" />
-
-                <TextView
-                    android:id="@+id/dokkan_medal_5_count"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="50"
-                    app:layout_constraintBottom_toBottomOf="@+id/dokkan_card_background"
-                    app:layout_constraintEnd_toEndOf="@+id/dokkan_medal_5"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toStartOf="@+id/dokkan_medal_5"
-                    app:layout_constraintTop_toBottomOf="@+id/dokkan_medal_5" />
-
-                <androidx.constraintlayout.widget.Group
-                    android:id="@+id/pre_dokkan_medal_1_group"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:constraint_referenced_ids="pre_dokkan_medal_1_count,pre_dokkan_medal_1" />
-
-                <androidx.constraintlayout.widget.Group
-                    android:id="@+id/pre_dokkan_medal_2_group"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:visibility="invisible"
-                    app:constraint_referenced_ids="pre_dokkan_medal_2,pre_dokkan_medal_2_count" />
-
-                <androidx.constraintlayout.widget.Group
-                    android:id="@+id/pre_dokkan_medal_3_group"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:visibility="invisible"
-                    app:constraint_referenced_ids="pre_dokkan_medal_3,pre_dokkan_medal_3_count" />
-
-                <androidx.constraintlayout.widget.Group
-                    android:id="@+id/pre_dokkan_medal_4_group"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:visibility="invisible"
-                    app:constraint_referenced_ids="pre_dokkan_medal_4,pre_dokkan_medal_4_count" />
-
-                <androidx.constraintlayout.widget.Group
-                    android:id="@+id/pre_dokkan_medal_5_group"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:visibility="invisible"
-                    app:constraint_referenced_ids="pre_dokkan_medal_5_count,pre_dokkan_medal_5" />
-
-                <androidx.constraintlayout.widget.Group
-                    android:id="@+id/dokkan_medal_1_group"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:constraint_referenced_ids="dokkan_medal_1,dokkan_medal_1_count" />
-
-                <androidx.constraintlayout.widget.Group
-                    android:id="@+id/dokkan_medal_2_group"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:visibility="invisible"
-                    app:constraint_referenced_ids="dokkan_medal_2,dokkan_medal_2_count" />
-
-                <androidx.constraintlayout.widget.Group
-                    android:id="@+id/dokkan_medal_3_group"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:visibility="invisible"
-                    app:constraint_referenced_ids="dokkan_medal_3_count,dokkan_medal_3" />
-
-                <androidx.constraintlayout.widget.Group
-                    android:id="@+id/dokkan_medal_4_group"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:visibility="invisible"
-                    app:constraint_referenced_ids="dokkan_medal_4_count,dokkan_medal_4" />
-
-                <androidx.constraintlayout.widget.Group
-                    android:id="@+id/dokkan_medal_5_group"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:visibility="invisible"
-                    app:constraint_referenced_ids="dokkan_medal_5_count,dokkan_medal_5" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <ImageView
-                android:id="@+id/imageView4"
-                android:layout_width="100dp"
-                android:layout_height="45dp"
-                app:layout_constraintBottom_toBottomOf="@+id/imageView5"
-                app:layout_constraintEnd_toStartOf="@+id/imageView5"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/imageView5"
-                app:srcCompat="@android:color/holo_green_light" />
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="14dp"
+            android:orientation="vertical">
 
             <TextView
-                android:id="@+id/textView12"
-                android:layout_width="wrap_content"
+                android:id="@+id/bottom_transformation_condition"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="Back"
-                android:textSize="16dp"
-                app:layout_constraintBottom_toBottomOf="@+id/imageView4"
-                app:layout_constraintEnd_toEndOf="@+id/imageView4"
-                app:layout_constraintStart_toStartOf="@+id/imageView4"
-                app:layout_constraintTop_toTopOf="@+id/imageView4" />
+                android:textSize="13dp" />
+        </ScrollView>
+    </LinearLayout>
 
-            <ImageView
-                android:id="@+id/imageView5"
-                android:layout_width="45dp"
-                android:layout_height="45dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/imageView6"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/imageView4"
-                app:layout_constraintTop_toBottomOf="@+id/guideline13"
-                app:srcCompat="@android:color/holo_green_light" />
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="100dp"
+        android:layout_height="45dp"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView5"
+        app:layout_constraintEnd_toStartOf="@+id/imageView5"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/imageView5"
+        app:srcCompat="@android:color/holo_green_light" />
 
-            <TextView
-                android:id="@+id/textView13"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="Sim"
-                android:textSize="16dp"
-                app:layout_constraintBottom_toBottomOf="@+id/imageView5"
-                app:layout_constraintEnd_toEndOf="@+id/imageView5"
-                app:layout_constraintStart_toStartOf="@+id/imageView5"
-                app:layout_constraintTop_toTopOf="@+id/imageView5" />
+    <TextView
+        android:id="@+id/textView12"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Back"
+        android:textSize="16dp"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView4"
+        app:layout_constraintEnd_toEndOf="@+id/imageView4"
+        app:layout_constraintStart_toStartOf="@+id/imageView4"
+        app:layout_constraintTop_toTopOf="@+id/imageView4" />
 
-            <ImageView
-                android:id="@+id/imageView6"
-                android:layout_width="100dp"
-                android:layout_height="45dp"
-                app:layout_constraintBottom_toBottomOf="@+id/imageView5"
-                app:layout_constraintEnd_toEndOf="@id/guideline2"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/imageView5"
-                app:layout_constraintTop_toTopOf="@+id/imageView5"
-                app:srcCompat="@android:color/holo_green_light" />
+    <ImageView
+        android:id="@+id/imageView5"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/imageView6"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/imageView4"
+        app:layout_constraintTop_toBottomOf="@+id/guideline13"
+        app:srcCompat="@android:color/holo_green_light" />
 
-            <TextView
-                android:id="@+id/textView4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="Add to Box"
-                android:textSize="16dp"
-                app:layout_constraintBottom_toBottomOf="@+id/imageView6"
-                app:layout_constraintEnd_toEndOf="@+id/imageView6"
-                app:layout_constraintStart_toStartOf="@+id/imageView6"
-                app:layout_constraintTop_toTopOf="@+id/imageView6" />
+    <TextView
+        android:id="@+id/textView13"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Sim"
+        android:textSize="16dp"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView5"
+        app:layout_constraintEnd_toEndOf="@+id/imageView5"
+        app:layout_constraintStart_toStartOf="@+id/imageView5"
+        app:layout_constraintTop_toTopOf="@+id/imageView5" />
+
+    <ImageView
+        android:id="@+id/imageView6"
+        android:layout_width="100dp"
+        android:layout_height="45dp"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView5"
+        app:layout_constraintEnd_toEndOf="@id/guideline2"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/imageView5"
+        app:layout_constraintTop_toTopOf="@+id/imageView5"
+        app:srcCompat="@android:color/holo_green_light" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Add to Box"
+        android:textSize="16dp"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView6"
+        app:layout_constraintEnd_toEndOf="@+id/imageView6"
+        app:layout_constraintStart_toStartOf="@+id/imageView6"
+        app:layout_constraintTop_toTopOf="@+id/imageView6" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

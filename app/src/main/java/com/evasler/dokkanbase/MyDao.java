@@ -59,9 +59,21 @@ public interface MyDao {
     @Query("SELECT super_attack_extra_effect.extra_effect_id,extra_effect_condition,extra_effect FROM super_attack_super_attack_extra_effect_relation,super_attack_extra_effect WHERE super_attack_super_attack_extra_effect_relation.extra_effect_id = super_attack_extra_effect.extra_effect_id AND super_attack_super_attack_extra_effect_relation.super_attack_id = :super_attack_id")
     super_attack_extra_effect getSuperAttackExtraEffect(int super_attack_id);
 
-    @Query("SELECT * FROM card_link_skill_relation,link_skill WHERE card_link_skill_relation.link_skill_id = link_skill.link_skill_id AND card_id = :card_id")
+    @Query("SELECT link_skill.link_skill_id, link_skill_name, link_skill_effect FROM card_link_skill_relation,link_skill WHERE card_link_skill_relation.link_skill_id = link_skill.link_skill_id AND card_id = :card_id")
     List<link_skill> getLinkSkills(String card_id);
 
-    @Query("SELECT * FROM card_category_relation,category WHERE card_category_relation.category_id = category.category_id AND card_id = :card_id")
+    @Query("SELECT category.category_id, category_name FROM card_category_relation,category WHERE card_category_relation.category_id = category.category_id AND card_id = :card_id")
     List<category> getCategories(String card_id);
+
+    @Query("SELECT invincible_form_card.card_id FROM invincible_form_card, card_invincible_form_card_relation WHERE invincible_form_card.card_id = card_invincible_form_card_relation.invincible_form_card_id AND card_invincible_form_card_relation.card_id = :card_id")
+    String getInvincibleFormCardId(String card_id);
+
+    @Query("SELECT transformation_card.card_id FROM transformation_card, card_transformation_card_relation WHERE transformation_card.card_id = card_transformation_card_relation.transformation_card_id AND card_transformation_card_relation.card_id = :card_id")
+    String getTransformationCardId(String card_id);
+
+    @Query("SELECT exchange_card.card_id FROM exchange_card, card_exchange_card_relation WHERE exchange_card.card_id = card_exchange_card_relation.exchange_card_id AND card_exchange_card_relation.card_id = :card_id")
+    String getExchangeCardId(String card_id);
+
+    @Query("SELECT card_id FROM card_invincible_form_card_relation WHERE invincible_form_card_id = :card_id UNION SELECT card_id FROM card_transformation_card_relation WHERE transformation_card_id = :card_id UNION SELECT card_id FROM card_exchange_card_relation WHERE exchange_card_id = :card_id")
+    String getBaseFormCard(String card_id);
 }

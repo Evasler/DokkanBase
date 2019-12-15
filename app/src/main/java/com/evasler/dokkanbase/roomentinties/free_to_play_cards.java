@@ -37,8 +37,8 @@ public class free_to_play_cards {
         return origin;
     }
 
-    public void setFree_to_play_cards_id(@NonNull Integer card_category_relation_id) {
-        this.free_to_play_cards_id = card_category_relation_id;
+    public void setFree_to_play_cards_id(@NonNull Integer free_to_play_cards_id) {
+        this.free_to_play_cards_id = free_to_play_cards_id;
     }
 
     public void setCard_id(@NonNull String card_id) {

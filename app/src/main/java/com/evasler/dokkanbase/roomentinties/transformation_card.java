@@ -9,7 +9,7 @@ public class transformation_card {
 
     @NonNull
     @PrimaryKey
-    private String transformation_card_id;
+    private String card_id;
     @NonNull
     private String character_name;
     @NonNull
@@ -18,8 +18,8 @@ public class transformation_card {
     private String passive_skill;
 
     @NonNull
-    public String getTransformation_card_id() {
-        return transformation_card_id;
+    public String getCard_id() {
+        return card_id;
     }
 
     @NonNull
@@ -37,8 +37,8 @@ public class transformation_card {
         return passive_skill;
     }
 
-    public void setTransformation_card_id(@NonNull String transformation_card_id) {
-        this.transformation_card_id = transformation_card_id;
+    public void setCard_id(@NonNull String card_id) {
+        this.card_id = card_id;
     }
 
     public void setCharacter_name(@NonNull String character_name) {

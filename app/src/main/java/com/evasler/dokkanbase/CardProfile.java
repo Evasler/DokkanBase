@@ -55,6 +55,10 @@ public class CardProfile extends AppCompatActivity implements GestureDetector.On
     private related_card_details pre_dokkan_details;
     private related_card_details dokkan_details;
 
+    private String baseFormCardId;
+    private String enhancedFormType;
+    private String enhancedFormCardId;
+
     private tier_5_medal_combination pre_dokkan_medal_tier_5_details;
     private tier_4_medal_combination pre_dokkan_medal_tier_4_details;
     private tier_3_medal_combination pre_dokkan_medal_tier_3_details;
@@ -160,6 +164,9 @@ public class CardProfile extends AppCompatActivity implements GestureDetector.On
         link_skills = myDao.getLinkSkills(card_id);
         categories = myDao.getCategories(card_id);
 
+        baseFormCardId = myDao.getBaseFormCard(card_id);
+        getEnhancedFormDetails();
+
         pre_dokkan_details = myDao.getPreDokkanAwakenedCardDetails(card_id);
         if (pre_dokkan_details != null) {
             int preDokkanAwakenedCardMedalCombinationId = pre_dokkan_details.getDokkan_awakening_medal_combination_id();
@@ -211,7 +218,7 @@ public class CardProfile extends AppCompatActivity implements GestureDetector.On
 
         DisplayMetrics displayMetrics = new DisplayMetrics();
         Objects.requireNonNull(this).getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-        double card_icon_dimension = Math.ceil(displayMetrics.heightPixels * 0.15);
+        double card_icon_dimension = Math.ceil(displayMetrics.heightPixels * 0.14);
 
         params = (ConstraintLayout.LayoutParams) findViewById(R.id.card_icon).getLayoutParams();
         params.width = (int) card_icon_dimension;
@@ -219,8 +226,8 @@ public class CardProfile extends AppCompatActivity implements GestureDetector.On
         findViewById(R.id.card_icon).setLayoutParams(params);
         params = (ConstraintLayout.LayoutParams) findViewById(R.id.card_background).getLayoutParams();
         params.width = (int) Math.ceil(card_icon_dimension * 0.8);
-        params.height = (int) Math.ceil(card_icon_dimension * 0.9);
-        params.bottomMargin = (int) Math.ceil(card_icon_dimension * 0.018);
+        params.height = (int) Math.ceil(card_icon_dimension * 0.8);
+        params.bottomMargin = (int) Math.ceil(card_icon_dimension * 0.06);
         findViewById(R.id.card_background).setLayoutParams(params);
         params = (ConstraintLayout.LayoutParams) findViewById(R.id.card_rarity).getLayoutParams();
         params.width = (int) Math.ceil(card_icon_dimension * 0.44);
@@ -307,8 +314,14 @@ public class CardProfile extends AppCompatActivity implements GestureDetector.On
         ((TextView) findViewById(R.id.twelve_ki_multiplier)).setText(MessageFormat.format("{0}%", card.getTwelve_ki_multiplier()));
 
         double related_card_icon_dimensions = card_icon_dimension / 2;
+        double medal_dimensions = related_card_icon_dimensions * 0.8 * 2 / 3;
 
         if (pre_dokkan_details != null) {
+
+            params = (ConstraintLayout.LayoutParams) findViewById(R.id.top_row_type_icon).getLayoutParams();
+            params.width = (int) related_card_icon_dimensions / 2;
+            params.height = (int) related_card_icon_dimensions / 2;
+            findViewById(R.id.top_row_type_icon).setLayoutParams(params);
 
             params = (ConstraintLayout.LayoutParams) findViewById(R.id.pre_dokkan_card_icon).getLayoutParams();
             params.width = (int) related_card_icon_dimensions;
@@ -316,8 +329,8 @@ public class CardProfile extends AppCompatActivity implements GestureDetector.On
             findViewById(R.id.pre_dokkan_card_icon).setLayoutParams(params);
             params = (ConstraintLayout.LayoutParams) findViewById(R.id.pre_dokkan_card_background).getLayoutParams();
             params.width = (int) Math.ceil(related_card_icon_dimensions * 0.8);
-            params.height = (int) Math.ceil(related_card_icon_dimensions * 0.9);
-            params.bottomMargin = (int) Math.ceil(related_card_icon_dimensions * 0.018);
+            params.height = (int) Math.ceil(related_card_icon_dimensions * 0.8);
+            params.bottomMargin = (int) Math.ceil(related_card_icon_dimensions * 0.06);
             findViewById(R.id.pre_dokkan_card_background).setLayoutParams(params);
             params = (ConstraintLayout.LayoutParams) findViewById(R.id.pre_dokkan_card_rarity).getLayoutParams();
             params.width = (int) Math.ceil(related_card_icon_dimensions * 0.44);
@@ -340,8 +353,8 @@ public class CardProfile extends AppCompatActivity implements GestureDetector.On
                 case 1:
                     ((ImageView) findViewById(R.id.pre_dokkan_medal_1)).setImageResource(getResourceId("medal_" + pre_dokkan_medal_tier_1_details.getMedal_1_id()));
                     params = (ConstraintLayout.LayoutParams) findViewById(R.id.pre_dokkan_medal_1).getLayoutParams();
-                    params.width = (int) Math.ceil(related_card_icon_dimensions * 0.9 * 2 / 3);
-                    params.height = (int) Math.ceil(related_card_icon_dimensions * 0.9 * 2 / 3);
+                    params.width = (int) Math.ceil(medal_dimensions);
+                    params.height = (int) Math.ceil(medal_dimensions);
                     findViewById(R.id.pre_dokkan_medal_1).setLayoutParams(params);
                     ((TextView) findViewById(R.id.pre_dokkan_medal_1_count)).setText(String.valueOf(pre_dokkan_medal_tier_1_details.getMedal_1_count()));
                     break;
@@ -349,14 +362,14 @@ public class CardProfile extends AppCompatActivity implements GestureDetector.On
                     findViewById(R.id.pre_dokkan_medal_2_group).setVisibility(View.VISIBLE);
                     ((ImageView) findViewById(R.id.pre_dokkan_medal_1)).setImageResource(getResourceId("medal_" + pre_dokkan_medal_tier_2_details.getMedal_1_id()));
                     params = (ConstraintLayout.LayoutParams) findViewById(R.id.pre_dokkan_medal_1).getLayoutParams();
-                    params.width = (int) Math.ceil(related_card_icon_dimensions * 0.9 * 2 / 3);
-                    params.height = (int) Math.ceil(related_card_icon_dimensions * 0.9 * 2 / 3);
+                    params.width = (int) Math.ceil(medal_dimensions);
+                    params.height = (int) Math.ceil(medal_dimensions);
                     findViewById(R.id.pre_dokkan_medal_1).setLayoutParams(params);
                     ((TextView) findViewById(R.id.pre_dokkan_medal_1_count)).setText(String.valueOf(pre_dokkan_medal_tier_2_details.getMedal_1_count()));
                     ((ImageView) findViewById(R.id.pre_dokkan_medal_2)).setImageResource(getResourceId("medal_" + pre_dokkan_medal_tier_2_details.getMedal_2_id()));
                     params = (ConstraintLayout.LayoutParams) findViewById(R.id.pre_dokkan_medal_2).getLayoutParams();
-                    params.width = (int) Math.ceil(related_card_icon_dimensions * 0.9 * 2 / 3);
-                    params.height = (int) Math.ceil(related_card_icon_dimensions * 0.9 * 2 / 3);
+                    params.width = (int) Math.ceil(medal_dimensions);
+                    params.height = (int) Math.ceil(medal_dimensions);
                     findViewById(R.id.pre_dokkan_medal_2).setLayoutParams(params);
                     ((TextView) findViewById(R.id.pre_dokkan_medal_2_count)).setText(String.valueOf(pre_dokkan_medal_tier_2_details.getMedal_2_count()));
                     break;
@@ -365,20 +378,20 @@ public class CardProfile extends AppCompatActivity implements GestureDetector.On
                     findViewById(R.id.pre_dokkan_medal_3_group).setVisibility(View.VISIBLE);
                     ((ImageView) findViewById(R.id.pre_dokkan_medal_1)).setImageResource(getResourceId("medal_" + pre_dokkan_medal_tier_3_details.getMedal_1_id()));
                     params = (ConstraintLayout.LayoutParams) findViewById(R.id.pre_dokkan_medal_1).getLayoutParams();
-                    params.width = (int) Math.ceil(related_card_icon_dimensions * 0.9 * 2 / 3);
-                    params.height = (int) Math.ceil(related_card_icon_dimensions * 0.9 * 2 / 3);
+                    params.width = (int) Math.ceil(medal_dimensions);
+                    params.height = (int) Math.ceil(medal_dimensions);
                     findViewById(R.id.pre_dokkan_medal_1).setLayoutParams(params);
                     ((TextView) findViewById(R.id.pre_dokkan_medal_1_count)).setText(String.valueOf(pre_dokkan_medal_tier_3_details.getMedal_1_count()));
                     ((ImageView) findViewById(R.id.pre_dokkan_medal_2)).setImageResource(getResourceId("medal_" + pre_dokkan_medal_tier_3_details.getMedal_2_id()));
                     params = (ConstraintLayout.LayoutParams) findViewById(R.id.pre_dokkan_medal_2).getLayoutParams();
-                    params.width = (int) Math.ceil(related_card_icon_dimensions * 0.9 * 2 / 3);
-                    params.height = (int) Math.ceil(related_card_icon_dimensions * 0.9 * 2 / 3);
+                    params.width = (int) Math.ceil(medal_dimensions);
+                    params.height = (int) Math.ceil(medal_dimensions);
                     findViewById(R.id.pre_dokkan_medal_2).setLayoutParams(params);
                     ((TextView) findViewById(R.id.pre_dokkan_medal_2_count)).setText(String.valueOf(pre_dokkan_medal_tier_3_details.getMedal_2_count()));
                     ((ImageView) findViewById(R.id.pre_dokkan_medal_3)).setImageResource(getResourceId("medal_" + pre_dokkan_medal_tier_3_details.getMedal_3_id()));
                     params = (ConstraintLayout.LayoutParams) findViewById(R.id.pre_dokkan_medal_3).getLayoutParams();
-                    params.width = (int) Math.ceil(related_card_icon_dimensions * 0.9 * 2 / 3);
-                    params.height = (int) Math.ceil(related_card_icon_dimensions * 0.9 * 2 / 3);
+                    params.width = (int) Math.ceil(medal_dimensions);
+                    params.height = (int) Math.ceil(medal_dimensions);
                     findViewById(R.id.pre_dokkan_medal_3).setLayoutParams(params);
                     ((TextView) findViewById(R.id.pre_dokkan_medal_3_count)).setText(String.valueOf(pre_dokkan_medal_tier_3_details.getMedal_3_count()));
                     break;
@@ -388,26 +401,26 @@ public class CardProfile extends AppCompatActivity implements GestureDetector.On
                     findViewById(R.id.pre_dokkan_medal_4_group).setVisibility(View.VISIBLE);
                     ((ImageView) findViewById(R.id.pre_dokkan_medal_1)).setImageResource(getResourceId("medal_" + pre_dokkan_medal_tier_4_details.getMedal_1_id()));
                     params = (ConstraintLayout.LayoutParams) findViewById(R.id.pre_dokkan_medal_1).getLayoutParams();
-                    params.width = (int) Math.ceil(related_card_icon_dimensions * 0.9 * 2 / 3);
-                    params.height = (int) Math.ceil(related_card_icon_dimensions * 0.9 * 2 / 3);
+                    params.width = (int) Math.ceil(medal_dimensions);
+                    params.height = (int) Math.ceil(medal_dimensions);
                     findViewById(R.id.pre_dokkan_medal_1).setLayoutParams(params);
                     ((TextView) findViewById(R.id.pre_dokkan_medal_1_count)).setText(String.valueOf(pre_dokkan_medal_tier_4_details.getMedal_1_count()));
                     ((ImageView) findViewById(R.id.pre_dokkan_medal_2)).setImageResource(getResourceId("medal_" + pre_dokkan_medal_tier_4_details.getMedal_2_id()));
                     params = (ConstraintLayout.LayoutParams) findViewById(R.id.pre_dokkan_medal_2).getLayoutParams();
-                    params.width = (int) Math.ceil(related_card_icon_dimensions * 0.9 * 2 / 3);
-                    params.height = (int) Math.ceil(related_card_icon_dimensions * 0.9 * 2 / 3);
+                    params.width = (int) Math.ceil(medal_dimensions);
+                    params.height = (int) Math.ceil(medal_dimensions);
                     findViewById(R.id.pre_dokkan_medal_2).setLayoutParams(params);
                     ((TextView) findViewById(R.id.pre_dokkan_medal_2_count)).setText(String.valueOf(pre_dokkan_medal_tier_4_details.getMedal_2_count()));
                     ((ImageView) findViewById(R.id.pre_dokkan_medal_3)).setImageResource(getResourceId("medal_" + pre_dokkan_medal_tier_4_details.getMedal_3_id()));
                     params = (ConstraintLayout.LayoutParams) findViewById(R.id.pre_dokkan_medal_3).getLayoutParams();
-                    params.width = (int) Math.ceil(related_card_icon_dimensions * 0.9 * 2 / 3);
-                    params.height = (int) Math.ceil(related_card_icon_dimensions * 0.9 * 2 / 3);
+                    params.width = (int) Math.ceil(medal_dimensions);
+                    params.height = (int) Math.ceil(medal_dimensions);
                     findViewById(R.id.pre_dokkan_medal_3).setLayoutParams(params);
                     ((TextView) findViewById(R.id.pre_dokkan_medal_3_count)).setText(String.valueOf(pre_dokkan_medal_tier_4_details.getMedal_3_count()));
                     ((ImageView) findViewById(R.id.pre_dokkan_medal_4)).setImageResource(getResourceId("medal_" + pre_dokkan_medal_tier_4_details.getMedal_4_id()));
                     params = (ConstraintLayout.LayoutParams) findViewById(R.id.pre_dokkan_medal_4).getLayoutParams();
-                    params.width = (int) Math.ceil(related_card_icon_dimensions * 0.9 * 2 / 3);
-                    params.height = (int) Math.ceil(related_card_icon_dimensions * 0.9 * 2 / 3);
+                    params.width = (int) Math.ceil(medal_dimensions);
+                    params.height = (int) Math.ceil(medal_dimensions);
                     findViewById(R.id.pre_dokkan_medal_4).setLayoutParams(params);
                     ((TextView) findViewById(R.id.pre_dokkan_medal_4_count)).setText(String.valueOf(pre_dokkan_medal_tier_4_details.getMedal_4_count()));
                     break;
@@ -418,32 +431,32 @@ public class CardProfile extends AppCompatActivity implements GestureDetector.On
                     findViewById(R.id.pre_dokkan_medal_5_group).setVisibility(View.VISIBLE);
                     ((ImageView) findViewById(R.id.pre_dokkan_medal_1)).setImageResource(getResourceId("medal_" + pre_dokkan_medal_tier_5_details.getMedal_1_id()));
                     params = (ConstraintLayout.LayoutParams) findViewById(R.id.pre_dokkan_medal_1).getLayoutParams();
-                    params.width = (int) Math.ceil(related_card_icon_dimensions * 0.9 * 2 / 3);
-                    params.height = (int) Math.ceil(related_card_icon_dimensions * 0.9 * 2 / 3);
+                    params.width = (int) Math.ceil(medal_dimensions);
+                    params.height = (int) Math.ceil(medal_dimensions);
                     findViewById(R.id.pre_dokkan_medal_1).setLayoutParams(params);
                     ((TextView) findViewById(R.id.pre_dokkan_medal_1_count)).setText(String.valueOf(pre_dokkan_medal_tier_5_details.getMedal_1_count()));
                     ((ImageView) findViewById(R.id.pre_dokkan_medal_2)).setImageResource(getResourceId("medal_" + pre_dokkan_medal_tier_5_details.getMedal_2_id()));
                     params = (ConstraintLayout.LayoutParams) findViewById(R.id.pre_dokkan_medal_2).getLayoutParams();
-                    params.width = (int) Math.ceil(related_card_icon_dimensions * 0.9 * 2 / 3);
-                    params.height = (int) Math.ceil(related_card_icon_dimensions * 0.9 * 2 / 3);
+                    params.width = (int) Math.ceil(medal_dimensions);
+                    params.height = (int) Math.ceil(medal_dimensions);
                     findViewById(R.id.pre_dokkan_medal_2).setLayoutParams(params);
                     ((TextView) findViewById(R.id.pre_dokkan_medal_2_count)).setText(String.valueOf(pre_dokkan_medal_tier_5_details.getMedal_2_count()));
                     ((ImageView) findViewById(R.id.pre_dokkan_medal_3)).setImageResource(getResourceId("medal_" + pre_dokkan_medal_tier_5_details.getMedal_3_id()));
                     params = (ConstraintLayout.LayoutParams) findViewById(R.id.pre_dokkan_medal_3).getLayoutParams();
-                    params.width = (int) Math.ceil(related_card_icon_dimensions * 0.9 * 2 / 3);
-                    params.height = (int) Math.ceil(related_card_icon_dimensions * 0.9 * 2 / 3);
+                    params.width = (int) Math.ceil(medal_dimensions);
+                    params.height = (int) Math.ceil(medal_dimensions);
                     findViewById(R.id.pre_dokkan_medal_3).setLayoutParams(params);
                     ((TextView) findViewById(R.id.pre_dokkan_medal_3_count)).setText(String.valueOf(pre_dokkan_medal_tier_5_details.getMedal_3_count()));
                     ((ImageView) findViewById(R.id.pre_dokkan_medal_4)).setImageResource(getResourceId("medal_" + pre_dokkan_medal_tier_5_details.getMedal_4_id()));
                     params = (ConstraintLayout.LayoutParams) findViewById(R.id.pre_dokkan_medal_4).getLayoutParams();
-                    params.width = (int) Math.ceil(related_card_icon_dimensions * 0.9 * 2 / 3);
-                    params.height = (int) Math.ceil(related_card_icon_dimensions * 0.9 * 2 / 3);
+                    params.width = (int) Math.ceil(medal_dimensions);
+                    params.height = (int) Math.ceil(medal_dimensions);
                     findViewById(R.id.pre_dokkan_medal_4).setLayoutParams(params);
                     ((TextView) findViewById(R.id.pre_dokkan_medal_4_count)).setText(String.valueOf(pre_dokkan_medal_tier_5_details.getMedal_4_count()));
                     ((ImageView) findViewById(R.id.pre_dokkan_medal_5)).setImageResource(getResourceId("medal_" + pre_dokkan_medal_tier_5_details.getMedal_5_id()));
                     params = (ConstraintLayout.LayoutParams) findViewById(R.id.pre_dokkan_medal_5).getLayoutParams();
-                    params.width = (int) Math.ceil(related_card_icon_dimensions * 0.9 * 2 / 3);
-                    params.height = (int) Math.ceil(related_card_icon_dimensions * 0.9 * 2 / 3);
+                    params.width = (int) Math.ceil(medal_dimensions);
+                    params.height = (int) Math.ceil(medal_dimensions);
                     findViewById(R.id.pre_dokkan_medal_5).setLayoutParams(params);
                     ((TextView) findViewById(R.id.pre_dokkan_medal_5_count)).setText(String.valueOf(pre_dokkan_medal_tier_5_details.getMedal_5_count()));
                     break;
@@ -457,9 +470,12 @@ public class CardProfile extends AppCompatActivity implements GestureDetector.On
             findViewById(R.id.pre_dokkan_medal_1_group).setVisibility(View.INVISIBLE);
         }
 
-
-
         if (dokkan_details != null) {
+
+            params = (ConstraintLayout.LayoutParams) findViewById(R.id.bottom_row_type_icon).getLayoutParams();
+            params.width = (int) related_card_icon_dimensions / 2;
+            params.height = (int) related_card_icon_dimensions / 2;
+            findViewById(R.id.bottom_row_type_icon).setLayoutParams(params);
 
             params = (ConstraintLayout.LayoutParams) findViewById(R.id.dokkan_card_icon).getLayoutParams();
             params.width = (int) related_card_icon_dimensions;
@@ -467,8 +483,8 @@ public class CardProfile extends AppCompatActivity implements GestureDetector.On
             findViewById(R.id.dokkan_card_icon).setLayoutParams(params);
             params = (ConstraintLayout.LayoutParams) findViewById(R.id.dokkan_card_background).getLayoutParams();
             params.width = (int) Math.ceil(related_card_icon_dimensions * 0.8);
-            params.height = (int) Math.ceil(related_card_icon_dimensions * 0.9);
-            params.bottomMargin = (int) Math.ceil(related_card_icon_dimensions * 0.018);
+            params.height = (int) Math.ceil(related_card_icon_dimensions * 0.8);
+            params.bottomMargin = (int) Math.ceil(related_card_icon_dimensions * 0.06);
             findViewById(R.id.dokkan_card_background).setLayoutParams(params);
             params = (ConstraintLayout.LayoutParams) findViewById(R.id.dokkan_card_rarity).getLayoutParams();
             params.width = (int) Math.ceil(related_card_icon_dimensions * 0.44);
@@ -491,8 +507,8 @@ public class CardProfile extends AppCompatActivity implements GestureDetector.On
                 case 1:
                     ((ImageView) findViewById(R.id.dokkan_medal_1)).setImageResource(getResourceId("medal_" + dokkan_medal_tier_1_details.getMedal_1_id()));
                     params = (ConstraintLayout.LayoutParams) findViewById(R.id.dokkan_medal_1).getLayoutParams();
-                    params.width = (int) Math.ceil(related_card_icon_dimensions * 0.9 * 2 / 3);
-                    params.height = (int) Math.ceil(related_card_icon_dimensions * 0.9 * 2 / 3);
+                    params.width = (int) Math.ceil(medal_dimensions);
+                    params.height = (int) Math.ceil(medal_dimensions);
                     findViewById(R.id.dokkan_medal_1).setLayoutParams(params);
                     ((TextView) findViewById(R.id.dokkan_medal_1_count)).setText(String.valueOf(dokkan_medal_tier_1_details.getMedal_1_count()));
                     break;
@@ -500,14 +516,14 @@ public class CardProfile extends AppCompatActivity implements GestureDetector.On
                     findViewById(R.id.dokkan_medal_2_group).setVisibility(View.VISIBLE);
                     ((ImageView) findViewById(R.id.dokkan_medal_1)).setImageResource(getResourceId("medal_" + dokkan_medal_tier_2_details.getMedal_1_id()));
                     params = (ConstraintLayout.LayoutParams) findViewById(R.id.dokkan_medal_1).getLayoutParams();
-                    params.width = (int) Math.ceil(related_card_icon_dimensions * 0.9 * 2 / 3);
-                    params.height = (int) Math.ceil(related_card_icon_dimensions * 0.9 * 2 / 3);
+                    params.width = (int) Math.ceil(medal_dimensions);
+                    params.height = (int) Math.ceil(medal_dimensions);
                     findViewById(R.id.dokkan_medal_1).setLayoutParams(params);
                     ((TextView) findViewById(R.id.dokkan_medal_1_count)).setText(String.valueOf(dokkan_medal_tier_2_details.getMedal_1_count()));
                     ((ImageView) findViewById(R.id.dokkan_medal_2)).setImageResource(getResourceId("medal_" + dokkan_medal_tier_2_details.getMedal_2_id()));
                     params = (ConstraintLayout.LayoutParams) findViewById(R.id.dokkan_medal_2).getLayoutParams();
-                    params.width = (int) Math.ceil(related_card_icon_dimensions * 0.9 * 2 / 3);
-                    params.height = (int) Math.ceil(related_card_icon_dimensions * 0.9 * 2 / 3);
+                    params.width = (int) Math.ceil(medal_dimensions);
+                    params.height = (int) Math.ceil(medal_dimensions);
                     findViewById(R.id.dokkan_medal_2).setLayoutParams(params);
                     ((TextView) findViewById(R.id.dokkan_medal_2_count)).setText(String.valueOf(dokkan_medal_tier_2_details.getMedal_2_count()));
                     break;
@@ -516,20 +532,20 @@ public class CardProfile extends AppCompatActivity implements GestureDetector.On
                     findViewById(R.id.dokkan_medal_3_group).setVisibility(View.VISIBLE);
                     ((ImageView) findViewById(R.id.dokkan_medal_1)).setImageResource(getResourceId("medal_" + dokkan_medal_tier_3_details.getMedal_1_id()));
                     params = (ConstraintLayout.LayoutParams) findViewById(R.id.dokkan_medal_1).getLayoutParams();
-                    params.width = (int) Math.ceil(related_card_icon_dimensions * 0.9 * 2 / 3);
-                    params.height = (int) Math.ceil(related_card_icon_dimensions * 0.9 * 2 / 3);
+                    params.width = (int) Math.ceil(medal_dimensions);
+                    params.height = (int) Math.ceil(medal_dimensions);
                     findViewById(R.id.dokkan_medal_1).setLayoutParams(params);
                     ((TextView) findViewById(R.id.dokkan_medal_1_count)).setText(String.valueOf(dokkan_medal_tier_3_details.getMedal_1_count()));
                     ((ImageView) findViewById(R.id.dokkan_medal_2)).setImageResource(getResourceId("medal_" + dokkan_medal_tier_3_details.getMedal_2_id()));
                     params = (ConstraintLayout.LayoutParams) findViewById(R.id.dokkan_medal_2).getLayoutParams();
-                    params.width = (int) Math.ceil(related_card_icon_dimensions * 0.9 * 2 / 3);
-                    params.height = (int) Math.ceil(related_card_icon_dimensions * 0.9 * 2 / 3);
+                    params.width = (int) Math.ceil(medal_dimensions);
+                    params.height = (int) Math.ceil(medal_dimensions);
                     findViewById(R.id.dokkan_medal_2).setLayoutParams(params);
                     ((TextView) findViewById(R.id.dokkan_medal_2_count)).setText(String.valueOf(dokkan_medal_tier_3_details.getMedal_2_count()));
                     ((ImageView) findViewById(R.id.dokkan_medal_3)).setImageResource(getResourceId("medal_" + dokkan_medal_tier_3_details.getMedal_3_id()));
                     params = (ConstraintLayout.LayoutParams) findViewById(R.id.dokkan_medal_3).getLayoutParams();
-                    params.width = (int) Math.ceil(related_card_icon_dimensions * 0.9 * 2 / 3);
-                    params.height = (int) Math.ceil(related_card_icon_dimensions * 0.9 * 2 / 3);
+                    params.width = (int) Math.ceil(medal_dimensions);
+                    params.height = (int) Math.ceil(medal_dimensions);
                     findViewById(R.id.dokkan_medal_3).setLayoutParams(params);
                     ((TextView) findViewById(R.id.dokkan_medal_3_count)).setText(String.valueOf(dokkan_medal_tier_3_details.getMedal_3_count()));
                     break;
@@ -539,26 +555,26 @@ public class CardProfile extends AppCompatActivity implements GestureDetector.On
                     findViewById(R.id.dokkan_medal_4_group).setVisibility(View.VISIBLE);
                     ((ImageView) findViewById(R.id.dokkan_medal_1)).setImageResource(getResourceId("medal_" + dokkan_medal_tier_4_details.getMedal_1_id()));
                     params = (ConstraintLayout.LayoutParams) findViewById(R.id.dokkan_medal_1).getLayoutParams();
-                    params.width = (int) Math.ceil(related_card_icon_dimensions * 0.9 * 2 / 3);
-                    params.height = (int) Math.ceil(related_card_icon_dimensions * 0.9 * 2 / 3);
+                    params.width = (int) Math.ceil(medal_dimensions);
+                    params.height = (int) Math.ceil(medal_dimensions);
                     findViewById(R.id.dokkan_medal_1).setLayoutParams(params);
                     ((TextView) findViewById(R.id.dokkan_medal_1_count)).setText(String.valueOf(dokkan_medal_tier_4_details.getMedal_1_count()));
                     ((ImageView) findViewById(R.id.dokkan_medal_2)).setImageResource(getResourceId("medal_" + dokkan_medal_tier_4_details.getMedal_2_id()));
                     params = (ConstraintLayout.LayoutParams) findViewById(R.id.dokkan_medal_2).getLayoutParams();
-                    params.width = (int) Math.ceil(related_card_icon_dimensions * 0.9 * 2 / 3);
-                    params.height = (int) Math.ceil(related_card_icon_dimensions * 0.9 * 2 / 3);
+                    params.width = (int) Math.ceil(medal_dimensions);
+                    params.height = (int) Math.ceil(medal_dimensions);
                     findViewById(R.id.dokkan_medal_2).setLayoutParams(params);
                     ((TextView) findViewById(R.id.dokkan_medal_2_count)).setText(String.valueOf(dokkan_medal_tier_4_details.getMedal_2_count()));
                     ((ImageView) findViewById(R.id.dokkan_medal_3)).setImageResource(getResourceId("medal_" + dokkan_medal_tier_4_details.getMedal_3_id()));
                     params = (ConstraintLayout.LayoutParams) findViewById(R.id.dokkan_medal_3).getLayoutParams();
-                    params.width = (int) Math.ceil(related_card_icon_dimensions * 0.9 * 2 / 3);
-                    params.height = (int) Math.ceil(related_card_icon_dimensions * 0.9 * 2 / 3);
+                    params.width = (int) Math.ceil(medal_dimensions);
+                    params.height = (int) Math.ceil(medal_dimensions);
                     findViewById(R.id.dokkan_medal_3).setLayoutParams(params);
                     ((TextView) findViewById(R.id.dokkan_medal_3_count)).setText(String.valueOf(dokkan_medal_tier_4_details.getMedal_3_count()));
                     ((ImageView) findViewById(R.id.dokkan_medal_4)).setImageResource(getResourceId("medal_" + dokkan_medal_tier_4_details.getMedal_4_id()));
                     params = (ConstraintLayout.LayoutParams) findViewById(R.id.dokkan_medal_4).getLayoutParams();
-                    params.width = (int) Math.ceil(related_card_icon_dimensions * 0.9 * 2 / 3);
-                    params.height = (int) Math.ceil(related_card_icon_dimensions * 0.9 * 2 / 3);
+                    params.width = (int) Math.ceil(medal_dimensions);
+                    params.height = (int) Math.ceil(medal_dimensions);
                     findViewById(R.id.dokkan_medal_4).setLayoutParams(params);
                     ((TextView) findViewById(R.id.dokkan_medal_4_count)).setText(String.valueOf(dokkan_medal_tier_4_details.getMedal_4_count()));
                     break;
@@ -569,32 +585,32 @@ public class CardProfile extends AppCompatActivity implements GestureDetector.On
                     findViewById(R.id.dokkan_medal_5_group).setVisibility(View.VISIBLE);
                     ((ImageView) findViewById(R.id.dokkan_medal_1)).setImageResource(getResourceId("medal_" + dokkan_medal_tier_5_details.getMedal_1_id()));
                     params = (ConstraintLayout.LayoutParams) findViewById(R.id.dokkan_medal_1).getLayoutParams();
-                    params.width = (int) Math.ceil(related_card_icon_dimensions * 0.9 * 2 / 3);
-                    params.height = (int) Math.ceil(related_card_icon_dimensions * 0.9 * 2 / 3);
+                    params.width = (int) Math.ceil(medal_dimensions);
+                    params.height = (int) Math.ceil(medal_dimensions);
                     findViewById(R.id.dokkan_medal_1).setLayoutParams(params);
                     ((TextView) findViewById(R.id.dokkan_medal_1_count)).setText(String.valueOf(dokkan_medal_tier_5_details.getMedal_1_count()));
                     ((ImageView) findViewById(R.id.dokkan_medal_2)).setImageResource(getResourceId("medal_" + dokkan_medal_tier_5_details.getMedal_2_id()));
                     params = (ConstraintLayout.LayoutParams) findViewById(R.id.dokkan_medal_2).getLayoutParams();
-                    params.width = (int) Math.ceil(related_card_icon_dimensions * 0.9 * 2 / 3);
-                    params.height = (int) Math.ceil(related_card_icon_dimensions * 0.9 * 2 / 3);
+                    params.width = (int) Math.ceil(medal_dimensions);
+                    params.height = (int) Math.ceil(medal_dimensions);
                     findViewById(R.id.dokkan_medal_2).setLayoutParams(params);
                     ((TextView) findViewById(R.id.dokkan_medal_2_count)).setText(String.valueOf(dokkan_medal_tier_5_details.getMedal_2_count()));
                     ((ImageView) findViewById(R.id.dokkan_medal_3)).setImageResource(getResourceId("medal_" + dokkan_medal_tier_5_details.getMedal_3_id()));
                     params = (ConstraintLayout.LayoutParams) findViewById(R.id.dokkan_medal_3).getLayoutParams();
-                    params.width = (int) Math.ceil(related_card_icon_dimensions * 0.9 * 2 / 3);
-                    params.height = (int) Math.ceil(related_card_icon_dimensions * 0.9 * 2 / 3);
+                    params.width = (int) Math.ceil(medal_dimensions);
+                    params.height = (int) Math.ceil(medal_dimensions);
                     findViewById(R.id.dokkan_medal_3).setLayoutParams(params);
                     ((TextView) findViewById(R.id.dokkan_medal_3_count)).setText(String.valueOf(dokkan_medal_tier_5_details.getMedal_3_count()));
                     ((ImageView) findViewById(R.id.dokkan_medal_4)).setImageResource(getResourceId("medal_" + dokkan_medal_tier_5_details.getMedal_4_id()));
                     params = (ConstraintLayout.LayoutParams) findViewById(R.id.dokkan_medal_4).getLayoutParams();
-                    params.width = (int) Math.ceil(related_card_icon_dimensions * 0.9 * 2 / 3);
-                    params.height = (int) Math.ceil(related_card_icon_dimensions * 0.9 * 2 / 3);
+                    params.width = (int) Math.ceil(medal_dimensions);
+                    params.height = (int) Math.ceil(medal_dimensions);
                     findViewById(R.id.dokkan_medal_4).setLayoutParams(params);
                     ((TextView) findViewById(R.id.dokkan_medal_4_count)).setText(String.valueOf(dokkan_medal_tier_5_details.getMedal_4_count()));
                     ((ImageView) findViewById(R.id.dokkan_medal_5)).setImageResource(getResourceId("medal_" + dokkan_medal_tier_5_details.getMedal_5_id()));
                     params = (ConstraintLayout.LayoutParams) findViewById(R.id.dokkan_medal_5).getLayoutParams();
-                    params.width = (int) Math.ceil(related_card_icon_dimensions * 0.9 * 2 / 3);
-                    params.height = (int) Math.ceil(related_card_icon_dimensions * 0.9 * 2 / 3);
+                    params.width = (int) Math.ceil(medal_dimensions);
+                    params.height = (int) Math.ceil(medal_dimensions);
                     findViewById(R.id.dokkan_medal_5).setLayoutParams(params);
                     ((TextView) findViewById(R.id.dokkan_medal_5_count)).setText(String.valueOf(dokkan_medal_tier_5_details.getMedal_5_count()));
                     break;
@@ -607,6 +623,20 @@ public class CardProfile extends AppCompatActivity implements GestureDetector.On
             findViewById(R.id.dokkan_card_rarity).setVisibility(View.INVISIBLE);
             findViewById(R.id.dokkan_medal_1_group).setVisibility(View.INVISIBLE);
         }
+
+        View twelve_ki_multiplier_label = findViewById(R.id.twelve_ki_multiplier_label);
+        twelve_ki_multiplier_label.measure(0, 0);
+        View twelve_ki_multiplier = findViewById(R.id.twelve_ki_multiplier);
+        twelve_ki_multiplier.measure(0, 0);
+        params = (ConstraintLayout.LayoutParams) findViewById(R.id.generic_stats_container).getLayoutParams();
+        params.width = twelve_ki_multiplier_label.getMeasuredWidth() + twelve_ki_multiplier.getMeasuredWidth();
+        params.height = twelve_ki_multiplier_label.getMeasuredHeight() * 4;
+        findViewById(R.id.generic_stats_container).setLayoutParams(params);
+
+        params = (ConstraintLayout.LayoutParams) findViewById(R.id.form_tree_container).getLayoutParams();
+        params.width = (int) Math.ceil(related_card_icon_dimensions * 1.5 + medal_dimensions * 5 + 64);
+        params.height = (int) Math.ceil(related_card_icon_dimensions * 2 + 6);
+        findViewById(R.id.form_tree_container).setLayoutParams(params);
 
         super_attack_extra_effect super_attack_extra_effect;
         myDao = AppDatabase.getDatabase(Objects.requireNonNull(this)).myDao();
@@ -833,5 +863,21 @@ public class CardProfile extends AppCompatActivity implements GestureDetector.On
         }
 
         return kiMeterFileName;
+    }
+
+    public void getEnhancedFormDetails() {
+        String invincibleFormCardId = myDao.getInvincibleFormCardId(card.getCard_id());
+        String transformationCardId = myDao.getTransformationCardId(card.getCard_id());
+        String exchangeCardId = myDao.getExchangeCardId(card.getCard_id());
+        if (invincibleFormCardId != null) {
+            enhancedFormType = "Invincible Form";
+            enhancedFormCardId = invincibleFormCardId;
+        } else if (transformationCardId != null) {
+            enhancedFormType = "Transformation";
+            enhancedFormCardId = transformationCardId;
+        } else if (exchangeCardId != null) {
+            enhancedFormType = "Exchange";
+            enhancedFormCardId = exchangeCardId;
+        }
     }
 }
