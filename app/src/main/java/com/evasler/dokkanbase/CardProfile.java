@@ -20,12 +20,14 @@ import android.widget.TextView;
 import android.widget.ViewFlipper;
 
 import com.evasler.dokkanbase.queryresponseobjects.active_skill_details;
+import com.evasler.dokkanbase.queryresponseobjects.invincible_form_card_details;
 import com.evasler.dokkanbase.queryresponseobjects.related_card_details;
 import com.evasler.dokkanbase.queryresponseobjects.tier_1_medal_combination;
 import com.evasler.dokkanbase.queryresponseobjects.tier_2_medal_combination;
 import com.evasler.dokkanbase.queryresponseobjects.tier_3_medal_combination;
 import com.evasler.dokkanbase.queryresponseobjects.tier_4_medal_combination;
 import com.evasler.dokkanbase.queryresponseobjects.tier_5_medal_combination;
+import com.evasler.dokkanbase.queryresponseobjects.transformation_card_exchange_card_details;
 import com.evasler.dokkanbase.roomentinties.card;
 import com.evasler.dokkanbase.roomentinties.category;
 import com.evasler.dokkanbase.roomentinties.link_skill;
@@ -44,9 +46,9 @@ public class CardProfile extends AppCompatActivity implements GestureDetector.On
 
     public static int extraSpace;
 
-    private MyDao myDao;
+    MyDao myDao;
 
-    private card card;
+    card card;
     private int max_level;
     private List<link_skill> link_skills;
     private List<category> categories;
@@ -55,9 +57,11 @@ public class CardProfile extends AppCompatActivity implements GestureDetector.On
     private related_card_details pre_dokkan_details;
     private related_card_details dokkan_details;
 
-    private String baseFormCardId;
-    private String enhancedFormType;
-    private String enhancedFormCardId;
+    private String previousCardFormId;
+    String current_enhanced_form_card_id;
+    String current_enhanced_form_type;
+    String enhancedFormType;
+    String enhancedFormCardId;
 
     private tier_5_medal_combination pre_dokkan_medal_tier_5_details;
     private tier_4_medal_combination pre_dokkan_medal_tier_4_details;
@@ -87,10 +91,13 @@ public class CardProfile extends AppCompatActivity implements GestureDetector.On
         setContentView(R.layout.card_profile);
 
         Intent intent = getIntent();
-        String card_id = intent.getStringExtra("card_id");
+        String base_card_id = intent.getStringExtra("card_id");
+        System.out.println("opened profile: " + base_card_id);
+        current_enhanced_form_card_id = intent.getStringExtra("enhanced_form_card_id");
+        current_enhanced_form_type = intent.getStringExtra("enhanced_form_type");
 
-        getCardDetails(card_id);
-        setViewsContent();
+        getCardDetails(base_card_id);
+        setViewsContent(base_card_id);
         lowerScrollsHeight();
     }
 
@@ -155,64 +162,94 @@ public class CardProfile extends AppCompatActivity implements GestureDetector.On
         return true;
     }
 
-    private void getCardDetails(String card_id) {
+    private void getCardDetails(String base_card_id) {
         myDao = AppDatabase.getDatabase(Objects.requireNonNull(this)).myDao();
-        card = myDao.getCardMainDetails(card_id);
-        max_level = myDao.getMaxLevel(card.getRarity());
-        active_skill = myDao.getActiveSkill(card_id);
-        super_attacks = myDao.getSuperAttacks(card_id);
-        link_skills = myDao.getLinkSkills(card_id);
-        categories = myDao.getCategories(card_id);
+        card = myDao.getCardMainDetails(base_card_id);
 
-        baseFormCardId = myDao.getBaseFormCard(card_id);
-        getEnhancedFormDetails();
-
-        pre_dokkan_details = myDao.getPreDokkanAwakenedCardDetails(card_id);
-        if (pre_dokkan_details != null) {
-            int preDokkanAwakenedCardMedalCombinationId = pre_dokkan_details.getDokkan_awakening_medal_combination_id();
-            switch (pre_dokkan_details.getDokkan_awakening_medal_combination_id() / 1000) {
-                case 1:
-                    pre_dokkan_medal_tier_1_details = myDao.getTier1MedalCombination(preDokkanAwakenedCardMedalCombinationId);
-                    break;
-                case 2:
-                    pre_dokkan_medal_tier_2_details = myDao.getTier2MedalCombination(preDokkanAwakenedCardMedalCombinationId);
-                    break;
-                case 3:
-                    pre_dokkan_medal_tier_3_details = myDao.getTier3MedalCombination(preDokkanAwakenedCardMedalCombinationId);
-                    break;
-                case 4:
-                    pre_dokkan_medal_tier_4_details = myDao.getTier4MedalCombination(preDokkanAwakenedCardMedalCombinationId);
-                    break;
-                case 5:
-                    pre_dokkan_medal_tier_5_details = myDao.getTier5MedalCombination(preDokkanAwakenedCardMedalCombinationId);
-                    break;
-            }
+        if (current_enhanced_form_card_id != null) {
+            card.setCard_id(current_enhanced_form_card_id);
+            previousCardFormId = myDao.getPreviousCardForm(current_enhanced_form_card_id);
         }
 
-        dokkan_details = myDao.getDokkanAwakenedCardDetails(card_id);
-        if (dokkan_details != null) {
-            int dokkanAwakenedCardMedalCombinationId = dokkan_details.getDokkan_awakening_medal_combination_id();
-            switch (dokkanAwakenedCardMedalCombinationId / 1000) {
-                case 1:
-                    dokkan_medal_tier_1_details = myDao.getTier1MedalCombination(dokkanAwakenedCardMedalCombinationId);
-                    break;
-                case 2:
-                    dokkan_medal_tier_2_details = myDao.getTier2MedalCombination(dokkanAwakenedCardMedalCombinationId);
-                    break;
-                case 3:
-                    dokkan_medal_tier_3_details = myDao.getTier3MedalCombination(dokkanAwakenedCardMedalCombinationId);
-                    break;
-                case 4:
-                    dokkan_medal_tier_4_details = myDao.getTier4MedalCombination(dokkanAwakenedCardMedalCombinationId);
-                    break;
-                case 5:
-                    dokkan_medal_tier_5_details = myDao.getTier5MedalCombination(dokkanAwakenedCardMedalCombinationId);
-                    break;
+        if (current_enhanced_form_card_id != null && current_enhanced_form_type != null) {
+            if (current_enhanced_form_type.equals("Invincible Form")) {
+                invincible_form_card_details invincible_form_card_details = myDao.getInvincibleFormCardDetails(current_enhanced_form_card_id);
+                card.setPassive_skill_name(invincible_form_card_details.getPassive_skill_name());
+                card.setPassive_skill(invincible_form_card_details.getPassive_skill());
+                card.setMax_hp(invincible_form_card_details.getBase_hp());
+                card.setMax_atk(invincible_form_card_details.getBase_atk());
+                card.setMax_def(invincible_form_card_details.getBase_def());
+            } else if (current_enhanced_form_type.equals("Transformation")) {
+                transformation_card_exchange_card_details transformation_card_exchange_card_details = myDao.getTransformationCardDetails(current_enhanced_form_card_id);
+                card.setCharacter_name(transformation_card_exchange_card_details.getCharacter_name());
+                card.setPassive_skill_name(transformation_card_exchange_card_details.getPassive_skill_name());
+                card.setPassive_skill(transformation_card_exchange_card_details.getPassive_skill());
+            } else if (current_enhanced_form_type.equals("Exchange")) {
+                transformation_card_exchange_card_details transformation_card_exchange_card_details = myDao.getExchangeCardDetails(current_enhanced_form_card_id);
+                card.setCharacter_name(transformation_card_exchange_card_details.getCharacter_name());
+                card.setPassive_skill_name(transformation_card_exchange_card_details.getPassive_skill_name());
+                card.setPassive_skill(transformation_card_exchange_card_details.getPassive_skill());
+            }
+        }
+        System.out.println(base_card_id);
+        max_level = myDao.getMaxLevel(card.getRarity());
+        active_skill = myDao.getActiveSkill(card.getCard_id());
+        super_attacks = myDao.getSuperAttacks(card.getCard_id());
+        link_skills = myDao.getLinkSkills(card.getCard_id());
+        categories = myDao.getCategories(card.getCard_id());
+
+        getEnhancedFormDetails();
+
+        if (current_enhanced_form_card_id == null) {
+            pre_dokkan_details = myDao.getPreDokkanAwakenedCardDetails(base_card_id);
+            if (pre_dokkan_details != null) {
+                int preDokkanAwakenedCardMedalCombinationId = pre_dokkan_details.getDokkan_awakening_medal_combination_id();
+                switch (pre_dokkan_details.getDokkan_awakening_medal_combination_id() / 1000) {
+                    case 1:
+                        pre_dokkan_medal_tier_1_details = myDao.getTier1MedalCombination(preDokkanAwakenedCardMedalCombinationId);
+                        break;
+                    case 2:
+                        pre_dokkan_medal_tier_2_details = myDao.getTier2MedalCombination(preDokkanAwakenedCardMedalCombinationId);
+                        break;
+                    case 3:
+                        pre_dokkan_medal_tier_3_details = myDao.getTier3MedalCombination(preDokkanAwakenedCardMedalCombinationId);
+                        break;
+                    case 4:
+                        pre_dokkan_medal_tier_4_details = myDao.getTier4MedalCombination(preDokkanAwakenedCardMedalCombinationId);
+                        break;
+                    case 5:
+                        pre_dokkan_medal_tier_5_details = myDao.getTier5MedalCombination(preDokkanAwakenedCardMedalCombinationId);
+                        break;
+                }
+            }
+
+            dokkan_details = myDao.getDokkanAwakenedCardDetails(base_card_id);
+            if (dokkan_details != null) {
+                int dokkanAwakenedCardMedalCombinationId = dokkan_details.getDokkan_awakening_medal_combination_id();
+                switch (dokkanAwakenedCardMedalCombinationId / 1000) {
+                    case 1:
+                        dokkan_medal_tier_1_details = myDao.getTier1MedalCombination(dokkanAwakenedCardMedalCombinationId);
+                        break;
+                    case 2:
+                        dokkan_medal_tier_2_details = myDao.getTier2MedalCombination(dokkanAwakenedCardMedalCombinationId);
+                        break;
+                    case 3:
+                        dokkan_medal_tier_3_details = myDao.getTier3MedalCombination(dokkanAwakenedCardMedalCombinationId);
+                        break;
+                    case 4:
+                        dokkan_medal_tier_4_details = myDao.getTier4MedalCombination(dokkanAwakenedCardMedalCombinationId);
+                        break;
+                    case 5:
+                        dokkan_medal_tier_5_details = myDao.getTier5MedalCombination(dokkanAwakenedCardMedalCombinationId);
+                        break;
+                }
             }
         }
     }
 
-    private void setViewsContent() {
+    private void setViewsContent(final String base_card_id) {
+
+        boolean isEnhancedForm = current_enhanced_form_card_id != null;
 
         ConstraintLayout.LayoutParams params;
 
@@ -287,7 +324,7 @@ public class CardProfile extends AppCompatActivity implements GestureDetector.On
             ((TextView) findViewById(R.id.active_skill)).setText(active_skill.get(0).getActive_skill_effect());
         }
 
-        ((TextView) findViewById(R.id.hp)).setText(String.valueOf(card.getMax_hp()));
+        ((TextView) findViewById(R.id.hp)).setText(card.getMax_hp() > 9000000 || card.getMax_hp() == 0 ? "∞" : String.valueOf(card.getMax_hp()));
         params = (ConstraintLayout.LayoutParams) findViewById(R.id.hp_background).getLayoutParams();
         params.width = (int) Math.ceil(displayMetrics.heightPixels * 0.14);
         params.height = (int) Math.ceil(displayMetrics.heightPixels * 0.06);
@@ -299,7 +336,7 @@ public class CardProfile extends AppCompatActivity implements GestureDetector.On
         params.height = (int) Math.ceil(displayMetrics.heightPixels * 0.06);
         findViewById(R.id.atk_background).setLayoutParams(params);
 
-        ((TextView) findViewById(R.id.def)).setText(String.valueOf(card.getMax_def()));
+        ((TextView) findViewById(R.id.def)).setText(card.getMax_def() > 9000000 || card.getMax_def() == 0 ? "∞" : String.valueOf(card.getMax_def()));
         params = (ConstraintLayout.LayoutParams) findViewById(R.id.def_background).getLayoutParams();
         params.width = (int) Math.ceil(displayMetrics.heightPixels * 0.14);
         params.height = (int) Math.ceil(displayMetrics.heightPixels * 0.06);
@@ -318,36 +355,35 @@ public class CardProfile extends AppCompatActivity implements GestureDetector.On
 
         if (pre_dokkan_details != null) {
 
-            params = (ConstraintLayout.LayoutParams) findViewById(R.id.top_row_type_icon).getLayoutParams();
+            params = (ConstraintLayout.LayoutParams) findViewById(R.id.top_row_form_type_icon).getLayoutParams();
             params.width = (int) related_card_icon_dimensions / 2;
             params.height = (int) related_card_icon_dimensions / 2;
-            findViewById(R.id.top_row_type_icon).setLayoutParams(params);
-
-            params = (ConstraintLayout.LayoutParams) findViewById(R.id.pre_dokkan_card_icon).getLayoutParams();
+            findViewById(R.id.top_row_form_type_icon).setLayoutParams(params);
+            params = (ConstraintLayout.LayoutParams) findViewById(R.id.top_row_card_icon).getLayoutParams();
             params.width = (int) related_card_icon_dimensions;
             params.height = (int) related_card_icon_dimensions;
-            findViewById(R.id.pre_dokkan_card_icon).setLayoutParams(params);
-            params = (ConstraintLayout.LayoutParams) findViewById(R.id.pre_dokkan_card_background).getLayoutParams();
+            findViewById(R.id.top_row_card_icon).setLayoutParams(params);
+            params = (ConstraintLayout.LayoutParams) findViewById(R.id.top_row_card_background).getLayoutParams();
             params.width = (int) Math.ceil(related_card_icon_dimensions * 0.8);
             params.height = (int) Math.ceil(related_card_icon_dimensions * 0.8);
             params.bottomMargin = (int) Math.ceil(related_card_icon_dimensions * 0.06);
-            findViewById(R.id.pre_dokkan_card_background).setLayoutParams(params);
-            params = (ConstraintLayout.LayoutParams) findViewById(R.id.pre_dokkan_card_rarity).getLayoutParams();
+            findViewById(R.id.top_row_card_background).setLayoutParams(params);
+            params = (ConstraintLayout.LayoutParams) findViewById(R.id.top_row_card_rarity).getLayoutParams();
             params.width = (int) Math.ceil(related_card_icon_dimensions * 0.44);
             params.height = (int) Math.ceil(related_card_icon_dimensions * 0.49);
-            findViewById(R.id.pre_dokkan_card_rarity).setLayoutParams(params);
-            params = (ConstraintLayout.LayoutParams) findViewById(R.id.pre_dokkan_card_type).getLayoutParams();
+            findViewById(R.id.top_row_card_rarity).setLayoutParams(params);
+            params = (ConstraintLayout.LayoutParams) findViewById(R.id.top_row_card_type).getLayoutParams();
             params.width = (int) Math.ceil(related_card_icon_dimensions * 0.35);
             params.height = (int) Math.ceil(related_card_icon_dimensions * 0.35);
-            findViewById(R.id.pre_dokkan_card_type).setLayoutParams(params);
+            findViewById(R.id.top_row_card_type).setLayoutParams(params);
 
             String preDokkanAwakenedCardId = pre_dokkan_details.getCard_id();
-            String pre_dokkan_card_icon_name = "card_icon_" + preDokkanAwakenedCardId;
-            ((ImageView) findViewById(R.id.pre_dokkan_card_icon)).setImageResource(getResourceId(pre_dokkan_card_icon_name));
-            findViewById(R.id.pre_dokkan_card_icon).setTag(preDokkanAwakenedCardId);
-            ((ImageView) findViewById(R.id.pre_dokkan_card_background)).setImageResource(getResourceId(background_icon_name));
-            ((ImageView) findViewById(R.id.pre_dokkan_card_rarity)).setImageResource(getResourceId(pre_dokkan_details.getRarity().toLowerCase()));
-            ((ImageView) findViewById(R.id.pre_dokkan_card_type)).setImageResource(getResourceId(card.getType().replace(" ", "_").toLowerCase()));
+            String top_row_card_icon_name = "card_icon_" + preDokkanAwakenedCardId;
+            ((ImageView) findViewById(R.id.top_row_card_icon)).setImageResource(getResourceId(top_row_card_icon_name));
+            findViewById(R.id.top_row_card_icon).setTag(preDokkanAwakenedCardId);
+            ((ImageView) findViewById(R.id.top_row_card_background)).setImageResource(getResourceId(background_icon_name));
+            ((ImageView) findViewById(R.id.top_row_card_rarity)).setImageResource(getResourceId(pre_dokkan_details.getRarity().toLowerCase()));
+            ((ImageView) findViewById(R.id.top_row_card_type)).setImageResource(getResourceId(card.getType().replace(" ", "_").toLowerCase()));
 
             switch (pre_dokkan_details.getDokkan_awakening_medal_combination_id() / 1000) {
                 case 1:
@@ -461,47 +497,126 @@ public class CardProfile extends AppCompatActivity implements GestureDetector.On
                     ((TextView) findViewById(R.id.pre_dokkan_medal_5_count)).setText(String.valueOf(pre_dokkan_medal_tier_5_details.getMedal_5_count()));
                     break;
             }
-        } else {
-            findViewById(R.id.top_row_type_icon).setVisibility(View.INVISIBLE);
-            findViewById(R.id.pre_dokkan_card_icon).setVisibility(View.INVISIBLE);
-            findViewById(R.id.pre_dokkan_card_background).setVisibility(View.INVISIBLE);
-            findViewById(R.id.pre_dokkan_card_type).setVisibility(View.INVISIBLE);
-            findViewById(R.id.pre_dokkan_card_rarity).setVisibility(View.INVISIBLE);
+
+            if (enhancedFormCardId != null) {
+                params = (ConstraintLayout.LayoutParams) findViewById(R.id.bottom_row_form_type_icon).getLayoutParams();
+                params.width = (int) related_card_icon_dimensions / 2;
+                params.height = (int) related_card_icon_dimensions / 2;
+                findViewById(R.id.bottom_row_form_type_icon).setLayoutParams(params);
+                params = (ConstraintLayout.LayoutParams) findViewById(R.id.bottom_row_card_icon).getLayoutParams();
+                params.width = (int) related_card_icon_dimensions;
+                params.height = (int) related_card_icon_dimensions;
+                findViewById(R.id.bottom_row_card_icon).setLayoutParams(params);
+                params = (ConstraintLayout.LayoutParams) findViewById(R.id.bottom_row_card_background).getLayoutParams();
+                params.width = (int) Math.ceil(related_card_icon_dimensions * 0.8);
+                params.height = (int) Math.ceil(related_card_icon_dimensions * 0.8);
+                params.bottomMargin = (int) Math.ceil(related_card_icon_dimensions * 0.06);
+                findViewById(R.id.bottom_row_card_background).setLayoutParams(params);
+                params = (ConstraintLayout.LayoutParams) findViewById(R.id.bottom_row_card_rarity).getLayoutParams();
+                params.width = (int) Math.ceil(related_card_icon_dimensions * 0.44);
+                params.height = (int) Math.ceil(related_card_icon_dimensions * 0.49);
+                findViewById(R.id.bottom_row_card_rarity).setLayoutParams(params);
+                params = (ConstraintLayout.LayoutParams) findViewById(R.id.bottom_row_card_type).getLayoutParams();
+                params.width = (int) Math.ceil(related_card_icon_dimensions * 0.35);
+                params.height = (int) Math.ceil(related_card_icon_dimensions * 0.35);
+                findViewById(R.id.bottom_row_card_type).setLayoutParams(params);
+
+                String enhanced_form_card_icon_name = "card_icon_" + enhancedFormCardId;
+                ((ImageView) findViewById(R.id.bottom_row_card_icon)).setImageResource(getResourceId(enhanced_form_card_icon_name));
+                findViewById(R.id.bottom_row_card_icon).setTag(null);
+                findViewById(R.id.bottom_row_card_icon).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        System.out.println("before opening form profile: " + base_card_id);
+                        openFormProfile("next", base_card_id);
+                    }
+                });
+                ((ImageView) findViewById(R.id.bottom_row_card_background)).setImageResource(getResourceId(background_icon_name));
+                ((ImageView) findViewById(R.id.bottom_row_card_rarity)).setImageResource(getResourceId(card.getRarity().toLowerCase()));
+
+                String enhanced_form_card_type_name = enhancedFormCardId.equals("9012021") ? "extreme_agl" : card.getType().replace(" ", "_").toLowerCase();
+                ((ImageView) findViewById(R.id.bottom_row_card_type)).setImageResource(getResourceId(enhanced_form_card_type_name));
+            }
+        } else if (previousCardFormId != null) {
+
+            findViewById(R.id.pre_dokkan_medal_1_group).setVisibility(View.INVISIBLE);
+
+            params = (ConstraintLayout.LayoutParams) findViewById(R.id.top_row_form_type_icon).getLayoutParams();
+            params.width = (int) related_card_icon_dimensions / 2;
+            params.height = (int) related_card_icon_dimensions / 2;
+            findViewById(R.id.top_row_form_type_icon).setLayoutParams(params);
+            params = (ConstraintLayout.LayoutParams) findViewById(R.id.top_row_card_icon).getLayoutParams();
+            params.width = (int) related_card_icon_dimensions;
+            params.height = (int) related_card_icon_dimensions;
+            findViewById(R.id.top_row_card_icon).setLayoutParams(params);
+            params = (ConstraintLayout.LayoutParams) findViewById(R.id.top_row_card_background).getLayoutParams();
+            params.width = (int) Math.ceil(related_card_icon_dimensions * 0.8);
+            params.height = (int) Math.ceil(related_card_icon_dimensions * 0.8);
+            params.bottomMargin = (int) Math.ceil(related_card_icon_dimensions * 0.06);
+            findViewById(R.id.top_row_card_background).setLayoutParams(params);
+            params = (ConstraintLayout.LayoutParams) findViewById(R.id.top_row_card_rarity).getLayoutParams();
+            params.width = (int) Math.ceil(related_card_icon_dimensions * 0.44);
+            params.height = (int) Math.ceil(related_card_icon_dimensions * 0.49);
+            findViewById(R.id.top_row_card_rarity).setLayoutParams(params);
+            params = (ConstraintLayout.LayoutParams) findViewById(R.id.top_row_card_type).getLayoutParams();
+            params.width = (int) Math.ceil(related_card_icon_dimensions * 0.35);
+            params.height = (int) Math.ceil(related_card_icon_dimensions * 0.35);
+            findViewById(R.id.top_row_card_type).setLayoutParams(params);
+
+            String top_row_card_icon_name = "card_icon_" + previousCardFormId;
+            ((ImageView) findViewById(R.id.top_row_card_icon)).setImageResource(getResourceId(top_row_card_icon_name));
+            findViewById(R.id.top_row_card_icon).setTag(previousCardFormId);
+            findViewById(R.id.top_row_card_icon).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    System.out.println("before opening form profile: " + base_card_id);
+                    openFormProfile("previous", base_card_id);
+                }
+            });
+            ((ImageView) findViewById(R.id.top_row_card_background)).setImageResource(getResourceId(background_icon_name));
+            ((ImageView) findViewById(R.id.top_row_card_rarity)).setImageResource(getResourceId(card.getRarity().toLowerCase()));
+            ((ImageView) findViewById(R.id.top_row_card_type)).setImageResource(getResourceId(card.getType().replace(" ", "_").toLowerCase()));
+        } else if (enhancedFormCardId == null || dokkan_details == null) {
+            findViewById(R.id.top_row_form_type_icon).setVisibility(View.INVISIBLE);
+            findViewById(R.id.top_row_card_icon).setVisibility(View.INVISIBLE);
+            findViewById(R.id.top_row_card_background).setVisibility(View.INVISIBLE);
+            findViewById(R.id.top_row_card_type).setVisibility(View.INVISIBLE);
+            findViewById(R.id.top_row_card_rarity).setVisibility(View.INVISIBLE);
             findViewById(R.id.pre_dokkan_medal_1_group).setVisibility(View.INVISIBLE);
         }
 
         if (dokkan_details != null) {
 
-            params = (ConstraintLayout.LayoutParams) findViewById(R.id.bottom_row_type_icon).getLayoutParams();
+            params = (ConstraintLayout.LayoutParams) findViewById(R.id.bottom_row_form_type_icon).getLayoutParams();
             params.width = (int) related_card_icon_dimensions / 2;
             params.height = (int) related_card_icon_dimensions / 2;
-            findViewById(R.id.bottom_row_type_icon).setLayoutParams(params);
+            findViewById(R.id.bottom_row_form_type_icon).setLayoutParams(params);
 
-            params = (ConstraintLayout.LayoutParams) findViewById(R.id.dokkan_card_icon).getLayoutParams();
+            params = (ConstraintLayout.LayoutParams) findViewById(R.id.bottom_row_card_icon).getLayoutParams();
             params.width = (int) related_card_icon_dimensions;
             params.height = (int) related_card_icon_dimensions;
-            findViewById(R.id.dokkan_card_icon).setLayoutParams(params);
-            params = (ConstraintLayout.LayoutParams) findViewById(R.id.dokkan_card_background).getLayoutParams();
+            findViewById(R.id.bottom_row_card_icon).setLayoutParams(params);
+            params = (ConstraintLayout.LayoutParams) findViewById(R.id.bottom_row_card_background).getLayoutParams();
             params.width = (int) Math.ceil(related_card_icon_dimensions * 0.8);
             params.height = (int) Math.ceil(related_card_icon_dimensions * 0.8);
             params.bottomMargin = (int) Math.ceil(related_card_icon_dimensions * 0.06);
-            findViewById(R.id.dokkan_card_background).setLayoutParams(params);
-            params = (ConstraintLayout.LayoutParams) findViewById(R.id.dokkan_card_rarity).getLayoutParams();
+            findViewById(R.id.bottom_row_card_background).setLayoutParams(params);
+            params = (ConstraintLayout.LayoutParams) findViewById(R.id.bottom_row_card_rarity).getLayoutParams();
             params.width = (int) Math.ceil(related_card_icon_dimensions * 0.44);
             params.height = (int) Math.ceil(related_card_icon_dimensions * 0.49);
-            findViewById(R.id.dokkan_card_rarity).setLayoutParams(params);
-            params = (ConstraintLayout.LayoutParams) findViewById(R.id.dokkan_card_type).getLayoutParams();
+            findViewById(R.id.bottom_row_card_rarity).setLayoutParams(params);
+            params = (ConstraintLayout.LayoutParams) findViewById(R.id.bottom_row_card_type).getLayoutParams();
             params.width = (int) Math.ceil(related_card_icon_dimensions * 0.35);
             params.height = (int) Math.ceil(related_card_icon_dimensions * 0.35);
-            findViewById(R.id.dokkan_card_type).setLayoutParams(params);
+            findViewById(R.id.bottom_row_card_type).setLayoutParams(params);
 
             String dokkanAwakenedCardId = dokkan_details.getCard_id();
-            String dokkan_card_icon_name = "card_icon_" + dokkanAwakenedCardId;
-            ((ImageView) findViewById(R.id.dokkan_card_icon)).setImageResource(getResourceId(dokkan_card_icon_name));
-            findViewById(R.id.dokkan_card_icon).setTag(dokkanAwakenedCardId);
-            ((ImageView) findViewById(R.id.dokkan_card_background)).setImageResource(getResourceId(background_icon_name));
-            ((ImageView) findViewById(R.id.dokkan_card_rarity)).setImageResource(getResourceId(dokkan_details.getRarity().toLowerCase()));
-            ((ImageView) findViewById(R.id.dokkan_card_type)).setImageResource(getResourceId(card.getType().replace(" ", "_").toLowerCase()));
+            String bottom_row_card_icon_name = "card_icon_" + dokkanAwakenedCardId;
+            ((ImageView) findViewById(R.id.bottom_row_card_icon)).setImageResource(getResourceId(bottom_row_card_icon_name));
+            findViewById(R.id.bottom_row_card_icon).setTag(dokkanAwakenedCardId);
+            ((ImageView) findViewById(R.id.bottom_row_card_background)).setImageResource(getResourceId(background_icon_name));
+            ((ImageView) findViewById(R.id.bottom_row_card_rarity)).setImageResource(getResourceId(dokkan_details.getRarity().toLowerCase()));
+            ((ImageView) findViewById(R.id.bottom_row_card_type)).setImageResource(getResourceId(card.getType().replace(" ", "_").toLowerCase()));
 
             switch (dokkan_details.getDokkan_awakening_medal_combination_id() / 1000) {
                 case 1:
@@ -615,12 +730,91 @@ public class CardProfile extends AppCompatActivity implements GestureDetector.On
                     ((TextView) findViewById(R.id.dokkan_medal_5_count)).setText(String.valueOf(dokkan_medal_tier_5_details.getMedal_5_count()));
                     break;
             }
+
+            if (enhancedFormCardId != null) {
+                params = (ConstraintLayout.LayoutParams) findViewById(R.id.top_row_form_type_icon).getLayoutParams();
+                params.width = (int) related_card_icon_dimensions / 2;
+                params.height = (int) related_card_icon_dimensions / 2;
+                findViewById(R.id.top_row_form_type_icon).setLayoutParams(params);
+                params = (ConstraintLayout.LayoutParams) findViewById(R.id.top_row_card_icon).getLayoutParams();
+                params.width = (int) related_card_icon_dimensions;
+                params.height = (int) related_card_icon_dimensions;
+                findViewById(R.id.top_row_card_icon).setLayoutParams(params);
+                params = (ConstraintLayout.LayoutParams) findViewById(R.id.top_row_card_background).getLayoutParams();
+                params.width = (int) Math.ceil(related_card_icon_dimensions * 0.8);
+                params.height = (int) Math.ceil(related_card_icon_dimensions * 0.8);
+                params.bottomMargin = (int) Math.ceil(related_card_icon_dimensions * 0.06);
+                findViewById(R.id.top_row_card_background).setLayoutParams(params);
+                params = (ConstraintLayout.LayoutParams) findViewById(R.id.top_row_card_rarity).getLayoutParams();
+                params.width = (int) Math.ceil(related_card_icon_dimensions * 0.44);
+                params.height = (int) Math.ceil(related_card_icon_dimensions * 0.49);
+                findViewById(R.id.top_row_card_rarity).setLayoutParams(params);
+                params = (ConstraintLayout.LayoutParams) findViewById(R.id.top_row_card_type).getLayoutParams();
+                params.width = (int) Math.ceil(related_card_icon_dimensions * 0.35);
+                params.height = (int) Math.ceil(related_card_icon_dimensions * 0.35);
+                findViewById(R.id.top_row_card_type).setLayoutParams(params);
+
+                String enhanced_form_card_icon_name = "card_icon_" + enhancedFormCardId;
+                ((ImageView) findViewById(R.id.top_row_card_icon)).setImageResource(getResourceId(enhanced_form_card_icon_name));
+                findViewById(R.id.top_row_card_icon).setTag(null);
+                findViewById(R.id.top_row_card_icon).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        System.out.println("before opening form profile: " + base_card_id);
+                        openFormProfile("next", base_card_id);
+                    }
+                });
+                ((ImageView) findViewById(R.id.top_row_card_background)).setImageResource(getResourceId(background_icon_name));
+                ((ImageView) findViewById(R.id.top_row_card_rarity)).setImageResource(getResourceId(card.getRarity().toLowerCase()));
+
+                String enhanced_form_card_type_name = enhancedFormCardId.equals("9012021") ? "extreme_agl" : card.getType().replace(" ", "_").toLowerCase();
+                ((ImageView) findViewById(R.id.top_row_card_type)).setImageResource(getResourceId(enhanced_form_card_type_name));
+            }
+        } else if (enhancedFormCardId != null) {
+
+            findViewById(R.id.dokkan_medal_1_group).setVisibility(View.INVISIBLE);
+
+            params = (ConstraintLayout.LayoutParams) findViewById(R.id.bottom_row_form_type_icon).getLayoutParams();
+            params.width = (int) related_card_icon_dimensions / 2;
+            params.height = (int) related_card_icon_dimensions / 2;
+            findViewById(R.id.bottom_row_form_type_icon).setLayoutParams(params);
+            params = (ConstraintLayout.LayoutParams) findViewById(R.id.bottom_row_card_icon).getLayoutParams();
+            params.width = (int) related_card_icon_dimensions;
+            params.height = (int) related_card_icon_dimensions;
+            findViewById(R.id.bottom_row_card_icon).setLayoutParams(params);
+            params = (ConstraintLayout.LayoutParams) findViewById(R.id.bottom_row_card_background).getLayoutParams();
+            params.width = (int) Math.ceil(related_card_icon_dimensions * 0.8);
+            params.height = (int) Math.ceil(related_card_icon_dimensions * 0.8);
+            params.bottomMargin = (int) Math.ceil(related_card_icon_dimensions * 0.06);
+            findViewById(R.id.bottom_row_card_background).setLayoutParams(params);
+            params = (ConstraintLayout.LayoutParams) findViewById(R.id.bottom_row_card_rarity).getLayoutParams();
+            params.width = (int) Math.ceil(related_card_icon_dimensions * 0.44);
+            params.height = (int) Math.ceil(related_card_icon_dimensions * 0.49);
+            findViewById(R.id.bottom_row_card_rarity).setLayoutParams(params);
+            params = (ConstraintLayout.LayoutParams) findViewById(R.id.bottom_row_card_type).getLayoutParams();
+            params.width = (int) Math.ceil(related_card_icon_dimensions * 0.35);
+            params.height = (int) Math.ceil(related_card_icon_dimensions * 0.35);
+            findViewById(R.id.bottom_row_card_type).setLayoutParams(params);
+
+            String bottom_row_card_icon_name = "card_icon_" + enhancedFormCardId;
+            ((ImageView) findViewById(R.id.bottom_row_card_icon)).setImageResource(getResourceId(bottom_row_card_icon_name));
+            findViewById(R.id.bottom_row_card_icon).setTag(enhancedFormCardId);
+            findViewById(R.id.bottom_row_card_icon).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    System.out.println("before opening form profile: " + base_card_id);
+                    openFormProfile("next", base_card_id);
+                }
+            });
+            ((ImageView) findViewById(R.id.bottom_row_card_background)).setImageResource(getResourceId(background_icon_name));
+            ((ImageView) findViewById(R.id.bottom_row_card_rarity)).setImageResource(getResourceId(card.getRarity().toLowerCase()));
+            ((ImageView) findViewById(R.id.bottom_row_card_type)).setImageResource(getResourceId(card.getType().replace(" ", "_").toLowerCase()));
         } else {
-            findViewById(R.id.bottom_row_type_icon).setVisibility(View.INVISIBLE);
-            findViewById(R.id.dokkan_card_icon).setVisibility(View.INVISIBLE);
-            findViewById(R.id.dokkan_card_background).setVisibility(View.INVISIBLE);
-            findViewById(R.id.dokkan_card_type).setVisibility(View.INVISIBLE);
-            findViewById(R.id.dokkan_card_rarity).setVisibility(View.INVISIBLE);
+            findViewById(R.id.bottom_row_form_type_icon).setVisibility(View.INVISIBLE);
+            findViewById(R.id.bottom_row_card_icon).setVisibility(View.INVISIBLE);
+            findViewById(R.id.bottom_row_card_background).setVisibility(View.INVISIBLE);
+            findViewById(R.id.bottom_row_card_type).setVisibility(View.INVISIBLE);
+            findViewById(R.id.bottom_row_card_rarity).setVisibility(View.INVISIBLE);
             findViewById(R.id.dokkan_medal_1_group).setVisibility(View.INVISIBLE);
         }
 
@@ -738,7 +932,6 @@ public class CardProfile extends AppCompatActivity implements GestureDetector.On
                         resizeScrollHeights(R.id.active_skill_scroll);
                         addSpaceForSuperAttacksHeader();
                         if (getFreeHeightOfMainFlipperViews(true) == 0) {
-                            System.out.println("extra space is zero");
                             lowerScrollHeight(R.id.super_attacks_scroll);
                             lowerScrollHeight(R.id.passive_skill_scroll);
                             lowerScrollHeight(R.id.active_skill_scroll);
@@ -792,7 +985,6 @@ public class CardProfile extends AppCompatActivity implements GestureDetector.On
 
     public void addSpaceForSuperAttacksHeader() {
         int superAttackLabelHeight = findViewById(R.id.super_attack_label).getHeight() + findViewById(R.id.passive_skill_label).getHeight() + findViewById(R.id.active_skill_label).getHeight();
-        System.out.println("sa_label_height: " + superAttackLabelHeight + " extraspace: " + getFreeHeightOfMainFlipperViews(false));
         if (superAttackLabelHeight > getFreeHeightOfMainFlipperViews(false)) {
             int requiredSpacePerScroll = (superAttackLabelHeight - getFreeHeightOfMainFlipperViews(false)) / 3;
 
@@ -842,8 +1034,28 @@ public class CardProfile extends AppCompatActivity implements GestureDetector.On
     }
 
     public void openProfile(View view) {
+        System.out.println("before opening regular profile: ");
         Intent myIntent = new Intent(this, CardProfile.class);
         myIntent.putExtra("card_id", view.getTag().toString());
+        Objects.requireNonNull(this).startActivity(myIntent);
+    }
+
+    public void openFormProfile(String formState, String base_card_id) {
+        Intent myIntent = new Intent(this, CardProfile.class);
+        System.out.println("opening form profile: " + base_card_id);
+        myIntent.putExtra("card_id", base_card_id);
+
+        String enhanced_form_card_id = null;
+        String enhanced_form_type = null;
+        if (formState.equals("next")) {
+            enhanced_form_card_id = enhancedFormCardId;
+            enhanced_form_type = enhancedFormType;
+        } else if (formState.equals("previous") && !previousCardFormId.equals(base_card_id)) {
+            enhanced_form_card_id = previousCardFormId;
+        }
+
+        myIntent.putExtra("enhanced_form_card_id", enhanced_form_card_id);
+        myIntent.putExtra("enhanced_form_type", enhanced_form_type);
         Objects.requireNonNull(this).startActivity(myIntent);
     }
 

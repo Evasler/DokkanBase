@@ -112,7 +112,6 @@ public class CardWikiFragment extends Fragment {
         List<Fragment> cardPreviews = getActivity().getSupportFragmentManager().getFragments();
 
         for (Fragment fragment : cardPreviews) {
-            System.out.println(System.currentTimeMillis());
             getActivity().getSupportFragmentManager().popBackStack();
         }
 
@@ -128,7 +127,6 @@ public class CardWikiFragment extends Fragment {
                 System.runFinalization();
                 Runtime.getRuntime().gc();
                 System.gc();
-                System.out.println("Card Wiki detached");
             }
         }).start();
     }

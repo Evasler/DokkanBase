@@ -2,12 +2,14 @@ package com.evasler.dokkanbase;
 
 import com.evasler.dokkanbase.queryresponseobjects.active_skill_details;
 import com.evasler.dokkanbase.queryresponseobjects.card_preview;
+import com.evasler.dokkanbase.queryresponseobjects.invincible_form_card_details;
 import com.evasler.dokkanbase.queryresponseobjects.related_card_details;
 import com.evasler.dokkanbase.queryresponseobjects.tier_1_medal_combination;
 import com.evasler.dokkanbase.queryresponseobjects.tier_2_medal_combination;
 import com.evasler.dokkanbase.queryresponseobjects.tier_3_medal_combination;
 import com.evasler.dokkanbase.queryresponseobjects.tier_4_medal_combination;
 import com.evasler.dokkanbase.queryresponseobjects.tier_5_medal_combination;
+import com.evasler.dokkanbase.queryresponseobjects.transformation_card_exchange_card_details;
 import com.evasler.dokkanbase.roomentinties.*;
 
 import java.util.List;
@@ -18,7 +20,7 @@ import androidx.room.Query;
 @Dao
 public interface MyDao {
 
-    @Query("SELECT card_id, rarity, type FROM card WHERE card_id NOT LIKE '%_jp' AND (rarity = 'LR')")
+    @Query("SELECT card.card_id, rarity, type FROM card, card_invincible_form_card_relation WHERE card.card_id = card_invincible_form_card_relation.card_id UNION SELECT card.card_id, rarity, type FROM card,card_transformation_card_relation WHERE card.card_id = card_transformation_card_relation.card_id UNION SELECT card.card_id, rarity, type FROM card,card_exchange_card_relation WHERE card.card_id = card_exchange_card_relation.card_id")
     List<card_preview> getCardsForPreview();
 
     @Query("SELECT * FROM card WHERE card_id = :card_id")
@@ -75,5 +77,14 @@ public interface MyDao {
     String getExchangeCardId(String card_id);
 
     @Query("SELECT card_id FROM card_invincible_form_card_relation WHERE invincible_form_card_id = :card_id UNION SELECT card_id FROM card_transformation_card_relation WHERE transformation_card_id = :card_id UNION SELECT card_id FROM card_exchange_card_relation WHERE exchange_card_id = :card_id")
-    String getBaseFormCard(String card_id);
+    String getPreviousCardForm(String card_id);
+
+    @Query("SELECT passive_skill_name, passive_skill, base_hp, base_atk, base_def FROM invincible_form_card WHERE card_id = :card_id")
+    invincible_form_card_details getInvincibleFormCardDetails(String card_id);
+
+    @Query("SELECT character_name, passive_skill_name, passive_skill FROM transformation_card WHERE card_id = :card_id")
+    transformation_card_exchange_card_details getTransformationCardDetails(String card_id);
+
+    @Query("SELECT character_name, passive_skill_name, passive_skill FROM exchange_card WHERE card_id = :card_id")
+    transformation_card_exchange_card_details getExchangeCardDetails(String card_id);
 }

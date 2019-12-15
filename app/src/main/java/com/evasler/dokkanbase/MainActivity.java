@@ -182,8 +182,6 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnFr
             memoryCache.put("ssr", getBitmap(R.drawable.ssr));
             memoryCache.put("ur", getBitmap(R.drawable.ur));
             memoryCache.put("lr", getBitmap(R.drawable.lr));
-            System.out.println(memoryCache.size());
-            System.out.println("finished");
             return "Executed";
         }
 

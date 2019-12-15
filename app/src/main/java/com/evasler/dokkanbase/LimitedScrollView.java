@@ -73,7 +73,6 @@ public class LimitedScrollView extends ScrollView {
 
     public void setScrollable(boolean scrollable) {
         this.scrollable = scrollable;
-        System.out.println(scrollable);
     }
 
     @Override
