@@ -499,6 +499,9 @@ public class CardProfile extends AppCompatActivity implements GestureDetector.On
             }
 
             if (enhancedFormCardId != null) {
+
+                findViewById(R.id.dokkan_medal_1_group).setVisibility(View.INVISIBLE);
+
                 params = (ConstraintLayout.LayoutParams) findViewById(R.id.bottom_row_form_type_icon).getLayoutParams();
                 params.width = (int) related_card_icon_dimensions / 2;
                 params.height = (int) related_card_icon_dimensions / 2;
@@ -732,6 +735,9 @@ public class CardProfile extends AppCompatActivity implements GestureDetector.On
             }
 
             if (enhancedFormCardId != null) {
+
+                findViewById(R.id.pre_dokkan_medal_1_group).setVisibility(View.INVISIBLE);
+
                 params = (ConstraintLayout.LayoutParams) findViewById(R.id.top_row_form_type_icon).getLayoutParams();
                 params.width = (int) related_card_icon_dimensions / 2;
                 params.height = (int) related_card_icon_dimensions / 2;
