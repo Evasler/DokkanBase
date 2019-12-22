@@ -16,6 +16,8 @@ public class active_skill {
     private String active_skill_type;
     @NonNull
     private String active_skill_effect;
+    @NonNull
+    private String active_skill_condition;
 
     @NonNull
     public Integer getActive_skill_id() {
@@ -37,6 +39,11 @@ public class active_skill {
         return active_skill_effect;
     }
 
+    @NonNull
+    public String getActive_skill_condition() {
+        return active_skill_condition;
+    }
+
     public void setActive_skill_id(@NonNull Integer active_skill_id) {
         this.active_skill_id = active_skill_id;
     }
@@ -51,5 +58,9 @@ public class active_skill {
 
     public void setActive_skill_effect(@NonNull String active_skill_effect) {
         this.active_skill_effect = active_skill_effect;
+    }
+
+    public void setActive_skill_condition(@NonNull String active_skill_condition) {
+        this.active_skill_condition = active_skill_condition;
     }
 }

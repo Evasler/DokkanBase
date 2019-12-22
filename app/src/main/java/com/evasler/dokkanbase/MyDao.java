@@ -29,9 +29,8 @@ public interface MyDao {
     @Query("SELECT max_level FROM rarity_max_level_relationship WHERE rarity = :rarity")
     int getMaxLevel(String rarity);
 
-    @Query("SELECT active_skill_name, active_skill_type, active_skill_effect FROM card, card_active_skill_relation,active_skill WHERE " +
-            "card.card_id = card_active_skill_relation.card_id AND card_active_skill_relation.active_skill_id = active_skill.active_skill_id AND " +
-            "card.card_id = :card_id")
+    @Query("SELECT active_skill_name, active_skill_type, active_skill_effect, active_skill_condition FROM card_active_skill_relation,active_skill WHERE " +
+            "card_active_skill_relation.active_skill_id = active_skill.active_skill_id AND card_id = :card_id")
     List<active_skill_details> getActiveSkill(String card_id);
 
     @Query("SELECT card.card_id, type, rarity, dokkan_awakening_medal_combination_id FROM card, card_dokkan_awakened_card_relation WHERE card.card_id = card_dokkan_awakened_card_relation.card_id AND dokkan_awakened_card_id = :card_id")
@@ -87,4 +86,7 @@ public interface MyDao {
 
     @Query("SELECT character_name, passive_skill_name, passive_skill FROM exchange_card WHERE card_id = :card_id")
     transformation_card_exchange_card_details getExchangeCardDetails(String card_id);
+
+    @Query("SELECT transformation_condition_details FROM card_transformation_condition_relation,transformation_condition WHERE card_transformation_condition_relation.transformation_condition_id = transformation_condition.transformation_condition_id AND card_id = :card_id")
+    String getTransformationCondition(String card_id);
 }

@@ -264,7 +264,7 @@ public class CardPreview extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View view) {
         Intent myIntent = new Intent(getContext(), CardProfile.class);
-        myIntent.putExtra("card_id", card_id); //Optional parameters
+        myIntent.putExtra("base_card_id", card_id);
         Objects.requireNonNull(getContext()).startActivity(myIntent);
     }
 }

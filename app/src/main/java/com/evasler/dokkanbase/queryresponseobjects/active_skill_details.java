@@ -5,6 +5,7 @@ public class active_skill_details {
     private String active_skill_name;
     private String active_skill_type;
     private String active_skill_effect;
+    private String active_skill_condition;
 
     public String getActive_skill_name() {
         return active_skill_name;
@@ -18,6 +19,10 @@ public class active_skill_details {
         return active_skill_effect;
     }
 
+    public String getActive_skill_condition() {
+        return active_skill_condition;
+    }
+
     public void setActive_skill_name(String active_skill_name) {
         this.active_skill_name = active_skill_name;
     }
@@ -28,5 +33,9 @@ public class active_skill_details {
 
     public void setActive_skill_effect(String active_skill_effect) {
         this.active_skill_effect = active_skill_effect;
+    }
+
+    public void setActive_skill_condition(String active_skill_condition) {
+        this.active_skill_condition = active_skill_condition;
     }
 }

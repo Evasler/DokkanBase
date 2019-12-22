@@ -58,10 +58,11 @@ public class CardProfile extends AppCompatActivity implements GestureDetector.On
     private related_card_details dokkan_details;
 
     private String previousCardFormId;
-    String current_enhanced_form_card_id;
-    String current_enhanced_form_type;
-    String enhancedFormType;
-    String enhancedFormCardId;
+    private String current_enhanced_form_card_id;
+    private String current_enhanced_form_type;
+    private String enhancedFormType;
+    private String enhancedFormCardId;
+    private String transformationCondition;
 
     private tier_5_medal_combination pre_dokkan_medal_tier_5_details;
     private tier_4_medal_combination pre_dokkan_medal_tier_4_details;
@@ -91,8 +92,7 @@ public class CardProfile extends AppCompatActivity implements GestureDetector.On
         setContentView(R.layout.card_profile);
 
         Intent intent = getIntent();
-        String base_card_id = intent.getStringExtra("card_id");
-        System.out.println("opened profile: " + base_card_id);
+        String base_card_id = intent.getStringExtra("base_card_id");
         current_enhanced_form_card_id = intent.getStringExtra("enhanced_form_card_id");
         current_enhanced_form_type = intent.getStringExtra("enhanced_form_type");
 
@@ -191,7 +191,7 @@ public class CardProfile extends AppCompatActivity implements GestureDetector.On
                 card.setPassive_skill(transformation_card_exchange_card_details.getPassive_skill());
             }
         }
-        System.out.println(base_card_id);
+
         max_level = myDao.getMaxLevel(card.getRarity());
         active_skill = myDao.getActiveSkill(card.getCard_id());
         super_attacks = myDao.getSuperAttacks(card.getCard_id());
@@ -199,6 +199,7 @@ public class CardProfile extends AppCompatActivity implements GestureDetector.On
         categories = myDao.getCategories(card.getCard_id());
 
         getEnhancedFormDetails();
+        getTransformationCondition();
 
         if (current_enhanced_form_card_id == null) {
             pre_dokkan_details = myDao.getPreDokkanAwakenedCardDetails(base_card_id);
@@ -248,8 +249,6 @@ public class CardProfile extends AppCompatActivity implements GestureDetector.On
     }
 
     private void setViewsContent(final String base_card_id) {
-
-        boolean isEnhancedForm = current_enhanced_form_card_id != null;
 
         ConstraintLayout.LayoutParams params;
 
@@ -321,7 +320,8 @@ public class CardProfile extends AppCompatActivity implements GestureDetector.On
             boolean is_ki_blast = active_skill.get(0).getActive_skill_type().equals("Ki Blast");
             findViewById(R.id.active_skill_ki_blast).setVisibility(is_ki_blast ? View.VISIBLE : View.GONE);
             ((TextView) findViewById(R.id.active_skill_name)).setText(active_skill.get(0).getActive_skill_name());
-            ((TextView) findViewById(R.id.active_skill)).setText(active_skill.get(0).getActive_skill_effect());
+            ((TextView) findViewById(R.id.active_skill_effect)).setText(String.format("Effect(s): %s", active_skill.get(0).getActive_skill_effect()));
+            ((TextView) findViewById(R.id.active_skill_condition)).setText(String.format("Condition(s): %s", active_skill.get(0).getActive_skill_condition()));
         }
 
         ((TextView) findViewById(R.id.hp)).setText(card.getMax_hp() > 9000000 || card.getMax_hp() == 0 ? "∞" : String.valueOf(card.getMax_hp()));
@@ -502,6 +502,9 @@ public class CardProfile extends AppCompatActivity implements GestureDetector.On
 
                 findViewById(R.id.dokkan_medal_1_group).setVisibility(View.INVISIBLE);
 
+                findViewById(R.id.bottom_transformation_condition_container).setVisibility(View.VISIBLE);
+                ((TextView) findViewById(R.id.bottom_transformation_condition)).setText(transformationCondition);
+
                 params = (ConstraintLayout.LayoutParams) findViewById(R.id.bottom_row_form_type_icon).getLayoutParams();
                 params.width = (int) related_card_icon_dimensions / 2;
                 params.height = (int) related_card_icon_dimensions / 2;
@@ -530,7 +533,6 @@ public class CardProfile extends AppCompatActivity implements GestureDetector.On
                 findViewById(R.id.bottom_row_card_icon).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        System.out.println("before opening form profile: " + base_card_id);
                         openFormProfile("next", base_card_id);
                     }
                 });
@@ -543,6 +545,8 @@ public class CardProfile extends AppCompatActivity implements GestureDetector.On
         } else if (previousCardFormId != null) {
 
             findViewById(R.id.pre_dokkan_medal_1_group).setVisibility(View.INVISIBLE);
+
+            findViewById(R.id.top_transformation_condition_container).setVisibility(View.VISIBLE);
 
             params = (ConstraintLayout.LayoutParams) findViewById(R.id.top_row_form_type_icon).getLayoutParams();
             params.width = (int) related_card_icon_dimensions / 2;
@@ -572,7 +576,6 @@ public class CardProfile extends AppCompatActivity implements GestureDetector.On
             findViewById(R.id.top_row_card_icon).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    System.out.println("before opening form profile: " + base_card_id);
                     openFormProfile("previous", base_card_id);
                 }
             });
@@ -738,6 +741,9 @@ public class CardProfile extends AppCompatActivity implements GestureDetector.On
 
                 findViewById(R.id.pre_dokkan_medal_1_group).setVisibility(View.INVISIBLE);
 
+                findViewById(R.id.top_transformation_condition_container).setVisibility(View.VISIBLE);
+                ((TextView) findViewById(R.id.top_transformation_condition)).setText(transformationCondition);
+
                 params = (ConstraintLayout.LayoutParams) findViewById(R.id.top_row_form_type_icon).getLayoutParams();
                 params.width = (int) related_card_icon_dimensions / 2;
                 params.height = (int) related_card_icon_dimensions / 2;
@@ -766,7 +772,6 @@ public class CardProfile extends AppCompatActivity implements GestureDetector.On
                 findViewById(R.id.top_row_card_icon).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        System.out.println("before opening form profile: " + base_card_id);
                         openFormProfile("next", base_card_id);
                     }
                 });
@@ -779,6 +784,9 @@ public class CardProfile extends AppCompatActivity implements GestureDetector.On
         } else if (enhancedFormCardId != null) {
 
             findViewById(R.id.dokkan_medal_1_group).setVisibility(View.INVISIBLE);
+
+            findViewById(R.id.bottom_transformation_condition_container).setVisibility(View.VISIBLE);
+            ((TextView) findViewById(R.id.bottom_transformation_condition)).setText(transformationCondition);
 
             params = (ConstraintLayout.LayoutParams) findViewById(R.id.bottom_row_form_type_icon).getLayoutParams();
             params.width = (int) related_card_icon_dimensions / 2;
@@ -808,7 +816,6 @@ public class CardProfile extends AppCompatActivity implements GestureDetector.On
             findViewById(R.id.bottom_row_card_icon).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    System.out.println("before opening form profile: " + base_card_id);
                     openFormProfile("next", base_card_id);
                 }
             });
@@ -1040,7 +1047,6 @@ public class CardProfile extends AppCompatActivity implements GestureDetector.On
     }
 
     public void openProfile(View view) {
-        System.out.println("before opening regular profile: ");
         Intent myIntent = new Intent(this, CardProfile.class);
         myIntent.putExtra("card_id", view.getTag().toString());
         Objects.requireNonNull(this).startActivity(myIntent);
@@ -1048,8 +1054,6 @@ public class CardProfile extends AppCompatActivity implements GestureDetector.On
 
     public void openFormProfile(String formState, String base_card_id) {
         Intent myIntent = new Intent(this, CardProfile.class);
-        System.out.println("opening form profile: " + base_card_id);
-        myIntent.putExtra("card_id", base_card_id);
 
         String enhanced_form_card_id = null;
         String enhanced_form_type = null;
@@ -1060,6 +1064,7 @@ public class CardProfile extends AppCompatActivity implements GestureDetector.On
             enhanced_form_card_id = previousCardFormId;
         }
 
+        myIntent.putExtra("base_card_id", base_card_id);
         myIntent.putExtra("enhanced_form_card_id", enhanced_form_card_id);
         myIntent.putExtra("enhanced_form_type", enhanced_form_type);
         Objects.requireNonNull(this).startActivity(myIntent);
@@ -1096,6 +1101,39 @@ public class CardProfile extends AppCompatActivity implements GestureDetector.On
         } else if (exchangeCardId != null) {
             enhancedFormType = "Exchange";
             enhancedFormCardId = exchangeCardId;
+        }
+    }
+
+    public void getTransformationCondition() {
+        transformationCondition = "";
+
+        if (enhancedFormType != null && enhancedFormType.equals("Invincible Form")) {
+            int index;
+            String separator;
+            if (card.getPassive_skill().contains(";")) {
+                separator = ";";
+                index = card.getPassive_skill().indexOf(";");
+                while(true) {
+                    if (card.getPassive_skill().indexOf(";", index + 1) > 0) {
+                        index = card.getPassive_skill().indexOf(";", index + 1);
+                    } else {
+                        break;
+                    }
+                }
+            } else if (card.getPassive_skill().contains(",")) {
+                separator = ",";
+                index = card.getPassive_skill().indexOf(",");
+            } else {
+                separator = " and ";
+                index = card.getPassive_skill().indexOf(" and ");
+            }
+
+            transformationCondition = card.getPassive_skill().substring(index + separator.length()).trim();
+            transformationCondition = transformationCondition.substring(0, 1).toUpperCase() + transformationCondition.substring(1);
+        } else if (enhancedFormType != null && enhancedFormType.equals("Transformation")) {
+            transformationCondition = myDao.getTransformationCondition(card.getCard_id());
+        } else if (enhancedFormType != null && enhancedFormType.equals("Exchange")) {
+            transformationCondition = active_skill.get(0).getActive_skill_condition();
         }
     }
 }

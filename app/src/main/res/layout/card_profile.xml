@@ -429,12 +429,23 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/active_skill_label">
 
-                    <TextView
-                        android:id="@+id/active_skill"
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text='Active Skill'
-                        android:textSize="13dp" />
+                        android:orientation="vertical">
+                        <TextView
+                            android:id="@+id/active_skill_effect"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text='Active Skill Effect(s)'
+                            android:textSize="13dp" />
+                        <TextView
+                            android:id="@+id/active_skill_condition"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Active Skill Condition(s)"
+                            android:textSize="13dp" />
+                    </LinearLayout>
                 </com.evasler.dokkanbase.LimitedScrollView>
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -1334,6 +1345,8 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginBottom="6dp"
+        android:visibility="gone"
+        android:background="@android:color/black"
         app:layout_constraintBottom_toBottomOf="@+id/top_row_card_background"
         app:layout_constraintEnd_toEndOf="@id/form_tree_container"
         app:layout_constraintStart_toEndOf="@+id/top_row_card_background"
@@ -1349,7 +1362,7 @@
                 android:id="@+id/top_transformation_condition"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="13dp" />
+                android:textSize="12dp" />
         </ScrollView>
     </LinearLayout>
 
@@ -1358,6 +1371,8 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginBottom="6dp"
+        android:visibility="gone"
+        android:background="@android:color/black"
         app:layout_constraintBottom_toBottomOf="@+id/bottom_row_card_background"
         app:layout_constraintEnd_toEndOf="@id/form_tree_container"
         app:layout_constraintStart_toEndOf="@+id/bottom_row_card_background"
@@ -1373,7 +1388,7 @@
                 android:id="@+id/bottom_transformation_condition"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="13dp" />
+                android:textSize="12dp" />
         </ScrollView>
     </LinearLayout>
 
