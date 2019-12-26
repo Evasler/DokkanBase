@@ -49,7 +49,7 @@
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.98" />
 
-    <!--> <!-->
+    <!--><!-->
     <TextView
         android:id="@+id/card_name_character_name"
         android:layout_width="wrap_content"
@@ -175,7 +175,6 @@
                             android:id="@+id/super_attack_1_ki_blast"
                             android:layout_width="wrap_content"
                             android:layout_height="0dp"
-
                             app:layout_constraintBottom_toBottomOf="@+id/super_attack_1_name"
                             app:layout_constraintEnd_toStartOf="@+id/super_attack_1_name"
                             app:layout_constraintStart_toStartOf="parent"
@@ -195,7 +194,8 @@
                             android:id="@+id/super_attack_1_extra_effect"
                             android:layout_width="30dp"
                             android:layout_height="0dp"
-
+                            android:onClick="openSuperAttackDetailsPanel"
+                            android:visibility="gone"
                             app:layout_constraintBottom_toBottomOf="@+id/super_attack_1_name"
                             app:layout_constraintStart_toEndOf="@+id/super_attack_1_name"
                             app:layout_constraintTop_toTopOf="@+id/super_attack_1_name"
@@ -237,7 +237,8 @@
                             android:id="@+id/super_attack_2_extra_effect"
                             android:layout_width="30dp"
                             android:layout_height="0dp"
-
+                            android:onClick="openSuperAttackDetailsPanel"
+                            android:visibility="gone"
                             app:layout_constraintBottom_toBottomOf="@+id/super_attack_2_name"
                             app:layout_constraintStart_toEndOf="@+id/super_attack_2_name"
                             app:layout_constraintTop_toTopOf="@+id/super_attack_2_name"
@@ -280,7 +281,8 @@
                             android:id="@+id/super_attack_3_extra_effect"
                             android:layout_width="30dp"
                             android:layout_height="0dp"
-
+                            android:onClick="openSuperAttackDetailsPanel"
+                            android:visibility="gone"
                             app:layout_constraintBottom_toBottomOf="@+id/super_attack_3_name"
                             app:layout_constraintStart_toEndOf="@+id/super_attack_3_name"
                             app:layout_constraintTop_toTopOf="@+id/super_attack_3_name"
@@ -303,16 +305,14 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             app:barrierDirection="top"
-                            app:constraint_referenced_ids="super_attack_2_extra_effect,super_attack_2_effect,super_attack_2_ki_blast,super_attack_2_name"
-                            tools:layout_editor_absoluteY="583dp" />
+                            app:constraint_referenced_ids="super_attack_2_extra_effect,super_attack_2_effect,super_attack_2_ki_blast,super_attack_2_name" />
 
                         <androidx.constraintlayout.widget.Barrier
                             android:id="@+id/super_attack_3_barrier"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             app:barrierDirection="top"
-                            app:constraint_referenced_ids="super_attack_3_name,super_attack_3_ki_blast,super_attack_3_effect,super_attack_3_extra_effect"
-                            tools:layout_editor_absoluteY="105dp" />
+                            app:constraint_referenced_ids="super_attack_3_name,super_attack_3_ki_blast,super_attack_3_effect,super_attack_3_extra_effect" />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
                 </com.evasler.dokkanbase.LimitedScrollView>
@@ -1460,5 +1460,219 @@
         app:layout_constraintEnd_toEndOf="@+id/imageView6"
         app:layout_constraintStart_toStartOf="@+id/imageView6"
         app:layout_constraintTop_toTopOf="@+id/imageView6" />
+
+    <LinearLayout
+        android:id="@+id/screen_overlay"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@android:color/black"
+        android:alpha="0.9"
+        android:visibility="gone"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:orientation="vertical"/>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/super_attack_details_panel"
+        android:layout_width="350dp"
+        android:layout_height="250dp"
+        android:background="@android:color/holo_orange_dark"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_20"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.2" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.02" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_98"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.98" />
+
+        <ImageView
+            android:id="@+id/super_attack_details_ki_blast"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ki_blast" />
+
+        <TextView
+            android:id="@+id/super_attack_details_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Super Attack Name"
+            android:textSize="18dp"
+            app:layout_constraintBottom_toTopOf="@+id/super_attack_details_separating_line_1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/super_attack_details_separating_line_1"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@android:color/holo_green_light"
+            app:layout_constraintBottom_toTopOf="@id/super_attack_details_ki_meter"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/super_attack_details_name" />
+
+        <TextView
+            android:id="@+id/super_attack_details_ki_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Ki:"
+            android:textSize="14dp"
+            app:layout_constraintBottom_toBottomOf="@+id/super_attack_details_ki_meter"
+            app:layout_constraintEnd_toStartOf="@id/super_attack_details_ki"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/super_attack_details_ki_meter" />
+
+        <TextView
+            android:id="@+id/super_attack_details_ki"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Ki"
+            android:textSize="13dp"
+            app:layout_constraintBottom_toBottomOf="@+id/super_attack_details_ki_meter"
+            app:layout_constraintEnd_toStartOf="@+id/guideline_20"
+            app:layout_constraintStart_toEndOf="@+id/super_attack_details_ki_label"
+            app:layout_constraintTop_toTopOf="@id/super_attack_details_ki_meter" />
+
+        <ImageView
+            android:id="@+id/super_attack_details_ki_meter"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ki_meter_12_2_9"
+            app:layout_constraintBottom_toTopOf="@+id/super_attack_details_super_attack_effect_label"
+            app:layout_constraintEnd_toStartOf="@+id/guideline_98"
+            app:layout_constraintStart_toStartOf="@+id/guideline_20"
+            app:layout_constraintTop_toBottomOf="@id/super_attack_details_separating_line_1" />
+
+        <TextView
+            android:id="@+id/super_attack_details_super_attack_effect_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Super Attack Effect"
+            android:textSize="14dp"
+            app:layout_constraintBottom_toTopOf="@id/super_attack_details_super_attack_effect"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/super_attack_details_ki_meter" />
+
+        <TextView
+            android:id="@+id/super_attack_details_super_attack_effect"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Super Attack Effect"
+            android:textSize="13dp"
+            app:layout_constraintBottom_toTopOf="@id/super_attack_details_separating_line_2"
+            app:layout_constraintEnd_toStartOf="@+id/guideline_98"
+            app:layout_constraintStart_toStartOf="@+id/guideline_2"
+            app:layout_constraintTop_toBottomOf="@id/super_attack_details_super_attack_effect_label" />
+
+        <TextView
+            android:id="@+id/super_attack_details_separating_line_2"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@android:color/holo_green_light"
+            app:layout_constraintBottom_toTopOf="@id/super_attack_details_extra_effect_label"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/super_attack_details_super_attack_effect" />
+
+        <TextView
+            android:id="@+id/super_attack_details_extra_effect_condition_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="SA Lvl"
+            android:textSize="14dp"
+            app:layout_constraintBottom_toTopOf="@+id/super_attack_details_extra_effect_condition"
+            app:layout_constraintEnd_toEndOf="@+id/super_attack_details_extra_effect_condition"
+            app:layout_constraintStart_toStartOf="@+id/super_attack_details_extra_effect_condition"
+            app:layout_constraintTop_toTopOf="@id/super_attack_details_extra_effect_label" />
+
+        <TextView
+            android:id="@+id/super_attack_details_extra_effect_condition"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="SA Lvl"
+            android:textSize="13dp"
+            app:layout_constraintBottom_toBottomOf="@+id/super_attack_details_extra_effect"
+            app:layout_constraintEnd_toStartOf="@+id/guideline_20"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/super_attack_details_extra_effect_condition_label" />
+
+        <TextView
+            android:id="@+id/super_attack_details_extra_effect_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Extra Effect"
+            android:textSize="14dp"
+            app:layout_constraintBottom_toTopOf="@id/super_attack_details_extra_effect"
+            app:layout_constraintEnd_toEndOf="@id/super_attack_details_extra_effect"
+            app:layout_constraintStart_toStartOf="@id/super_attack_details_extra_effect"
+            app:layout_constraintTop_toBottomOf="@id/super_attack_details_separating_line_2" />
+
+        <TextView
+            android:id="@+id/super_attack_details_extra_effect"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Extra Effect"
+            android:textSize="13dp"
+            app:layout_constraintBottom_toTopOf="@id/super_attack_details_separating_line_3"
+            app:layout_constraintEnd_toStartOf="@+id/guideline_98"
+            app:layout_constraintStart_toStartOf="@+id/guideline_20"
+            app:layout_constraintTop_toBottomOf="@id/super_attack_details_extra_effect_label" />
+
+        <TextView
+            android:id="@+id/super_attack_details_separating_line_3"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@android:color/holo_green_light"
+            app:layout_constraintBottom_toTopOf="@id/super_attack_details_ok_button"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/super_attack_details_extra_effect" />
+
+        <ImageView
+            android:id="@+id/super_attack_details_ok_button"
+            android:layout_width="70dp"
+            android:layout_height="35dp"
+            android:background="@android:color/holo_purple"
+            android:onClick="closeSuperAttackDetailsPanel"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/super_attack_details_separating_line_3" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="OK"
+            android:textSize="13dp"
+            app:layout_constraintBottom_toBottomOf="@id/super_attack_details_ok_button"
+            app:layout_constraintEnd_toEndOf="@id/super_attack_details_ok_button"
+            app:layout_constraintStart_toStartOf="@id/super_attack_details_ok_button"
+            app:layout_constraintTop_toTopOf="@+id/super_attack_details_ok_button" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

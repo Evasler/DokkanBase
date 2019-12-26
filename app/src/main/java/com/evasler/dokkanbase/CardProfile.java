@@ -53,6 +53,7 @@ public class CardProfile extends AppCompatActivity implements GestureDetector.On
     private List<link_skill> link_skills;
     private List<category> categories;
     private List<super_attack> super_attacks;
+    private List<super_attack_extra_effect> super_attack_extra_effects;
     private List<active_skill_details> active_skill;
     private related_card_details pre_dokkan_details;
     private related_card_details dokkan_details;
@@ -845,13 +846,8 @@ public class CardProfile extends AppCompatActivity implements GestureDetector.On
         params.height = (int) Math.ceil(related_card_icon_dimensions * 2 + 6);
         findViewById(R.id.form_tree_container).setLayoutParams(params);
 
-        super_attack_extra_effect super_attack_extra_effect;
+        super_attack_extra_effects = new ArrayList<>();
         myDao = AppDatabase.getDatabase(Objects.requireNonNull(this)).myDao();
-
-        params = (ConstraintLayout.LayoutParams) findViewById(R.id.ki_meter).getLayoutParams();
-        params.height = (int) Math.ceil(related_card_icon_dimensions / 2);
-        findViewById(R.id.ki_meter).setLayoutParams(params);
-        ((ImageView) findViewById(R.id.ki_meter)).setImageResource(getResourceId(getKiMeterFileName()));
 
         if (super_attacks.size() > 0) {
             ((TextView) findViewById(R.id.super_attack_1_name)).setText(super_attacks.get(0).getSuper_attack_name());
@@ -860,9 +856,11 @@ public class CardProfile extends AppCompatActivity implements GestureDetector.On
                 findViewById(R.id.super_attack_1_ki_blast).setVisibility(View.GONE);
             }
 
-            super_attack_extra_effect = myDao.getSuperAttackExtraEffect(super_attacks.get(0).getSuper_attack_id());
-            if (super_attack_extra_effect == null) {
-                findViewById(R.id.super_attack_1_extra_effect).setVisibility(View.GONE);
+            super_attack_extra_effect super_attack_extra_effect = myDao.getSuperAttackExtraEffect(super_attacks.get(0).getSuper_attack_id());
+            if (super_attack_extra_effect != null) {
+                super_attack_extra_effects.add(super_attack_extra_effect);
+                findViewById(R.id.super_attack_1_extra_effect).setTag(super_attack_extra_effects.size());
+                findViewById(R.id.super_attack_1_extra_effect).setVisibility(View.VISIBLE);
             }
         }
 
@@ -877,9 +875,11 @@ public class CardProfile extends AppCompatActivity implements GestureDetector.On
                 findViewById(R.id.super_attack_2_ki_blast).setVisibility(View.GONE);
             }
 
-            super_attack_extra_effect = myDao.getSuperAttackExtraEffect(super_attacks.get(1).getSuper_attack_id());
-            if (super_attack_extra_effect == null) {
-                findViewById(R.id.super_attack_2_extra_effect).setVisibility(View.GONE);
+            super_attack_extra_effect super_attack_extra_effect = myDao.getSuperAttackExtraEffect(super_attacks.get(1).getSuper_attack_id());
+            if (super_attack_extra_effect != null) {
+                super_attack_extra_effects.add(super_attack_extra_effect);
+                findViewById(R.id.super_attack_2_extra_effect).setTag(super_attack_extra_effects.size());
+                findViewById(R.id.super_attack_2_extra_effect).setVisibility(View.VISIBLE);
             }
         } else {
             findViewById(R.id.super_attack_2_name).setVisibility(View.GONE);
@@ -899,16 +899,41 @@ public class CardProfile extends AppCompatActivity implements GestureDetector.On
                 findViewById(R.id.super_attack_3_ki_blast).setVisibility(View.GONE);
             }
 
-            super_attack_extra_effect = myDao.getSuperAttackExtraEffect(super_attacks.get(2).getSuper_attack_id());
-            if (super_attack_extra_effect == null) {
-                findViewById(R.id.super_attack_3_extra_effect).setVisibility(View.GONE);
+            super_attack_extra_effect super_attack_extra_effect = myDao.getSuperAttackExtraEffect(super_attacks.get(2).getSuper_attack_id());
+            if (super_attack_extra_effect != null) {
+                super_attack_extra_effects.add(super_attack_extra_effect);
+                findViewById(R.id.super_attack_3_extra_effect).setTag(super_attack_extra_effects.size());
+                findViewById(R.id.super_attack_3_extra_effect).setVisibility(View.VISIBLE);
             }
+
         } else {
             findViewById(R.id.super_attack_3_name).setVisibility(View.GONE);
             findViewById(R.id.super_attack_3_effect).setVisibility(View.GONE);
             findViewById(R.id.super_attack_3_ki_blast).setVisibility(View.GONE);
             findViewById(R.id.super_attack_3_extra_effect).setVisibility(View.GONE);
         }
+
+        params = (ConstraintLayout.LayoutParams) findViewById(R.id.ki_meter).getLayoutParams();
+        params.height = (int) Math.ceil(related_card_icon_dimensions / 2);
+        findViewById(R.id.ki_meter).setLayoutParams(params);
+        ((ImageView) findViewById(R.id.ki_meter)).setImageResource(getResourceId(getKiMeterFileName()));
+
+        params = (ConstraintLayout.LayoutParams) findViewById(R.id.super_attack_details_ki_meter).getLayoutParams();
+        params.height = (int) Math.ceil(related_card_icon_dimensions / 2.5);
+        findViewById(R.id.super_attack_details_ki_meter).setLayoutParams(params);
+        ((ImageView) findViewById(R.id.super_attack_details_ki_meter)).setImageResource(getResourceId(getKiMeterFileName()));
+
+        params = (ConstraintLayout.LayoutParams) findViewById(R.id.super_attack_details_panel).getLayoutParams();
+        params.height = (int) Math.ceil(displayMetrics.heightPixels * 0.3);
+        params.width = (int) Math.ceil(displayMetrics.widthPixels * 0.85);
+        findViewById(R.id.super_attack_details_panel).setLayoutParams(params);
+
+        findViewById(R.id.screen_overlay).setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                return true;
+            }
+        });
     }
 
     public int getResourceId(@NonNull String pVariableName) {
@@ -1135,5 +1160,30 @@ public class CardProfile extends AppCompatActivity implements GestureDetector.On
         } else if (enhancedFormType != null && enhancedFormType.equals("Exchange")) {
             transformationCondition = active_skill.get(0).getActive_skill_condition();
         }
+    }
+
+    public void openSuperAttackDetailsPanel(View view) {
+
+        int index = ((Integer) view.getTag()) - 1;
+
+        super_attack_extra_effect super_attack_extra_effect = super_attack_extra_effects.get(index);
+
+        if (super_attacks.get(index).getSuper_attack_type().equals("Melee")) {
+            findViewById(R.id.super_attack_details_ki_blast).setVisibility(View.GONE);
+        }
+        ((TextView) findViewById(R.id.super_attack_details_name)).setText(super_attacks.get(index).getSuper_attack_name());
+        ((TextView) findViewById(R.id.super_attack_details_ki)).setText(super_attacks.get(index).getSuper_attack_launch_condition());
+        ((TextView) findViewById(R.id.super_attack_details_super_attack_effect)).setText(super_attacks.get(index).getSuper_attack_effect());
+
+        ((TextView) findViewById(R.id.super_attack_details_extra_effect_condition)).setText(super_attack_extra_effect.getExtra_effect_condition());
+        ((TextView) findViewById(R.id.super_attack_details_extra_effect)).setText(super_attack_extra_effect.getExtra_effect());
+
+        findViewById(R.id.screen_overlay).setVisibility(View.VISIBLE);
+        findViewById(R.id.super_attack_details_panel).setVisibility(View.VISIBLE);
+    }
+
+    public void closeSuperAttackDetailsPanel(View view) {
+        findViewById(R.id.screen_overlay).setVisibility(View.GONE);
+        findViewById(R.id.super_attack_details_panel).setVisibility(View.GONE);
     }
 }
