@@ -111,10 +111,6 @@ public class CardWikiFragment extends Fragment {
 
         List<Fragment> cardPreviews = getActivity().getSupportFragmentManager().getFragments();
 
-        for (Fragment fragment : cardPreviews) {
-            getActivity().getSupportFragmentManager().popBackStack();
-        }
-
         super.onDetach();
 
         new Thread(new Runnable() {
@@ -224,7 +220,6 @@ public class CardWikiFragment extends Fragment {
             gridLayout.addView(card_preview_containers.get(index), gridLayoutParams);
             Objects.requireNonNull(getActivity()).getSupportFragmentManager().beginTransaction()
                     .replace(index + 1, CardPreviews.get(index))
-                    .addToBackStack(null)
                     .commit();
             currentCard = null;
             gridLayoutParams = null;

@@ -99,6 +99,15 @@
         app:layout_constraintTop_toTopOf="@+id/card_icon"
         app:srcCompat="@drawable/super_agl" />
 
+    <ImageView
+        android:id="@+id/exz_awakening"
+        android:layout_width="38.5dp"
+        android:layout_height="38.5dp"
+        android:onClick="changeExzAwakenState"
+        app:layout_constraintStart_toStartOf="@+id/card_icon"
+        app:layout_constraintTop_toTopOf="@+id/card_icon"
+        app:srcCompat="@drawable/exz_awaken" />
+
     <TextView
         android:id="@+id/leader_skill"
         android:layout_width="0dp"
@@ -871,7 +880,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Cost:"
-        app:layout_constraintVertical_chainStyle="packed"
         app:layout_constraintBottom_toTopOf="@+id/max_level_label"
         app:layout_constraintStart_toStartOf="@+id/max_level_label"
         app:layout_constraintTop_toTopOf="@id/generic_stats_container" />
@@ -885,6 +893,16 @@
         app:layout_constraintStart_toStartOf="@+id/max_level"
         app:layout_constraintTop_toTopOf="@+id/cost_label"
         app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/generic_stats_separating_line_1"
+        android:layout_width="0dp"
+        android:layout_height="2dp"
+        android:background="@android:color/holo_green_light"
+        app:layout_constraintBottom_toTopOf="@id/max_level_label"
+        app:layout_constraintEnd_toEndOf="@id/generic_stats_container"
+        app:layout_constraintStart_toStartOf="@+id/generic_stats_container"
+        app:layout_constraintTop_toBottomOf="@id/cost_label" />
 
     <TextView
         android:id="@+id/max_level_label"
@@ -906,6 +924,16 @@
         app:layout_constraintVertical_bias="0.0" />
 
     <TextView
+        android:id="@+id/generic_stats_separating_line_2"
+        android:layout_width="0dp"
+        android:layout_height="2dp"
+        android:background="@android:color/holo_green_light"
+        app:layout_constraintBottom_toTopOf="@id/max_sa_level_label"
+        app:layout_constraintEnd_toEndOf="@id/generic_stats_container"
+        app:layout_constraintStart_toStartOf="@+id/generic_stats_container"
+        app:layout_constraintTop_toBottomOf="@id/max_level_label" />
+
+    <TextView
         android:id="@+id/max_sa_level_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -923,6 +951,16 @@
         app:layout_constraintStart_toStartOf="@+id/twelve_ki_multiplier"
         app:layout_constraintTop_toTopOf="@+id/max_sa_level_label"
         app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/generic_stats_separating_line_3"
+        android:layout_width="0dp"
+        android:layout_height="2dp"
+        android:background="@android:color/holo_green_light"
+        app:layout_constraintBottom_toTopOf="@id/twelve_ki_multiplier_label"
+        app:layout_constraintEnd_toEndOf="@id/generic_stats_container"
+        app:layout_constraintStart_toStartOf="@+id/generic_stats_container"
+        app:layout_constraintTop_toBottomOf="@id/max_sa_level_label" />
 
     <TextView
         android:id="@+id/twelve_ki_multiplier_label"
@@ -1466,8 +1504,6 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="@android:color/black"
-        android:alpha="0.9"
-        android:visibility="gone"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"

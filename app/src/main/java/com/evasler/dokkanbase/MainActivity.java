@@ -16,6 +16,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 
 import java.util.Objects;
@@ -30,6 +31,9 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnFr
 
     LruCache<String, Bitmap> memoryCache;
 
+    private static boolean navigationLocked;
+    private static TransitionAnimations transitionAnimations;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,17 +42,50 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnFr
         onInstallOrUpdate();
         initializeCache();
 
+        homeFragment = new HomeFragment();
+        teamBuilderFragment = new TeamBuilderFragment();
+        userBoxFragment = new UserBoxFragment();
+
         if (savedInstanceState != null) {
             cardWikiFragment = (CardWikiFragment) getSupportFragmentManager().getFragment(savedInstanceState, "cardWikiFragment");
         } else {
             cardWikiFragment = new CardWikiFragment();
         }
-        homeFragment = new HomeFragment();
 
-        teamBuilderFragment = new TeamBuilderFragment();
-        userBoxFragment = new UserBoxFragment();
+        navigationLocked = false;
+        transitionAnimations = new TransitionAnimations(this);
+
+        findViewById(R.id.screen_overlay).setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                return true;
+            }
+        });
 
         loadFragment(R.id.homeButton);
+    }
+
+    @Override
+    protected void onRestart() {
+        navigationLocked = true;
+        super.onRestart();
+        if (findViewById(R.id.screen_overlay).getVisibility() == View.VISIBLE) {
+            transitionAnimations.fadeOutAnimation(findViewById(R.id.screen_overlay));
+            transitionAnimations.executeOnAnimationFinished(new Runnable() {
+                @Override
+                public void run() {
+                    navigationLocked = false;
+                }
+            });
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (!navigationLocked && findViewById(R.id.screen_overlay).getVisibility() == View.GONE) {
+            navigationLocked = true;
+            super.onBackPressed();
+        }
     }
 
     @Override
@@ -56,6 +93,18 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnFr
         super.onSaveInstanceState(outState);
 
         getSupportFragmentManager().putFragment(outState, "cardWikiFragment", cardWikiFragment);
+    }
+
+    public static boolean getNavigationLocked() {
+        return navigationLocked;
+    }
+
+    public static void setNavigationLocked(boolean newNavigationLocked) {
+        navigationLocked = newNavigationLocked;
+    }
+
+    public static TransitionAnimations getTransitionAnimations() {
+        return transitionAnimations;
     }
 
     protected void onInstallOrUpdate() {

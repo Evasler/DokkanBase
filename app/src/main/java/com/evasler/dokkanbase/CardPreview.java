@@ -20,6 +20,8 @@ import android.widget.RelativeLayout;
 
 import java.util.Objects;
 
+import static android.content.Intent.FLAG_ACTIVITY_NO_ANIMATION;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -243,7 +245,7 @@ public class CardPreview extends Fragment implements View.OnClickListener {
     }
 
     public Bitmap getBitmapFromMemCache(String key) {
-        return ((MainActivity)getActivity()).getCache().get(key);
+        return ((MainActivity) Objects.requireNonNull(getActivity())).getCache().get(key);
     }
 
     public Bitmap getResizedCardIcon(Bitmap cardIcon) {
@@ -263,8 +265,20 @@ public class CardPreview extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View view) {
-        Intent myIntent = new Intent(getContext(), CardProfile.class);
-        myIntent.putExtra("base_card_id", card_id);
-        Objects.requireNonNull(getContext()).startActivity(myIntent);
+        if (!MainActivity.getNavigationLocked()) {
+            MainActivity.setNavigationLocked(true);
+            final Intent myIntent = new Intent(getContext(), CardProfile.class);
+            myIntent.addFlags(FLAG_ACTIVITY_NO_ANIMATION);
+            myIntent.putExtra("base_card_id", card_id);
+
+            MainActivity.getTransitionAnimations().fadeInAnimation(Objects.requireNonNull(getActivity()).findViewById(R.id.screen_overlay));
+            MainActivity.getTransitionAnimations().executeOnAnimationFinished(new Runnable() {
+                @Override
+                public void run() {
+                    Objects.requireNonNull(getContext()).startActivity(myIntent);
+                    MainActivity.setNavigationLocked(false);
+                }
+            });
+        }
     }
 }

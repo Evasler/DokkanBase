@@ -8,6 +8,7 @@ import androidx.core.view.GestureDetectorCompat;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.transition.Transition;
 import android.util.DisplayMetrics;
 import android.util.SparseBooleanArray;
 import android.util.TypedValue;
@@ -15,6 +16,8 @@ import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.ViewFlipper;
@@ -40,10 +43,14 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
+import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
+import static android.content.Intent.FLAG_ACTIVITY_NO_ANIMATION;
+
 public class CardProfile extends AppCompatActivity implements GestureDetector.OnGestureListener {
 
     private GestureDetectorCompat detectorCompat;
 
+    boolean navigationLocked;
     public static int extraSpace;
 
     MyDao myDao;
@@ -84,6 +91,7 @@ public class CardProfile extends AppCompatActivity implements GestureDetector.On
         super.onCreate(savedInstanceState);
 
         extraSpace = 0;
+        navigationLocked = true;
         detectorCompat = new GestureDetectorCompat(this, this);
         scrollsAdjustedStatus = new SparseBooleanArray();
         scrollsAdjustedStatus.put(R.id.super_attacks_scroll, false);
@@ -100,6 +108,47 @@ public class CardProfile extends AppCompatActivity implements GestureDetector.On
         getCardDetails(base_card_id);
         setViewsContent(base_card_id);
         lowerScrollsHeight();
+
+        MainActivity.getTransitionAnimations().fadeOutAnimation(findViewById(R.id.screen_overlay));
+        MainActivity.getTransitionAnimations().executeOnAnimationFinished(new Runnable() {
+            @Override
+            public void run() {
+                navigationLocked = false;
+            }
+        });
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (!navigationLocked && findViewById(R.id.screen_overlay).getVisibility() == View.GONE) {
+            navigationLocked = true;
+            super.onBackPressed();
+            overridePendingTransition(0, 0);
+            MainActivity.getTransitionAnimations().fadeInAnimation(findViewById(R.id.screen_overlay));
+            MainActivity.getTransitionAnimations().executeOnAnimationFinished(new Runnable() {
+                @Override
+                public void run() {
+                    navigationLocked = false;
+                }
+            });
+        }
+    }
+
+    @Override
+    protected void onRestart() {
+        navigationLocked = true;
+        super.onRestart();
+        if (findViewById(R.id.screen_overlay).getVisibility() == View.VISIBLE) {
+            MainActivity.getTransitionAnimations().fadeOutAnimation(findViewById(R.id.screen_overlay));
+            MainActivity.getTransitionAnimations().executeOnAnimationFinished(new Runnable() {
+                @Override
+                public void run() {
+                    navigationLocked = false;
+                }
+            });
+        } else {
+            navigationLocked = false;
+        }
     }
 
     @Override
@@ -165,6 +214,7 @@ public class CardProfile extends AppCompatActivity implements GestureDetector.On
 
     private void getCardDetails(String base_card_id) {
         myDao = AppDatabase.getDatabase(Objects.requireNonNull(this)).myDao();
+
         card = myDao.getCardMainDetails(base_card_id);
 
         if (current_enhanced_form_card_id != null) {
@@ -837,8 +887,8 @@ public class CardProfile extends AppCompatActivity implements GestureDetector.On
         View twelve_ki_multiplier = findViewById(R.id.twelve_ki_multiplier);
         twelve_ki_multiplier.measure(0, 0);
         params = (ConstraintLayout.LayoutParams) findViewById(R.id.generic_stats_container).getLayoutParams();
-        params.width = twelve_ki_multiplier_label.getMeasuredWidth() + twelve_ki_multiplier.getMeasuredWidth();
-        params.height = twelve_ki_multiplier_label.getMeasuredHeight() * 4;
+        params.width = twelve_ki_multiplier_label.getMeasuredWidth() + twelve_ki_multiplier.getMeasuredWidth() + getDp(10);
+        params.height = twelve_ki_multiplier_label.getMeasuredHeight() * 4 + getDp(10);
         findViewById(R.id.generic_stats_container).setLayoutParams(params);
 
         params = (ConstraintLayout.LayoutParams) findViewById(R.id.form_tree_container).getLayoutParams();
@@ -1072,27 +1122,55 @@ public class CardProfile extends AppCompatActivity implements GestureDetector.On
     }
 
     public void openProfile(View view) {
-        Intent myIntent = new Intent(this, CardProfile.class);
-        myIntent.putExtra("card_id", view.getTag().toString());
-        Objects.requireNonNull(this).startActivity(myIntent);
+
+        if (!navigationLocked) {
+            navigationLocked = true;
+            final Intent myIntent = new Intent(this, CardProfile.class);
+            myIntent.addFlags(FLAG_ACTIVITY_NEW_TASK);
+            myIntent.addFlags(FLAG_ACTIVITY_NO_ANIMATION);
+            myIntent.putExtra("base_card_id", view.getTag().toString());
+
+            MainActivity.getTransitionAnimations().fadeInAnimation(findViewById(R.id.screen_overlay));
+            MainActivity.getTransitionAnimations().executeOnAnimationFinished(new Runnable() {
+                @Override
+                public void run() {
+                    Objects.requireNonNull(getApplicationContext()).startActivity(myIntent);
+                    navigationLocked = false;
+                }
+            });
+        }
     }
 
     public void openFormProfile(String formState, String base_card_id) {
-        Intent myIntent = new Intent(this, CardProfile.class);
 
-        String enhanced_form_card_id = null;
-        String enhanced_form_type = null;
-        if (formState.equals("next")) {
-            enhanced_form_card_id = enhancedFormCardId;
-            enhanced_form_type = enhancedFormType;
-        } else if (formState.equals("previous") && !previousCardFormId.equals(base_card_id)) {
-            enhanced_form_card_id = previousCardFormId;
+        if (!navigationLocked) {
+            navigationLocked = true;
+            final Intent myIntent = new Intent(this, CardProfile.class);
+            myIntent.addFlags(FLAG_ACTIVITY_NEW_TASK);
+            myIntent.addFlags(FLAG_ACTIVITY_NO_ANIMATION);
+
+            String enhanced_form_card_id = null;
+            String enhanced_form_type = null;
+            if (formState.equals("next")) {
+                enhanced_form_card_id = enhancedFormCardId;
+                enhanced_form_type = enhancedFormType;
+            } else if (formState.equals("previous") && !previousCardFormId.equals(base_card_id)) {
+                enhanced_form_card_id = previousCardFormId;
+            }
+
+            myIntent.putExtra("base_card_id", base_card_id);
+            myIntent.putExtra("enhanced_form_card_id", enhanced_form_card_id);
+            myIntent.putExtra("enhanced_form_type", enhanced_form_type);
+
+            MainActivity.getTransitionAnimations().fadeInAnimation(findViewById(R.id.screen_overlay));
+            MainActivity.getTransitionAnimations().executeOnAnimationFinished(new Runnable() {
+                @Override
+                public void run() {
+                    Objects.requireNonNull(getApplicationContext()).startActivity(myIntent);
+                    navigationLocked = false;
+                }
+            });
         }
-
-        myIntent.putExtra("base_card_id", base_card_id);
-        myIntent.putExtra("enhanced_form_card_id", enhanced_form_card_id);
-        myIntent.putExtra("enhanced_form_type", enhanced_form_type);
-        Objects.requireNonNull(this).startActivity(myIntent);
     }
 
     public String getKiMeterFileName() {
@@ -1178,6 +1256,7 @@ public class CardProfile extends AppCompatActivity implements GestureDetector.On
         ((TextView) findViewById(R.id.super_attack_details_extra_effect_condition)).setText(super_attack_extra_effect.getExtra_effect_condition());
         ((TextView) findViewById(R.id.super_attack_details_extra_effect)).setText(super_attack_extra_effect.getExtra_effect());
 
+        findViewById(R.id.screen_overlay).setAlpha(0.9f);
         findViewById(R.id.screen_overlay).setVisibility(View.VISIBLE);
         findViewById(R.id.super_attack_details_panel).setVisibility(View.VISIBLE);
     }
@@ -1185,5 +1264,23 @@ public class CardProfile extends AppCompatActivity implements GestureDetector.On
     public void closeSuperAttackDetailsPanel(View view) {
         findViewById(R.id.screen_overlay).setVisibility(View.GONE);
         findViewById(R.id.super_attack_details_panel).setVisibility(View.GONE);
+    }
+
+    public void changeExzAwakenState(View view) {
+
+        MainActivity.getTransitionAnimations().fadeInAnimation(findViewById(R.id.screen_overlay));
+
+        /*Animation fade_in = AnimationUtils.loadAnimation(this, R.anim.black_fade_in);
+        Animation fade_out = AnimationUtils.loadAnimation(this, R.anim.black_fade_out);
+        System.out.println("done");
+
+        findViewById(R.id.screen_overlay).postOnAnimation(new Runnable() {
+            @Override
+            public void run() {
+                boolean isCurrentlyVisibile = findViewById(R.id.screen_overlay).getVisibility() == View.VISIBLE;
+                findViewById(R.id.screen_overlay).setVisibility(isCurrentlyVisibile ? View.GONE : View.VISIBLE);
+            }
+        });
+        findViewById(R.id.screen_overlay).startAnimation(fade_in);*/
     }
 }
