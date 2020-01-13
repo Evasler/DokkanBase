@@ -20,17 +20,17 @@ public class TransitionAnimations {
         this.view = view;
     }
 
-    public void fadeInAnimation(View view) {
+    public void fadeInAnimation(View view, Runnable runnable) {
         setView(view);
-        startAnimation(R.anim.black_fade_in);
+        startAnimation(R.anim.black_fade_in, runnable);
     }
 
-    public void fadeOutAnimation(View view) {
+    public void fadeOutAnimation(View view, Runnable runnable) {
         setView(view);
-        startAnimation(R.anim.black_fade_out);
+        startAnimation(R.anim.black_fade_out, runnable);
     }
 
-    private void startAnimation(final int animationId) {
+    private void startAnimation(final int animationId, final Runnable runnable) {
         animation = AnimationUtils.loadAnimation(context, animationId);
         animation.setAnimationListener(new Animation.AnimationListener() {
             @Override
@@ -42,6 +42,9 @@ public class TransitionAnimations {
             public void onAnimationEnd(Animation animation) {
                 if (animationId == R.anim.black_fade_out) {
                     onPostAnimation();
+                }
+                if (runnable != null) {
+                    runnable.run();
                 }
             }
 
@@ -75,7 +78,7 @@ public class TransitionAnimations {
         }
     }
 
-    public void executeOnAnimationFinished(final Runnable runnable) {
+    /*public void executeOnAnimationFinished(final Runnable runnable) {
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -83,5 +86,5 @@ public class TransitionAnimations {
                 runnable.run();
             }
         }).start();
-    }
+    }*/
 }

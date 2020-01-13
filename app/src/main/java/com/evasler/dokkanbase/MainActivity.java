@@ -70,8 +70,7 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnFr
         navigationLocked = true;
         super.onRestart();
         if (findViewById(R.id.screen_overlay).getVisibility() == View.VISIBLE) {
-            transitionAnimations.fadeOutAnimation(findViewById(R.id.screen_overlay));
-            transitionAnimations.executeOnAnimationFinished(new Runnable() {
+            transitionAnimations.fadeOutAnimation(findViewById(R.id.screen_overlay), new Runnable() {
                 @Override
                 public void run() {
                     navigationLocked = false;

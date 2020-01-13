@@ -19,7 +19,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.24076608" />
+        app:layout_constraintGuide_percent="0.24" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline4"
@@ -27,13 +27,6 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.67" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline13"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.9" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline5"
@@ -68,45 +61,54 @@
         android:layout_width="88dp"
         android:layout_height="88dp"
         android:layout_marginBottom="7.5dp"
+        android:src="@drawable/agl_background"
         app:layout_constraintBottom_toBottomOf="@+id/card_icon"
         app:layout_constraintEnd_toEndOf="@+id/card_icon"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="@+id/card_icon"
-        app:srcCompat="@drawable/agl_background" />
+        app:layout_constraintStart_toStartOf="@+id/card_icon" />
 
     <ImageView
         android:id="@+id/card_icon"
         android:layout_width="110dp"
         android:layout_height="110dp"
+        android:src="@drawable/card_icon_9015142"
         app:layout_constraintBottom_toTopOf="@+id/guideline3"
         app:layout_constraintStart_toEndOf="@id/guideline5"
-        app:layout_constraintTop_toTopOf="@+id/guideline"
-        app:srcCompat="@drawable/card_icon_9015142" />
+        app:layout_constraintTop_toTopOf="@+id/guideline" />
 
     <ImageView
         android:id="@+id/card_rarity"
         android:layout_width="49.5dp"
         android:layout_height="53.9dp"
+        android:src="@drawable/lr"
         app:layout_constraintBottom_toBottomOf="@+id/card_icon"
-        app:layout_constraintStart_toStartOf="@+id/card_icon"
-        app:srcCompat="@drawable/lr" />
+        app:layout_constraintStart_toStartOf="@+id/card_icon" />
 
     <ImageView
         android:id="@+id/card_type"
         android:layout_width="38.5dp"
         android:layout_height="38.5dp"
+        android:src="@drawable/super_agl"
         app:layout_constraintEnd_toEndOf="@+id/card_icon"
-        app:layout_constraintTop_toTopOf="@+id/card_icon"
-        app:srcCompat="@drawable/super_agl" />
+        app:layout_constraintTop_toTopOf="@+id/card_icon" />
 
     <ImageView
-        android:id="@+id/exz_awakening"
+        android:id="@+id/exz_awakening_icon"
         android:layout_width="38.5dp"
         android:layout_height="38.5dp"
-        android:onClick="changeExzAwakenState"
+        android:src="@drawable/exz_awaken"
+        android:visibility="gone"
         app:layout_constraintStart_toStartOf="@+id/card_icon"
-        app:layout_constraintTop_toTopOf="@+id/card_icon"
-        app:srcCompat="@drawable/exz_awaken" />
+        app:layout_constraintTop_toTopOf="@+id/card_icon" />
+
+    <ImageView
+        android:id="@+id/origin_icon"
+        android:layout_width="38.5dp"
+        android:layout_height="38.5dp"
+        android:src="@drawable/global_flag"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/card_icon"
+        app:layout_constraintEnd_toEndOf="@+id/card_icon" />
 
     <TextView
         android:id="@+id/leader_skill"
@@ -184,11 +186,11 @@
                             android:id="@+id/super_attack_1_ki_blast"
                             android:layout_width="wrap_content"
                             android:layout_height="0dp"
+                            android:src="@drawable/ki_blast"
                             app:layout_constraintBottom_toBottomOf="@+id/super_attack_1_name"
                             app:layout_constraintEnd_toStartOf="@+id/super_attack_1_name"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="@+id/super_attack_1_name"
-                            app:srcCompat="@drawable/ki_blast" />
+                            app:layout_constraintTop_toTopOf="@+id/super_attack_1_name" />
 
                         <TextView
                             android:id="@+id/super_attack_1_name"
@@ -204,11 +206,11 @@
                             android:layout_width="30dp"
                             android:layout_height="0dp"
                             android:onClick="openSuperAttackDetailsPanel"
+                            android:src="@color/colorPrimary"
                             android:visibility="gone"
                             app:layout_constraintBottom_toBottomOf="@+id/super_attack_1_name"
                             app:layout_constraintStart_toEndOf="@+id/super_attack_1_name"
-                            app:layout_constraintTop_toTopOf="@+id/super_attack_1_name"
-                            app:srcCompat="@color/colorPrimary" />
+                            app:layout_constraintTop_toTopOf="@+id/super_attack_1_name" />
 
                         <TextView
                             android:id="@+id/super_attack_1_effect"
@@ -226,11 +228,11 @@
                             android:layout_width="wrap_content"
                             android:layout_height="0dp"
 
+                            android:src="@drawable/ki_blast"
                             app:layout_constraintBottom_toBottomOf="@+id/super_attack_2_name"
                             app:layout_constraintEnd_toStartOf="@+id/super_attack_2_name"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="@+id/super_attack_2_name"
-                            app:srcCompat="@drawable/ki_blast" />
+                            app:layout_constraintTop_toTopOf="@+id/super_attack_2_name" />
 
                         <TextView
                             android:id="@+id/super_attack_2_name"
@@ -247,11 +249,11 @@
                             android:layout_width="30dp"
                             android:layout_height="0dp"
                             android:onClick="openSuperAttackDetailsPanel"
+                            android:src="@color/colorPrimary"
                             android:visibility="gone"
                             app:layout_constraintBottom_toBottomOf="@+id/super_attack_2_name"
                             app:layout_constraintStart_toEndOf="@+id/super_attack_2_name"
-                            app:layout_constraintTop_toTopOf="@+id/super_attack_2_name"
-                            app:srcCompat="@color/colorPrimary" />
+                            app:layout_constraintTop_toTopOf="@+id/super_attack_2_name" />
 
                         <TextView
                             android:id="@+id/super_attack_2_effect"
@@ -270,11 +272,11 @@
                             android:layout_width="wrap_content"
                             android:layout_height="0dp"
 
+                            android:src="@drawable/ki_blast"
                             app:layout_constraintBottom_toBottomOf="@+id/super_attack_3_name"
                             app:layout_constraintEnd_toStartOf="@+id/super_attack_3_name"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="@+id/super_attack_3_name"
-                            app:srcCompat="@drawable/ki_blast" />
+                            app:layout_constraintTop_toTopOf="@+id/super_attack_3_name" />
 
                         <TextView
                             android:id="@+id/super_attack_3_name"
@@ -291,11 +293,11 @@
                             android:layout_width="30dp"
                             android:layout_height="0dp"
                             android:onClick="openSuperAttackDetailsPanel"
+                            android:src="@color/colorPrimary"
                             android:visibility="gone"
                             app:layout_constraintBottom_toBottomOf="@+id/super_attack_3_name"
                             app:layout_constraintStart_toEndOf="@+id/super_attack_3_name"
-                            app:layout_constraintTop_toTopOf="@+id/super_attack_3_name"
-                            app:srcCompat="@color/colorPrimary" />
+                            app:layout_constraintTop_toTopOf="@+id/super_attack_3_name" />
 
                         <TextView
                             android:id="@+id/super_attack_3_effect"
@@ -442,12 +444,14 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical">
+
                         <TextView
                             android:id="@+id/active_skill_effect"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text='Active Skill Effect(s)'
                             android:textSize="13dp" />
+
                         <TextView
                             android:id="@+id/active_skill_condition"
                             android:layout_width="match_parent"
@@ -764,12 +768,12 @@
         android:id="@+id/hp_background"
         android:layout_width="100dp"
         android:layout_height="45dp"
+        android:src="@color/colorAccent"
         app:layout_constraintBottom_toBottomOf="@+id/atk_background"
         app:layout_constraintEnd_toStartOf="@+id/atk_background"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/atk_background"
-        app:srcCompat="@color/colorAccent" />
+        app:layout_constraintTop_toTopOf="@+id/atk_background" />
 
     <TextView
         android:id="@+id/hp"
@@ -799,12 +803,12 @@
         android:id="@+id/atk_background"
         android:layout_width="100dp"
         android:layout_height="45dp"
+        android:src="@color/colorAccent"
         app:layout_constraintBottom_toTopOf="@+id/form_tree_container"
         app:layout_constraintEnd_toStartOf="@+id/def_background"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/hp_background"
-        app:layout_constraintTop_toBottomOf="@+id/guideline4"
-        app:srcCompat="@color/colorAccent" />
+        app:layout_constraintTop_toBottomOf="@+id/contentFlipper" />
 
     <TextView
         android:id="@+id/atk"
@@ -834,12 +838,12 @@
         android:id="@+id/def_background"
         android:layout_width="100dp"
         android:layout_height="45dp"
+        android:src="@color/colorAccent"
         app:layout_constraintBottom_toBottomOf="@+id/atk_background"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/atk_background"
-        app:layout_constraintTop_toTopOf="@+id/atk_background"
-        app:srcCompat="@color/colorAccent" />
+        app:layout_constraintTop_toTopOf="@+id/atk_background" />
 
     <TextView
         android:id="@+id/def"
@@ -869,11 +873,11 @@
         android:id="@+id/generic_stats_container"
         android:layout_width="120dp"
         android:layout_height="80dp"
-        app:layout_constraintBottom_toTopOf="@id/guideline13"
+        android:src="@android:color/holo_blue_light"
+        app:layout_constraintBottom_toBottomOf="@+id/form_tree_container"
         app:layout_constraintEnd_toStartOf="@+id/form_tree_container"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/atk_background"
-        app:srcCompat="@android:color/holo_blue_light" />
+        app:layout_constraintTop_toTopOf="@+id/form_tree_container" />
 
     <TextView
         android:id="@+id/cost_label"
@@ -967,10 +971,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="12 Ki Boost:"
-        app:layout_constraintTop_toBottomOf="@+id/max_sa_level_label"
         app:layout_constraintBottom_toBottomOf="@id/generic_stats_container"
         app:layout_constraintEnd_toStartOf="@+id/twelve_ki_multiplier"
-        app:layout_constraintStart_toStartOf="@id/generic_stats_container" />
+        app:layout_constraintStart_toStartOf="@id/generic_stats_container"
+        app:layout_constraintTop_toBottomOf="@+id/max_sa_level_label" />
 
     <TextView
         android:id="@+id/twelve_ki_multiplier"
@@ -987,32 +991,33 @@
         android:id="@+id/form_tree_container"
         android:layout_width="260dp"
         android:layout_height="115dp"
-        app:layout_constraintBottom_toTopOf="@id/guideline13"
+        android:src="@android:color/holo_red_light"
+        app:layout_constraintBottom_toTopOf="@+id/exz_origin_panel"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/generic_stats_container"
-        app:layout_constraintTop_toBottomOf="@id/atk_background"
-        app:srcCompat="@android:color/holo_red_light" />
+        app:layout_constraintTop_toBottomOf="@+id/atk_background" />
 
     <ImageView
         android:id="@+id/top_row_form_type_icon"
         android:layout_width="20dp"
         android:layout_height="20dp"
+        android:src="@android:color/holo_blue_light"
         app:layout_constraintBottom_toBottomOf="@+id/top_row_card_icon"
         app:layout_constraintEnd_toStartOf="@+id/top_row_card_background"
         app:layout_constraintStart_toStartOf="@+id/form_tree_container"
-        app:layout_constraintTop_toTopOf="@+id/top_row_card_icon"
-        app:srcCompat="@android:color/holo_blue_light" />
+        app:layout_constraintTop_toTopOf="@+id/top_row_card_icon" />
 
     <ImageView
         android:id="@+id/top_row_card_background"
         android:layout_width="44dp"
         android:layout_height="44dp"
         android:layout_marginBottom="3.5dp"
+        android:src="@drawable/agl_background"
         app:layout_constraintBottom_toBottomOf="@+id/top_row_card_icon"
         app:layout_constraintEnd_toEndOf="@+id/top_row_card_icon"
         app:layout_constraintHorizontal_bias="0.51"
-        app:layout_constraintStart_toStartOf="@+id/top_row_card_icon"
-        app:srcCompat="@drawable/agl_background" />
+        app:layout_constraintStart_toStartOf="@+id/top_row_card_icon" />
 
     <ImageView
         android:id="@+id/top_row_card_icon"
@@ -1020,38 +1025,38 @@
         android:layout_height="55dp"
         android:onClick="openProfile"
         android:scaleType="fitXY"
+        android:src="@drawable/card_icon_9015140"
         app:layout_constraintBottom_toTopOf="@+id/bottom_row_card_icon"
         app:layout_constraintEnd_toStartOf="@+id/pre_dokkan_medal_1"
         app:layout_constraintStart_toEndOf="@+id/top_row_form_type_icon"
-        app:layout_constraintTop_toTopOf="@id/form_tree_container"
-        app:srcCompat="@drawable/card_icon_9015140" />
+        app:layout_constraintTop_toTopOf="@id/form_tree_container" />
 
     <ImageView
         android:id="@+id/top_row_card_type"
         android:layout_width="19.25dp"
         android:layout_height="19.25dp"
+        android:src="@drawable/super_agl"
         app:layout_constraintEnd_toEndOf="@+id/top_row_card_icon"
-        app:layout_constraintTop_toTopOf="@+id/top_row_card_icon"
-        app:srcCompat="@drawable/super_agl" />
+        app:layout_constraintTop_toTopOf="@+id/top_row_card_icon" />
 
     <ImageView
         android:id="@+id/top_row_card_rarity"
         android:layout_width="24.2dp"
         android:layout_height="26.95dp"
+        android:src="@drawable/lr"
         app:layout_constraintBottom_toBottomOf="@+id/top_row_card_icon"
-        app:layout_constraintStart_toStartOf="@+id/top_row_card_icon"
-        app:srcCompat="@drawable/lr" />
+        app:layout_constraintStart_toStartOf="@+id/top_row_card_icon" />
 
     <ImageView
         android:id="@+id/pre_dokkan_medal_1"
         android:layout_width="30dp"
         android:layout_height="30dp"
+        android:src="@drawable/medal_0"
         app:layout_constraintBottom_toTopOf="@+id/pre_dokkan_medal_1_count"
         app:layout_constraintEnd_toStartOf="@+id/pre_dokkan_medal_2"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/top_row_card_background"
-        app:layout_constraintTop_toTopOf="@+id/top_row_card_background"
-        app:srcCompat="@drawable/medal_0" />
+        app:layout_constraintTop_toTopOf="@+id/top_row_card_background" />
 
     <TextView
         android:id="@+id/pre_dokkan_medal_1_count"
@@ -1068,12 +1073,12 @@
         android:id="@+id/pre_dokkan_medal_2"
         android:layout_width="30dp"
         android:layout_height="30dp"
+        android:src="@drawable/medal_0"
         app:layout_constraintBottom_toTopOf="@+id/pre_dokkan_medal_2_count"
         app:layout_constraintEnd_toStartOf="@+id/pre_dokkan_medal_3"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/pre_dokkan_medal_1"
-        app:layout_constraintTop_toTopOf="@+id/top_row_card_background"
-        app:srcCompat="@drawable/medal_0" />
+        app:layout_constraintTop_toTopOf="@+id/top_row_card_background" />
 
     <TextView
         android:id="@+id/pre_dokkan_medal_2_count"
@@ -1090,12 +1095,12 @@
         android:id="@+id/pre_dokkan_medal_3"
         android:layout_width="30dp"
         android:layout_height="30dp"
+        android:src="@drawable/medal_0"
         app:layout_constraintBottom_toTopOf="@+id/pre_dokkan_medal_3_count"
         app:layout_constraintEnd_toStartOf="@+id/pre_dokkan_medal_4"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/pre_dokkan_medal_2"
-        app:layout_constraintTop_toTopOf="@+id/top_row_card_background"
-        app:srcCompat="@drawable/medal_0" />
+        app:layout_constraintTop_toTopOf="@+id/top_row_card_background" />
 
     <TextView
         android:id="@+id/pre_dokkan_medal_3_count"
@@ -1112,12 +1117,12 @@
         android:id="@+id/pre_dokkan_medal_4"
         android:layout_width="30dp"
         android:layout_height="30dp"
+        android:src="@drawable/medal_0"
         app:layout_constraintBottom_toTopOf="@+id/pre_dokkan_medal_4_count"
         app:layout_constraintEnd_toStartOf="@+id/pre_dokkan_medal_5"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/pre_dokkan_medal_3"
-        app:layout_constraintTop_toTopOf="@+id/top_row_card_background"
-        app:srcCompat="@drawable/medal_0" />
+        app:layout_constraintTop_toTopOf="@+id/top_row_card_background" />
 
     <TextView
         android:id="@+id/pre_dokkan_medal_4_count"
@@ -1134,12 +1139,12 @@
         android:id="@+id/pre_dokkan_medal_5"
         android:layout_width="30dp"
         android:layout_height="30dp"
+        android:src="@drawable/medal_0"
         app:layout_constraintBottom_toTopOf="@+id/pre_dokkan_medal_5_count"
         app:layout_constraintEnd_toEndOf="@+id/form_tree_container"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/pre_dokkan_medal_4"
-        app:layout_constraintTop_toTopOf="@+id/top_row_card_background"
-        app:srcCompat="@drawable/medal_0" />
+        app:layout_constraintTop_toTopOf="@+id/top_row_card_background" />
 
     <TextView
         android:id="@+id/pre_dokkan_medal_5_count"
@@ -1156,21 +1161,21 @@
         android:id="@+id/bottom_row_form_type_icon"
         android:layout_width="20dp"
         android:layout_height="20dp"
+        android:src="@android:color/holo_blue_light"
         app:layout_constraintBottom_toBottomOf="@+id/bottom_row_card_icon"
         app:layout_constraintEnd_toStartOf="@+id/bottom_row_card_background"
         app:layout_constraintStart_toStartOf="@+id/form_tree_container"
-        app:layout_constraintTop_toTopOf="@+id/bottom_row_card_icon"
-        app:srcCompat="@android:color/holo_blue_light" />
+        app:layout_constraintTop_toTopOf="@+id/bottom_row_card_icon" />
 
     <ImageView
         android:id="@+id/bottom_row_card_background"
         android:layout_width="44dp"
         android:layout_height="44dp"
         android:layout_marginBottom="3.5dp"
+        android:src="@drawable/agl_background"
         app:layout_constraintBottom_toBottomOf="@+id/bottom_row_card_icon"
         app:layout_constraintEnd_toEndOf="@+id/bottom_row_card_icon"
-        app:layout_constraintStart_toStartOf="@+id/bottom_row_card_icon"
-        app:srcCompat="@drawable/agl_background" />
+        app:layout_constraintStart_toStartOf="@+id/bottom_row_card_icon" />
 
     <ImageView
         android:id="@+id/bottom_row_card_icon"
@@ -1178,38 +1183,38 @@
         android:layout_height="55dp"
         android:onClick="openProfile"
         android:scaleType="fitXY"
+        android:src="@drawable/card_icon_9015141"
         app:layout_constraintBottom_toBottomOf="@id/form_tree_container"
         app:layout_constraintEnd_toStartOf="@+id/dokkan_medal_1"
         app:layout_constraintStart_toEndOf="@+id/bottom_row_form_type_icon"
-        app:layout_constraintTop_toBottomOf="@+id/top_row_card_icon"
-        app:srcCompat="@drawable/card_icon_9015141" />
+        app:layout_constraintTop_toBottomOf="@+id/top_row_card_icon" />
 
     <ImageView
         android:id="@+id/bottom_row_card_type"
         android:layout_width="19.25dp"
         android:layout_height="19.25dp"
+        android:src="@drawable/super_agl"
         app:layout_constraintEnd_toEndOf="@+id/bottom_row_card_icon"
-        app:layout_constraintTop_toTopOf="@+id/bottom_row_card_icon"
-        app:srcCompat="@drawable/super_agl" />
+        app:layout_constraintTop_toTopOf="@+id/bottom_row_card_icon" />
 
     <ImageView
         android:id="@+id/bottom_row_card_rarity"
         android:layout_width="24.2dp"
         android:layout_height="26.95dp"
+        android:src="@drawable/lr"
         app:layout_constraintBottom_toBottomOf="@+id/bottom_row_card_icon"
-        app:layout_constraintStart_toStartOf="@+id/bottom_row_card_icon"
-        app:srcCompat="@drawable/lr" />
+        app:layout_constraintStart_toStartOf="@+id/bottom_row_card_icon" />
 
     <ImageView
         android:id="@+id/dokkan_medal_1"
         android:layout_width="30dp"
         android:layout_height="30dp"
+        android:src="@drawable/medal_0"
         app:layout_constraintBottom_toTopOf="@+id/dokkan_medal_1_count"
         app:layout_constraintEnd_toStartOf="@+id/dokkan_medal_2"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/bottom_row_card_background"
-        app:layout_constraintTop_toTopOf="@+id/bottom_row_card_background"
-        app:srcCompat="@drawable/medal_0" />
+        app:layout_constraintTop_toTopOf="@+id/bottom_row_card_background" />
 
     <TextView
         android:id="@+id/dokkan_medal_1_count"
@@ -1226,12 +1231,12 @@
         android:id="@+id/dokkan_medal_2"
         android:layout_width="30dp"
         android:layout_height="30dp"
+        android:src="@drawable/medal_0"
         app:layout_constraintBottom_toTopOf="@+id/dokkan_medal_2_count"
         app:layout_constraintEnd_toStartOf="@+id/dokkan_medal_3"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/dokkan_medal_1"
-        app:layout_constraintTop_toTopOf="@+id/bottom_row_card_background"
-        app:srcCompat="@drawable/medal_0" />
+        app:layout_constraintTop_toTopOf="@+id/bottom_row_card_background" />
 
     <TextView
         android:id="@+id/dokkan_medal_2_count"
@@ -1248,12 +1253,12 @@
         android:id="@+id/dokkan_medal_3"
         android:layout_width="30dp"
         android:layout_height="30dp"
+        android:src="@drawable/medal_0"
         app:layout_constraintBottom_toTopOf="@+id/dokkan_medal_3_count"
         app:layout_constraintEnd_toStartOf="@+id/dokkan_medal_4"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/dokkan_medal_2"
-        app:layout_constraintTop_toTopOf="@+id/bottom_row_card_background"
-        app:srcCompat="@drawable/medal_0" />
+        app:layout_constraintTop_toTopOf="@+id/bottom_row_card_background" />
 
     <TextView
         android:id="@+id/dokkan_medal_3_count"
@@ -1270,12 +1275,12 @@
         android:id="@+id/dokkan_medal_4"
         android:layout_width="30dp"
         android:layout_height="30dp"
+        android:src="@drawable/medal_0"
         app:layout_constraintBottom_toTopOf="@+id/dokkan_medal_4_count"
         app:layout_constraintEnd_toStartOf="@+id/dokkan_medal_5"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/dokkan_medal_3"
-        app:layout_constraintTop_toTopOf="@+id/bottom_row_card_background"
-        app:srcCompat="@drawable/medal_0" />
+        app:layout_constraintTop_toTopOf="@+id/bottom_row_card_background" />
 
     <TextView
         android:id="@+id/dokkan_medal_4_count"
@@ -1292,12 +1297,12 @@
         android:id="@+id/dokkan_medal_5"
         android:layout_width="30dp"
         android:layout_height="30dp"
+        android:src="@drawable/medal_0"
         app:layout_constraintBottom_toTopOf="@+id/dokkan_medal_5_count"
         app:layout_constraintEnd_toEndOf="@id/form_tree_container"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/dokkan_medal_4"
-        app:layout_constraintTop_toTopOf="@+id/bottom_row_card_background"
-        app:srcCompat="@drawable/medal_0" />
+        app:layout_constraintTop_toTopOf="@+id/bottom_row_card_background" />
 
     <TextView
         android:id="@+id/dokkan_medal_5_count"
@@ -1383,8 +1388,8 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginBottom="6dp"
-        android:visibility="gone"
         android:background="@android:color/black"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@+id/top_row_card_background"
         app:layout_constraintEnd_toEndOf="@id/form_tree_container"
         app:layout_constraintStart_toEndOf="@+id/top_row_card_background"
@@ -1409,8 +1414,8 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginBottom="6dp"
-        android:visibility="gone"
         android:background="@android:color/black"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@+id/bottom_row_card_background"
         app:layout_constraintEnd_toEndOf="@id/form_tree_container"
         app:layout_constraintStart_toEndOf="@+id/bottom_row_card_background"
@@ -1430,85 +1435,53 @@
         </ScrollView>
     </LinearLayout>
 
-    <ImageView
-        android:id="@+id/imageView4"
-        android:layout_width="100dp"
-        android:layout_height="45dp"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView5"
-        app:layout_constraintEnd_toStartOf="@+id/imageView5"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/imageView5"
-        app:srcCompat="@android:color/holo_green_light" />
-
-    <TextView
-        android:id="@+id/textView12"
-        android:layout_width="wrap_content"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/exz_origin_panel"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="Back"
-        android:textSize="16dp"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView4"
-        app:layout_constraintEnd_toEndOf="@+id/imageView4"
-        app:layout_constraintStart_toStartOf="@+id/imageView4"
-        app:layout_constraintTop_toTopOf="@+id/imageView4" />
+        app:layout_constraintTop_toBottomOf="@+id/form_tree_container"
+        app:layout_constraintBottom_toBottomOf="parent">
 
-    <ImageView
-        android:id="@+id/imageView5"
-        android:layout_width="45dp"
-        android:layout_height="45dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/imageView6"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/imageView4"
-        app:layout_constraintTop_toBottomOf="@+id/guideline13"
-        app:srcCompat="@android:color/holo_green_light" />
+        <ImageView
+            android:id="@+id/exz_awakening"
+            android:layout_width="100dp"
+            android:layout_height="45dp"
+            android:src="@drawable/exz_awaken"
+            android:visibility="gone"
+            android:onClick="openExzProfile"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/origin_flag"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/textView13"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="Sim"
-        android:textSize="16dp"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView5"
-        app:layout_constraintEnd_toEndOf="@+id/imageView5"
-        app:layout_constraintStart_toStartOf="@+id/imageView5"
-        app:layout_constraintTop_toTopOf="@+id/imageView5" />
-
-    <ImageView
-        android:id="@+id/imageView6"
-        android:layout_width="100dp"
-        android:layout_height="45dp"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView5"
-        app:layout_constraintEnd_toEndOf="@id/guideline2"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/imageView5"
-        app:layout_constraintTop_toTopOf="@+id/imageView5"
-        app:srcCompat="@android:color/holo_green_light" />
-
-    <TextView
-        android:id="@+id/textView4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="Add to Box"
-        android:textSize="16dp"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView6"
-        app:layout_constraintEnd_toEndOf="@+id/imageView6"
-        app:layout_constraintStart_toStartOf="@+id/imageView6"
-        app:layout_constraintTop_toTopOf="@+id/imageView6" />
+        <ImageView
+            android:id="@+id/origin_flag"
+            android:layout_width="100dp"
+            android:layout_height="45dp"
+            android:src="@drawable/japanese_flag"
+            android:visibility="gone"
+            android:onClick="openProfile"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/exz_awakening"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <LinearLayout
         android:id="@+id/screen_overlay"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="@android:color/black"
-        app:layout_constraintTop_toTopOf="parent"
+        android:orientation="vertical"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:orientation="vertical"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+    </LinearLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/super_attack_details_panel"
@@ -1546,9 +1519,9 @@
             android:id="@+id/super_attack_details_ki_blast"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
+            android:src="@drawable/ki_blast"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ki_blast" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/super_attack_details_name"
@@ -1710,5 +1683,4 @@
             app:layout_constraintStart_toStartOf="@id/super_attack_details_ok_button"
             app:layout_constraintTop_toTopOf="@+id/super_attack_details_ok_button" />
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 </androidx.constraintlayout.widget.ConstraintLayout>

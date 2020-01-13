@@ -20,7 +20,8 @@ import androidx.room.Query;
 @Dao
 public interface MyDao {
 
-    @Query("SELECT card.card_id, rarity, type FROM card, card_invincible_form_card_relation WHERE card.card_id = card_invincible_form_card_relation.card_id UNION SELECT card.card_id, rarity, type FROM card,card_transformation_card_relation WHERE card.card_id = card_transformation_card_relation.card_id UNION SELECT card.card_id, rarity, type FROM card,card_exchange_card_relation WHERE card.card_id = card_exchange_card_relation.card_id")
+    //@Query("SELECT card.card_id, rarity, type FROM card, card_invincible_form_card_relation WHERE card.card_id = card_invincible_form_card_relation.card_id UNION SELECT card.card_id, rarity, type FROM card,card_transformation_card_relation WHERE card.card_id = card_transformation_card_relation.card_id UNION SELECT card.card_id, rarity, type FROM card,card_exchange_card_relation WHERE card.card_id = card_exchange_card_relation.card_id")
+    @Query("SELECT card.card_id, rarity, type FROM card WHERE card_id NOT LIKE '%_jp' AND rarity = 'UR' AND (type = 'Super TEQ' OR type = 'Extreme PHY' )")
     List<card_preview> getCardsForPreview();
 
     @Query("SELECT * FROM card WHERE card_id = :card_id")
@@ -89,4 +90,13 @@ public interface MyDao {
 
     @Query("SELECT transformation_condition_details FROM card_transformation_condition_relation,transformation_condition WHERE card_transformation_condition_relation.transformation_condition_id = transformation_condition.transformation_condition_id AND card_id = :card_id")
     String getTransformationCondition(String card_id);
+
+    @Query("SELECT card_id FROM card_exz_awakened_card_relation WHERE exz_awakened_card_id = :exz_awakened_card_id")
+    String getPreExzAwakenedCardId(String exz_awakened_card_id);
+
+    @Query("SELECT exz_awakened_card_id FROM card_exz_awakened_card_relation WHERE card_id = :card_id")
+    String getExzAwakenedCardId(String card_id);
+
+    @Query("SELECT * FROM exz_awakened_card WHERE exz_awakened_card_id = :card_id")
+    exz_awakened_card getExzAwakenedCardDetails(String card_id);
 }

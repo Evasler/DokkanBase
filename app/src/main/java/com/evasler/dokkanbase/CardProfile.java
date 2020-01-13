@@ -7,6 +7,7 @@ import androidx.core.view.GestureDetectorCompat;
 
 import android.content.Intent;
 import android.content.res.Resources;
+import android.media.Image;
 import android.os.Bundle;
 import android.transition.Transition;
 import android.util.DisplayMetrics;
@@ -18,8 +19,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.ToggleButton;
 import android.widget.ViewFlipper;
 
 import com.evasler.dokkanbase.queryresponseobjects.active_skill_details;
@@ -33,6 +36,7 @@ import com.evasler.dokkanbase.queryresponseobjects.tier_5_medal_combination;
 import com.evasler.dokkanbase.queryresponseobjects.transformation_card_exchange_card_details;
 import com.evasler.dokkanbase.roomentinties.card;
 import com.evasler.dokkanbase.roomentinties.category;
+import com.evasler.dokkanbase.roomentinties.exz_awakened_card;
 import com.evasler.dokkanbase.roomentinties.link_skill;
 import com.evasler.dokkanbase.roomentinties.super_attack;
 import com.evasler.dokkanbase.roomentinties.super_attack_extra_effect;
@@ -68,6 +72,7 @@ public class CardProfile extends AppCompatActivity implements GestureDetector.On
     private String previousCardFormId;
     private String current_enhanced_form_card_id;
     private String current_enhanced_form_type;
+    private String exz_card_id;
     private String enhancedFormType;
     private String enhancedFormCardId;
     private String transformationCondition;
@@ -104,13 +109,13 @@ public class CardProfile extends AppCompatActivity implements GestureDetector.On
         String base_card_id = intent.getStringExtra("base_card_id");
         current_enhanced_form_card_id = intent.getStringExtra("enhanced_form_card_id");
         current_enhanced_form_type = intent.getStringExtra("enhanced_form_type");
+        exz_card_id = intent.getStringExtra("exz_card_id");
 
         getCardDetails(base_card_id);
         setViewsContent(base_card_id);
         lowerScrollsHeight();
 
-        MainActivity.getTransitionAnimations().fadeOutAnimation(findViewById(R.id.screen_overlay));
-        MainActivity.getTransitionAnimations().executeOnAnimationFinished(new Runnable() {
+        MainActivity.getTransitionAnimations().fadeOutAnimation(findViewById(R.id.screen_overlay), new Runnable() {
             @Override
             public void run() {
                 navigationLocked = false;
@@ -124,8 +129,7 @@ public class CardProfile extends AppCompatActivity implements GestureDetector.On
             navigationLocked = true;
             super.onBackPressed();
             overridePendingTransition(0, 0);
-            MainActivity.getTransitionAnimations().fadeInAnimation(findViewById(R.id.screen_overlay));
-            MainActivity.getTransitionAnimations().executeOnAnimationFinished(new Runnable() {
+            MainActivity.getTransitionAnimations().fadeInAnimation(findViewById(R.id.screen_overlay), new Runnable() {
                 @Override
                 public void run() {
                     navigationLocked = false;
@@ -139,8 +143,7 @@ public class CardProfile extends AppCompatActivity implements GestureDetector.On
         navigationLocked = true;
         super.onRestart();
         if (findViewById(R.id.screen_overlay).getVisibility() == View.VISIBLE) {
-            MainActivity.getTransitionAnimations().fadeOutAnimation(findViewById(R.id.screen_overlay));
-            MainActivity.getTransitionAnimations().executeOnAnimationFinished(new Runnable() {
+            MainActivity.getTransitionAnimations().fadeOutAnimation(findViewById(R.id.screen_overlay), new Runnable() {
                 @Override
                 public void run() {
                     navigationLocked = false;
@@ -214,8 +217,19 @@ public class CardProfile extends AppCompatActivity implements GestureDetector.On
 
     private void getCardDetails(String base_card_id) {
         myDao = AppDatabase.getDatabase(Objects.requireNonNull(this)).myDao();
+        System.out.println(base_card_id);
 
         card = myDao.getCardMainDetails(base_card_id);
+
+        if (isExzAwakening() && current_enhanced_form_card_id == null) {
+            exz_awakened_card exz_awakened_card = myDao.getExzAwakenedCardDetails(exz_card_id);
+            card.setMax_sa_level(exz_awakened_card.getMax_sa_level());
+            card.setLeader_skill(exz_awakened_card.getLeader_skill());
+            card.setPassive_skill(exz_awakened_card.getPassive_skill());
+            card.setMax_hp(exz_awakened_card.getMax_hp());
+            card.setMax_atk(exz_awakened_card.getMax_atk());
+            card.setMax_def(exz_awakened_card.getMax_def());
+        }
 
         if (current_enhanced_form_card_id != null) {
             card.setCard_id(current_enhanced_form_card_id);
@@ -223,6 +237,7 @@ public class CardProfile extends AppCompatActivity implements GestureDetector.On
         }
 
         if (current_enhanced_form_card_id != null && current_enhanced_form_type != null) {
+            System.out.println(current_enhanced_form_card_id);
             if (current_enhanced_form_type.equals("Invincible Form")) {
                 invincible_form_card_details invincible_form_card_details = myDao.getInvincibleFormCardDetails(current_enhanced_form_card_id);
                 card.setPassive_skill_name(invincible_form_card_details.getPassive_skill_name());
@@ -241,11 +256,26 @@ public class CardProfile extends AppCompatActivity implements GestureDetector.On
                 card.setPassive_skill_name(transformation_card_exchange_card_details.getPassive_skill_name());
                 card.setPassive_skill(transformation_card_exchange_card_details.getPassive_skill());
             }
+
+            if (isExzAwakening()) {
+                exz_awakened_card exz_awakened_card = myDao.getExzAwakenedCardDetails(exz_card_id);
+                card.setMax_sa_level(exz_awakened_card.getMax_sa_level());
+                card.setLeader_skill(exz_awakened_card.getLeader_skill());
+                card.setPassive_skill(exz_awakened_card.getPassive_skill());
+                card.setMax_hp(exz_awakened_card.getMax_hp());
+                card.setMax_atk(exz_awakened_card.getMax_atk());
+                card.setMax_def(exz_awakened_card.getMax_def());
+            }
         }
 
-        max_level = myDao.getMaxLevel(card.getRarity());
         active_skill = myDao.getActiveSkill(card.getCard_id());
-        super_attacks = myDao.getSuperAttacks(card.getCard_id());
+        if (isExzAwakening()) {
+            max_level = myDao.getMaxLevel("Exz_UR");
+            super_attacks = myDao.getSuperAttacks(exz_card_id);
+        } else {
+            max_level = myDao.getMaxLevel(card.getRarity());
+            super_attacks = myDao.getSuperAttacks(card.getCard_id());
+        }
         link_skills = myDao.getLinkSkills(card.getCard_id());
         categories = myDao.getCategories(card.getCard_id());
 
@@ -299,6 +329,8 @@ public class CardProfile extends AppCompatActivity implements GestureDetector.On
         }
     }
 
+
+
     private void setViewsContent(final String base_card_id) {
 
         ConstraintLayout.LayoutParams params;
@@ -325,7 +357,7 @@ public class CardProfile extends AppCompatActivity implements GestureDetector.On
         params.height = (int) Math.ceil(card_icon_dimension * 0.35);
         findViewById(R.id.card_type).setLayoutParams(params);
 
-        String card_icon_name = "card_icon_" + card.getCard_id();
+        String card_icon_name = isJapaneseVersion() ? "card_icon_" + card.getCard_id().replace("_jp", "") : "card_icon_" + card.getCard_id();
         String background_icon_name = card.getType().replaceAll("Super|Extreme", "").trim().toLowerCase() + "_background";
         ((ImageView) findViewById(R.id.card_icon)).setImageResource(getResourceId(card_icon_name));
         ((ImageView) findViewById(R.id.card_background)).setImageResource(getResourceId(background_icon_name));
@@ -429,7 +461,7 @@ public class CardProfile extends AppCompatActivity implements GestureDetector.On
             findViewById(R.id.top_row_card_type).setLayoutParams(params);
 
             String preDokkanAwakenedCardId = pre_dokkan_details.getCard_id();
-            String top_row_card_icon_name = "card_icon_" + preDokkanAwakenedCardId;
+            String top_row_card_icon_name = preDokkanAwakenedCardId.contains("_jp") ? "card_icon_" + preDokkanAwakenedCardId.replace("_jp", "") : "card_icon_" + preDokkanAwakenedCardId;
             ((ImageView) findViewById(R.id.top_row_card_icon)).setImageResource(getResourceId(top_row_card_icon_name));
             findViewById(R.id.top_row_card_icon).setTag(preDokkanAwakenedCardId);
             ((ImageView) findViewById(R.id.top_row_card_background)).setImageResource(getResourceId(background_icon_name));
@@ -578,7 +610,7 @@ public class CardProfile extends AppCompatActivity implements GestureDetector.On
                 params.height = (int) Math.ceil(related_card_icon_dimensions * 0.35);
                 findViewById(R.id.bottom_row_card_type).setLayoutParams(params);
 
-                String enhanced_form_card_icon_name = "card_icon_" + enhancedFormCardId;
+                String enhanced_form_card_icon_name = enhancedFormCardId.contains("_jp") ? "card_icon_" + enhancedFormCardId.replace("_jp", "") : "card_icon_" + enhancedFormCardId;
                 ((ImageView) findViewById(R.id.bottom_row_card_icon)).setImageResource(getResourceId(enhanced_form_card_icon_name));
                 findViewById(R.id.bottom_row_card_icon).setTag(null);
                 findViewById(R.id.bottom_row_card_icon).setOnClickListener(new View.OnClickListener() {
@@ -621,7 +653,7 @@ public class CardProfile extends AppCompatActivity implements GestureDetector.On
             params.height = (int) Math.ceil(related_card_icon_dimensions * 0.35);
             findViewById(R.id.top_row_card_type).setLayoutParams(params);
 
-            String top_row_card_icon_name = "card_icon_" + previousCardFormId;
+            String top_row_card_icon_name = previousCardFormId.contains("_jp") ? "card_icon_" + previousCardFormId.replace("_jp", "") : "card_icon_" + previousCardFormId;
             ((ImageView) findViewById(R.id.top_row_card_icon)).setImageResource(getResourceId(top_row_card_icon_name));
             findViewById(R.id.top_row_card_icon).setTag(previousCardFormId);
             findViewById(R.id.top_row_card_icon).setOnClickListener(new View.OnClickListener() {
@@ -668,7 +700,7 @@ public class CardProfile extends AppCompatActivity implements GestureDetector.On
             findViewById(R.id.bottom_row_card_type).setLayoutParams(params);
 
             String dokkanAwakenedCardId = dokkan_details.getCard_id();
-            String bottom_row_card_icon_name = "card_icon_" + dokkanAwakenedCardId;
+            String bottom_row_card_icon_name = dokkanAwakenedCardId.contains("_jp") ? "card_icon_" + dokkanAwakenedCardId.replace("_jp", "") : "card_icon_" + dokkanAwakenedCardId;
             ((ImageView) findViewById(R.id.bottom_row_card_icon)).setImageResource(getResourceId(bottom_row_card_icon_name));
             findViewById(R.id.bottom_row_card_icon).setTag(dokkanAwakenedCardId);
             ((ImageView) findViewById(R.id.bottom_row_card_background)).setImageResource(getResourceId(background_icon_name));
@@ -817,7 +849,7 @@ public class CardProfile extends AppCompatActivity implements GestureDetector.On
                 params.height = (int) Math.ceil(related_card_icon_dimensions * 0.35);
                 findViewById(R.id.top_row_card_type).setLayoutParams(params);
 
-                String enhanced_form_card_icon_name = "card_icon_" + enhancedFormCardId;
+                String enhanced_form_card_icon_name = enhancedFormCardId.contains("_jp)") ? "card_icon_" + enhancedFormCardId.replace("_jp", "") : "card_icon_" + enhancedFormCardId;
                 ((ImageView) findViewById(R.id.top_row_card_icon)).setImageResource(getResourceId(enhanced_form_card_icon_name));
                 findViewById(R.id.top_row_card_icon).setTag(null);
                 findViewById(R.id.top_row_card_icon).setOnClickListener(new View.OnClickListener() {
@@ -861,7 +893,7 @@ public class CardProfile extends AppCompatActivity implements GestureDetector.On
             params.height = (int) Math.ceil(related_card_icon_dimensions * 0.35);
             findViewById(R.id.bottom_row_card_type).setLayoutParams(params);
 
-            String bottom_row_card_icon_name = "card_icon_" + enhancedFormCardId;
+            String bottom_row_card_icon_name = enhancedFormCardId.contains("_jp") ? "card_icon_" + enhancedFormCardId.replace("_jp", "") : "card_icon_" + enhancedFormCardId;
             ((ImageView) findViewById(R.id.bottom_row_card_icon)).setImageResource(getResourceId(bottom_row_card_icon_name));
             findViewById(R.id.bottom_row_card_icon).setTag(enhancedFormCardId);
             findViewById(R.id.bottom_row_card_icon).setOnClickListener(new View.OnClickListener() {
@@ -984,6 +1016,30 @@ public class CardProfile extends AppCompatActivity implements GestureDetector.On
                 return true;
             }
         });
+
+        if (isOrHasExzAwakening(base_card_id)) {
+            findViewById(R.id.exz_awakening).setVisibility(View.VISIBLE);
+
+            if (isExzAwakening()) {
+                findViewById(R.id.exz_awakening_icon).setVisibility(View.VISIBLE);
+                findViewById(R.id.exz_awakening).setTag(myDao.getPreExzAwakenedCardId(base_card_id));
+            } else {
+                findViewById(R.id.exz_awakening).setTag(myDao.getExzAwakenedCardId(card.getCard_id()));
+            }
+        }
+
+        if (isOrHasJapaneseVersion()) {
+            findViewById(R.id.origin_icon).setVisibility(View.VISIBLE);
+            findViewById(R.id.origin_flag).setVisibility(View.VISIBLE);
+
+            if (card.getCard_id().contains("_jp")) {
+                findViewById(R.id.origin_flag).setTag(card.getCard_id().replace("_jp", ""));
+                ((ImageView) findViewById(R.id.origin_flag)).setImageResource(getResourceId("global_flag"));
+                ((ImageView) findViewById(R.id.origin_icon)).setImageResource(getResourceId("japanese_flag"));
+            } else {
+                findViewById(R.id.origin_flag).setTag(card.getCard_id() + "_jp");
+            }
+        }
     }
 
     public int getResourceId(@NonNull String pVariableName) {
@@ -1130,8 +1186,39 @@ public class CardProfile extends AppCompatActivity implements GestureDetector.On
             myIntent.addFlags(FLAG_ACTIVITY_NO_ANIMATION);
             myIntent.putExtra("base_card_id", view.getTag().toString());
 
-            MainActivity.getTransitionAnimations().fadeInAnimation(findViewById(R.id.screen_overlay));
-            MainActivity.getTransitionAnimations().executeOnAnimationFinished(new Runnable() {
+            MainActivity.getTransitionAnimations().fadeInAnimation(findViewById(R.id.screen_overlay), new Runnable() {
+                @Override
+                public void run() {
+                    Objects.requireNonNull(getApplicationContext()).startActivity(myIntent);
+                    navigationLocked = false;
+                }
+            });
+        }
+    }public void openExzProfile(View view) {
+
+        if (!navigationLocked) {
+            navigationLocked = true;
+            final Intent myIntent = new Intent(this, CardProfile.class);
+            myIntent.addFlags(FLAG_ACTIVITY_NEW_TASK);
+            myIntent.addFlags(FLAG_ACTIVITY_NO_ANIMATION);
+
+            String preExzCardId = myDao.getPreExzAwakenedCardId(view.getTag().toString());
+            String previousFormCardId = myDao.getPreviousCardForm(preExzCardId);
+
+            if (previousFormCardId == null) {
+                myIntent.putExtra("base_card_id", preExzCardId);
+            } else {
+                myIntent.putExtra("base_card_id", previousFormCardId);
+            }
+
+            myIntent.putExtra("exz_card_id", view.getTag().toString());
+
+            if (current_enhanced_form_card_id != null) {
+                myIntent.putExtra("enhanced_form_card_id", current_enhanced_form_card_id);
+                myIntent.putExtra("enhanced_form_type", current_enhanced_form_type);
+            }
+
+            MainActivity.getTransitionAnimations().fadeInAnimation(findViewById(R.id.screen_overlay), new Runnable() {
                 @Override
                 public void run() {
                     Objects.requireNonNull(getApplicationContext()).startActivity(myIntent);
@@ -1162,8 +1249,7 @@ public class CardProfile extends AppCompatActivity implements GestureDetector.On
             myIntent.putExtra("enhanced_form_card_id", enhanced_form_card_id);
             myIntent.putExtra("enhanced_form_type", enhanced_form_type);
 
-            MainActivity.getTransitionAnimations().fadeInAnimation(findViewById(R.id.screen_overlay));
-            MainActivity.getTransitionAnimations().executeOnAnimationFinished(new Runnable() {
+            MainActivity.getTransitionAnimations().fadeInAnimation(findViewById(R.id.screen_overlay), new Runnable() {
                 @Override
                 public void run() {
                     Objects.requireNonNull(getApplicationContext()).startActivity(myIntent);
@@ -1171,6 +1257,10 @@ public class CardProfile extends AppCompatActivity implements GestureDetector.On
                 }
             });
         }
+    }
+
+    public void openExzProfile() {
+
     }
 
     public String getKiMeterFileName() {
@@ -1264,23 +1354,22 @@ public class CardProfile extends AppCompatActivity implements GestureDetector.On
     public void closeSuperAttackDetailsPanel(View view) {
         findViewById(R.id.screen_overlay).setVisibility(View.GONE);
         findViewById(R.id.super_attack_details_panel).setVisibility(View.GONE);
+        findViewById(R.id.screen_overlay).setAlpha(1f);
     }
 
-    public void changeExzAwakenState(View view) {
+    public boolean isOrHasExzAwakening(String card_id) {
+        return isExzAwakening() || myDao.getExzAwakenedCardId(card.getCard_id()) != null;
+    }
 
-        MainActivity.getTransitionAnimations().fadeInAnimation(findViewById(R.id.screen_overlay));
+    public boolean isExzAwakening() {
+        return exz_card_id != null;
+    }
 
-        /*Animation fade_in = AnimationUtils.loadAnimation(this, R.anim.black_fade_in);
-        Animation fade_out = AnimationUtils.loadAnimation(this, R.anim.black_fade_out);
-        System.out.println("done");
+    public boolean isOrHasJapaneseVersion() {
+        return isJapaneseVersion() || myDao.getCardMainDetails(card.getCard_id() + "_jp") != null;
+    }
 
-        findViewById(R.id.screen_overlay).postOnAnimation(new Runnable() {
-            @Override
-            public void run() {
-                boolean isCurrentlyVisibile = findViewById(R.id.screen_overlay).getVisibility() == View.VISIBLE;
-                findViewById(R.id.screen_overlay).setVisibility(isCurrentlyVisibile ? View.GONE : View.VISIBLE);
-            }
-        });
-        findViewById(R.id.screen_overlay).startAnimation(fade_in);*/
+    public boolean isJapaneseVersion() {
+        return card.getCard_id().contains("_jp");
     }
 }

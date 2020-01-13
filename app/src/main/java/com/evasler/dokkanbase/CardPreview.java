@@ -271,8 +271,7 @@ public class CardPreview extends Fragment implements View.OnClickListener {
             myIntent.addFlags(FLAG_ACTIVITY_NO_ANIMATION);
             myIntent.putExtra("base_card_id", card_id);
 
-            MainActivity.getTransitionAnimations().fadeInAnimation(Objects.requireNonNull(getActivity()).findViewById(R.id.screen_overlay));
-            MainActivity.getTransitionAnimations().executeOnAnimationFinished(new Runnable() {
+            MainActivity.getTransitionAnimations().fadeInAnimation(Objects.requireNonNull(getActivity()).findViewById(R.id.screen_overlay), new Runnable() {
                 @Override
                 public void run() {
                     Objects.requireNonNull(getContext()).startActivity(myIntent);
