@@ -217,7 +217,7 @@ public class CardProfile extends AppCompatActivity implements GestureDetector.On
 
     private void getCardDetails(String base_card_id) {
         myDao = AppDatabase.getDatabase(Objects.requireNonNull(this)).myDao();
-        System.out.println(base_card_id);
+        System.out.println("base_card_id: " + base_card_id);
 
         card = myDao.getCardMainDetails(base_card_id);
 
@@ -237,7 +237,7 @@ public class CardProfile extends AppCompatActivity implements GestureDetector.On
         }
 
         if (current_enhanced_form_card_id != null && current_enhanced_form_type != null) {
-            System.out.println(current_enhanced_form_card_id);
+            System.out.println("current_enhanced_form_card_id: " + current_enhanced_form_card_id);
             if (current_enhanced_form_type.equals("Invincible Form")) {
                 invincible_form_card_details invincible_form_card_details = myDao.getInvincibleFormCardDetails(current_enhanced_form_card_id);
                 card.setPassive_skill_name(invincible_form_card_details.getPassive_skill_name());
@@ -1022,8 +1022,9 @@ public class CardProfile extends AppCompatActivity implements GestureDetector.On
 
             if (isExzAwakening()) {
                 findViewById(R.id.exz_awakening_icon).setVisibility(View.VISIBLE);
-                findViewById(R.id.exz_awakening).setTag(myDao.getPreExzAwakenedCardId(base_card_id));
+                findViewById(R.id.exz_awakening).setTag(myDao.getPreExzAwakenedCardId(exz_card_id));
             } else {
+                System.out.println("exz: " + myDao.getExzAwakenedCardId(card.getCard_id()));
                 findViewById(R.id.exz_awakening).setTag(myDao.getExzAwakenedCardId(card.getCard_id()));
             }
         }
@@ -1194,7 +1195,9 @@ public class CardProfile extends AppCompatActivity implements GestureDetector.On
                 }
             });
         }
-    }public void openExzProfile(View view) {
+    }
+
+    public void openExzProfile(View view) {
 
         if (!navigationLocked) {
             navigationLocked = true;
@@ -1202,16 +1205,22 @@ public class CardProfile extends AppCompatActivity implements GestureDetector.On
             myIntent.addFlags(FLAG_ACTIVITY_NEW_TASK);
             myIntent.addFlags(FLAG_ACTIVITY_NO_ANIMATION);
 
-            String preExzCardId = myDao.getPreExzAwakenedCardId(view.getTag().toString());
-            String previousFormCardId = myDao.getPreviousCardForm(preExzCardId);
+            String preExzCardId = null;
 
+            if (isExzAwakening()) {
+                preExzCardId = view.getTag().toString();
+                myIntent.putExtra("base_card_id", card.getCard_id());
+            } else {
+                preExzCardId = myDao.getPreExzAwakenedCardId(view.getTag().toString());
+                myIntent.putExtra("exz_card_id", view.getTag().toString());
+            }
+
+            String previousFormCardId = myDao.getPreviousCardForm(preExzCardId);
             if (previousFormCardId == null) {
                 myIntent.putExtra("base_card_id", preExzCardId);
             } else {
                 myIntent.putExtra("base_card_id", previousFormCardId);
             }
-
-            myIntent.putExtra("exz_card_id", view.getTag().toString());
 
             if (current_enhanced_form_card_id != null) {
                 myIntent.putExtra("enhanced_form_card_id", current_enhanced_form_card_id);
